@@ -5,7 +5,8 @@
 2. Plana hitting klukkan 11 á morgunn eftir fyrirlestur
 3. Plönuðum að gera user group analysis og kannski requirements
 4. Bjóum til Doc skjal fyrir skrýrslu
-5. Völdum David sem git master
+5. Völdum David sem git master og hann gerði git handbók
+
 
 
 
