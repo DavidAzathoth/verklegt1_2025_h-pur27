@@ -29,6 +29,7 @@ Komnir með töflur fyrir user group analysis og func/non func requirements. Byr
   1. Byrja á use cases - **Gulli**
   2. Gera happy paths/low-fi prototype með use cases - **Baldvin**
   3. Gera class diagrams - **Adam, David**
+       -Smá vesen að byrja class diagrams, eftir að lesa um 3-laga högun þá fór allt í gang.
 - Á morgun
   1. Klára Use cases, class diagrams og low-fi ef óklárað
   2. Kannski state diagrams
@@ -36,6 +37,7 @@ Komnir með töflur fyrir user group analysis og func/non func requirements. Byr
 ### Vantar hópmeðlim en annars erum við í fínu standi og vinnum vel saman👨‍🦲
 
 ## 27/11/25 - 
+
 
 
 
