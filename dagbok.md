@@ -44,10 +44,11 @@ Erum alveg að vera komnir með prototype og erum að undirbúa okkur fyrir prot
   3. Klára prototype - **Baldvin**
   4. Klára class diagram - **Davíd**
   - Á morgun
-  1. Gera prototype testing
+  1. Gera low-fi prototype testing
   2. Gera base flow og alternitive flow í use cases
   3. Gera lokaorð og fara yfir skýrslu
 ### Erum einum færri en gengur samt vel 😸 allir ná mjög vel saman og samvinna gengur vel!
+
 
 
 
