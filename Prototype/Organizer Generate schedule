@@ -1,0 +1,108 @@
+Organizer Generate schedule
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Organizer Menu
+
+1. Create tournament
+2. Add teams to tournament
+3. Generate schedule
+4. Update results
+5. Back
+
+> 3
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Choose tournament to generate schedule
+
+1. HA cup final
+2. HRingurinn
+3. Back
+
+> 1
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Team count check
+
+Current number of teams: 6
+Minimum teams required: 16
+
+ERROR: Not enough teams to generate schedule
+
+Please add more teams to this tournament
+
+1. Go to "Add teams to tournament" menu
+2. Back to Organizer menu
+
+> 1
+
+----------------------------------
+more teams added........
+----------------------------------
+
+# Back to generate schedule window
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Team count check
+
+Current number of teams: 16
+
+1. Generate schedule
+2. Cancel
+
+> 1
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Generaterating schedule...
+
+Schedule has been generated.
+
+This is the schedule for: HA cup final
+
+
+First rounds:
+Match 1A: Team 1 vs Team 2      Date: 2025-11-28  18:00    Server: 1
+Match 1B: Team 4 vs Team 6      Date: 2025-11-28  18:00    Server: 2
+Match 2A: Team 15 vs Team 3     Date: 2025-11-28  19:00    Server: 1
+Match 2B: Team 8 vs Team 10     Date: 2025-11-28  19:00    Server: 2
+...
+
+NOTE: Quarterfinals, semifinals and finals will be determined as results are updated
+
+1. Go back to organizer menu
+
+
+
+----------------------------------------------------------------------------
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Team number confirmation
+
+Current number of teams: 16
+
+1. Generate schedule
+2. Cancel
+
+> 1
+
+! Schedule has already been created for this tournament !
+
+Make new schedule?
+
+1. Generate new schedule
+2. Cancel
+
+> 1
+
+# Goes into "generating schedule...". to make a new one
+
