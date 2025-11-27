@@ -1,0 +1,108 @@
+Public Completed and incomplete matches
+______________________________________________________________
+
+---------------------------
+ RU's e-sport extravaganza
+---------------------------
+Name: HA Cup Final
+Venue: HA
+start date: 28. nov
+End date: 30. nov
+
+1. View schedule
+2. View results/standings
+3. Back
+
+> 2
+
+---------------------------
+ RU's e-sport extravaganza
+---------------------------
+Tournament results and standings
+HA cup final
+
+View completed matches
+2. View unfinished matches
+3. View full standings
+4. Back
+
+> 1
+
+---------------------------
+ RU's e-sport extravaganza
+---------------------------
+Completed matches
+
+Match 1A
+Team 1 vs Team 2
+
+Match 1B
+Team 3 vs Team 4
+
+Match details
+2. Back
+
+> 1
+
+Enter match ID: 1B
+
+---------------------------
+ RU's e-sport extravaganza
+---------------------------
+Completed match details
+
+Match: 1B
+Teams: Team 3 vs Team 4
+Score: 0 – 2
+Winner: Team 4
+Date: 28. nov, 21:00
+Server: 2
+
+Back
+
+________________________________________________________________
+Unfinished matches
+
+---------------------------
+ RU's e-sport extravaganza
+---------------------------
+Tournament results and standings
+HA cup final
+
+View completed matches
+2. View unfinished matches
+3. View full standings
+4. Back
+
+> 2
+
+---------------------------
+ RU's e-sport extravaganza
+---------------------------
+Unfinished matches
+
+match 2A
+Team 1 vs Team 4
+
+Match 2B
+Team 2 vs Team 3
+
+Match details
+2. Back
+
+> 1
+
+Enter match ID: 2A
+
+---------------------------
+ RU's e-sport extravaganza
+---------------------------
+Unfinished match details
+
+Match: 2A
+Teams: Team 1 vs Team 4
+Date: 29. nov, 18:00
+Server: 1
+Status: Awaiting result
+
+Back
