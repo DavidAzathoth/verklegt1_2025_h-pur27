@@ -1,0 +1,90 @@
+Organizer add teams to tournament
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Organizer Menu
+
+1. Create tournament
+2. Add teams to tournament
+3. Generate schedule
+4. Update results
+5. Back
+
+> 2
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Choose Tournament
+
+1. HA cup finals
+2. HRingurinn
+3. Back
+
+> 1
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Add Teams To Tournament: HA cup final
+
+Teams currently registered:
+- Team 1
+- Team 3
+
+Available teams:
+1. Team 2
+2. Team 4
+3. Team 5
+4. Team 6
+5. Back
+
+Select team to add: 1
+
+------------------------------------------------
+Team "Team 2" has been added to HA cup final
+
+Current number of teams: 3
+NOTE: minimum amount required: 16 teams
+
+1. Add another team
+2. Finish and go back to organizer menu
+
+> 1
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Add Teams To Tournament: HA cup final
+
+Teams currently registered:
+- Team 1
+- Team 3
+- Team 2
+
+Available teams:
+1. Team 4
+2. Team 5
+3. Team 6
+4. Back
+
+Select team to add: 6
+
+ERROR: Invalid input. Please enter a number from the list
+
+Select team to add: 1
+
+--------------------------------------------------
+Team "Team 4" has been added to HA cup final
+
+Current number of teams: 4
+NOTE: minimum amount required: 16 teams
+
+1. Add another team
+2. Finish
+
+> 2
+
+Returning to organizer menu...
+
+
