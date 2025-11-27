@@ -37,9 +37,18 @@ Komnir með töflur fyrir user group analysis og func/non func requirements. Byr
 ### Vantar hópmeðlim en annars erum við í fínu standi og vinnum vel saman👨‍🦲
 
 ## 27/11/25 - Adam, Baldvin, David, Gunnlaugur
+Erum alveg að vera komnir með prototype og erum að undirbúa okkur fyrir prototype testing á morgun.  Class diagram lítur vel út eftir að við löguðum það.  Fréttum að það vantaði líka use cases fyrir B og C kröfur.
 - Í dag
-  1. Klára B og C priority use cases
-  2. 
+  1. Klára B og C priority use cases - **Gulli**
+  2. Gera state diagram - **Adam**
+  3. Klára prototype - **Baldvin**
+  4. Klára class diagram - **Davíd**
+  - Á morgun
+  1. Gera prototype testing
+  2. Gera base flow og alternitive flow í use cases
+  3. Gera lokaorð og fara yfir skýrslu
+### Erum einum færri en gengur samt vel 😸 allir ná mjög vel saman og samvinna gengur vel!
+
 
 
 
