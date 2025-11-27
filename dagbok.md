@@ -36,7 +36,11 @@ Komnir með töflur fyrir user group analysis og func/non func requirements. Byr
   3. User testing low-fi prototype
 ### Vantar hópmeðlim en annars erum við í fínu standi og vinnum vel saman👨‍🦲
 
-## 27/11/25 - 
+## 27/11/25 - Adam, Baldvin, David, Gunnlaugur
+- Í dag
+  1. Klára B og C priority use cases
+  2. 
+
 
 
 
