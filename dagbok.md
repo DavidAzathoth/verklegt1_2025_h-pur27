@@ -29,13 +29,31 @@ Komnir með töflur fyrir user group analysis og func/non func requirements. Byr
   1. Byrja á use cases - **Gulli**
   2. Gera happy paths/low-fi prototype með use cases - **Baldvin**
   3. Gera class diagrams - **Adam, David**
+       -Smá vesen að byrja class diagrams, eftir að lesa um 3-laga högun þá fór allt í gang.
 - Á morgun
   1. Klára Use cases, class diagrams og low-fi ef óklárað
   2. Kannski state diagrams
   3. User testing low-fi prototype
 ### Vantar hópmeðlim en annars erum við í fínu standi og vinnum vel saman👨‍🦲
 
-## 27/11/25 - 
+## 27/11/25 - Adam, Baldvin, David, Gunnlaugur
+Erum alveg að vera komnir með prototype og erum að undirbúa okkur fyrir prototype testing á morgun.  Class diagram lítur vel út eftir að við löguðum það.  Fréttum að það vantaði líka use cases fyrir B og C kröfur.
+- Í dag
+  1. Klára B og C priority use cases - **Gulli**
+  2. Gera state diagram - **Adam**
+  3. Klára prototype - **Baldvin**
+  4. Klára class diagram - **Davíd**
+  5. Gera base flow og alternitive flow í use cases **Gulli**
+  - Á morgun
+  1. Gera low-fi prototype testing
+  2. Gera lokaorð og fara yfir skýrslu
+  3. Endurvinna loka git handbókina
+### Erum einum færri en gengur samt vel 😸 allir ná mjög vel saman og samvinna gengur vel!
+
+
+
+
+
 
 
 
