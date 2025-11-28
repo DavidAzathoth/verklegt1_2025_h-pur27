@@ -1,5 +1,5 @@
-svar=0
-while svar!=4:
+svar=None
+while True:
       print("""
 Public Match schedule
 __________________________________________________
@@ -10,11 +10,13 @@ Main menu
 1. Public
 2. Organizer
 3. Team captain
-4. Quit
+0. Quit
       """)
       svar=int(input())
-      if svar==1:
-            while svar!=3:
+      if svar==0:
+            break
+      elif svar==1:
+            while True:
                   print("""
 ---------------------------
 RU's e-Sport Extravaganza
@@ -22,11 +24,13 @@ RU's e-Sport Extravaganza
 Public menu
 1. View tournaments
 2. View teams/players
-3. Back
+0. Back
 """)
                   svar=int(input())
+                  if svar==0:
+                        break
                   if svar==1:
-                        while svar!=3:
+                        while True:
                               print("""
 ---------------------------
  RU's e-Sport Extravaganza
@@ -35,10 +39,12 @@ List of tournaments
 
 1. Ha cup Final
 2. HRingurinn
-3. Back""")
+0. Back""")
                               svar=int(input("Select tournament: "))
+                              if svar==0:
+                                    break
                               if svar==1:
-                                    while svar!=3:
+                                    while True:
                                           print("""
 ---------------------------
  RU's e-Sport Extravaganza
@@ -50,9 +56,11 @@ End date: 30. nov
 
 1. View schedule
 2. View results/standings
-3. Back""")
+0. Back""")
                                           svar=int(input())
-                                          while svar!=3:
+                                          if svar==0:
+                                                break
+                                          while True:
                                                 print("""
 --------------------------- 
  RU's e-sport extravaganza
@@ -68,8 +76,12 @@ Match number: 1B
 Team 3 vs team 4
 date: 28. nov, 21:00
 Server 2
+                                                      
+0. Back
 """)
                                                 svar=int(input())
+                                                if svar==0:
+                                                      break
 print("Exiting program...")
 
 
