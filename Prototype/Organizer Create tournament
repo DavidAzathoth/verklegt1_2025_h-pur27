@@ -1,0 +1,71 @@
+Organizer create tournament 
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Main Menu
+
+1. Public
+2. Organizer
+3. Team captain
+4. Quit
+
+> 2
+
+Enter password: *******
+
+Password has been verified.
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Organizer Menu
+
+1. Create tournament
+2. Add teams to tournament
+3. Generate schedule
+4. Update results
+5. Back
+
+> 1
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Tournament Creation Menu
+
+Enter venue location: HA
+Enter tournament name: HA cup final
+
+Enter start date(YYYY-MM-DD): 2025-11-28
+Enter end date(YYYY-MM-DD): 2025-11-30
+
+Enter contact person's email: John@gmail.com
+Enter contact person's phone number: 909-1234
+
+1. Confirm creation
+2. Cancel
+
+> 1
+
+---------------------------------------------------
+Tournament has successfully been created!
+
+1. Back to organizer menu
+
+> 1
+
+---------------------------
+ RU's e-Sport Extravaganza  
+---------------------------
+Organizer Menu
+
+1. Create tournament
+2. Add teams to tournament  
+3. Generate schedule
+4. Update results
+5. Back
+
+
+
+
+
