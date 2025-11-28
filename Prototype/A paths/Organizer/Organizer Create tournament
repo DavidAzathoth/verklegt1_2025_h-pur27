@@ -66,6 +66,36 @@ Organizer Menu
 5. Back
 
 
+---------------------------------------------------------------------
+# Making new tournament after this one
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Tournament Creation Menu
 
+Enter venue location: HA
+Enter tournament name: HA cup final
+
+ERROR: Tournament name already in use. Please choose another name.
+
+Enter tournament name: HA cup final
+
+------------------------------------------------------------------------------
+# Missing input
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Tournament Creation Menu
+
+Enter venue location: HA
+Enter tournament name: HA cup final
+
+Enter start date(YYYY-MM-DD): 
+
+ERROR: All required fields must be filled.
+
+Enter start date(YYYY-MM-DD): 
+
+------------------------------------------------------------------------------
 
 
