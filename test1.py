@@ -6,6 +6,7 @@ Public Match schedule
 __________________________________________________
 ---------------------------
 RU's e-Sport Extravaganza
+---------------------------
 Main menu
 1. Public
 2. Organizer
