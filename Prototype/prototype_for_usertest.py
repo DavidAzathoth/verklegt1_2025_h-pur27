@@ -15,7 +15,6 @@ Main menu
       svar=int(input())
       if svar==1:
             while svar!=3:
-                  svar=0
                   print("""
 ---------------------------
 RU's e-Sport Extravaganza
@@ -27,9 +26,7 @@ Public menu
 """)
                   svar=int(input())
                   if svar==1:
-                        svar=0
                         while svar!=3:
-                              svar=0
                               print("""
 ---------------------------
  RU's e-Sport Extravaganza
@@ -42,7 +39,6 @@ List of tournaments
                               svar=int(input("Select tournament: "))
                               if svar==1:
                                     while svar!=3:
-                                          svar=0
                                           print("""
 ---------------------------
  RU's e-Sport Extravaganza
@@ -57,7 +53,6 @@ End date: 30. nov
 3. Back""")
                                           svar=int(input())
                                           while svar!=3:
-                                                svar=0
                                                 print("""
 --------------------------- 
  RU's e-sport extravaganza
@@ -75,5 +70,6 @@ date: 28. nov, 21:00
 Server 2
 """)
                                                 svar=int(input())
+print("Exiting program...")
 
 
