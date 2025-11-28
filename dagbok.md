@@ -43,11 +43,13 @@ Erum alveg að vera komnir með prototype og erum að undirbúa okkur fyrir prot
   2. Gera state diagram - **Adam**
   3. Klára prototype - **Baldvin**
   4. Klára class diagram - **Davíd**
+  5. Gera base flow og alternitive flow í use cases **Gulli**
   - Á morgun
   1. Gera low-fi prototype testing
-  2. Gera base flow og alternitive flow í use cases
-  3. Gera lokaorð og fara yfir skýrslu
+  2. Gera lokaorð og fara yfir skýrslu
+  3. Endurvinna loka git handbókina
 ### Erum einum færri en gengur samt vel 😸 allir ná mjög vel saman og samvinna gengur vel!
+
 
 
 
