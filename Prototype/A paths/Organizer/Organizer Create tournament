@@ -2,18 +2,18 @@ Organizer create tournament
 ---------------------------
  RU's e-Sport Extravaganza
 ---------------------------
-Main Menu
+Main menu
 
-1. Public
-2. Organizer
-3. Team captain
-4. Quit
+1. View tournaments
+2. View teams/players
+3. Log in as Captain/Organizer
+0. Quit
 
-> 2
+> 3
 
-Enter password: *******
+Handle: Organizer
 
-Password has been verified.
+Login successful.
 
 ---------------------------
  RU's e-Sport Extravaganza

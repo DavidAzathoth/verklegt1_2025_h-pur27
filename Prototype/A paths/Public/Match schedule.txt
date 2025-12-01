@@ -5,24 +5,12 @@ __________________________________________________
 ---------------------------
 Main menu
 
-1. Public
-2. Organizer
-3. Team captain
-4. Quit
-
-> 1
-
----------------------------
- RU's e-Sport Extravaganza
----------------------------
-Public menu
-
 1. View tournaments
 2. View teams/players
-3. Back
+3. Log in as Captain/Organizer
+0. Quit
 
 > 1
-
 
 ---------------------------
  RU's e-Sport Extravaganza
