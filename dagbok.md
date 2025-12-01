@@ -73,11 +73,16 @@ Kláruðum fyrstu skil af verkefni í síðasta tíma og ætlum við núna að p
   1. Skoða feedback
   2. Fá hjálp frá aðstoðarkennara
   3. Fara vel yfir klasarit(3-laga)
-  4. Lagfæra mistök
-  5. Ræða um hvað við gerum í framhaldi
+     1. Fínpússuðum klasaritin, en höfum ekki alveg skilning í kringum það ennþá.
+  5. Lagfæra mistök
+     1. Breyttum skýrsluna samkvæmt feedback frá kennara.
+  7. Ræða um hvað við gerum í framhaldi
+     1. Fórum yfir öðruvísi "naming conventions" fyrir forrittun á morgun(PascalCase, camelCase, snake_case... og fleira).
+     2. 
 - Á morgun
   1. Gera okkur tilbúna fyrir kóðunina.
 ### 
+
 
 
 
