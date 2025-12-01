@@ -1,4 +1,6 @@
 ﻿# verklegt1_2025_h-pur27
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Vika 1
 
 ## 24/11/25 - Adam, Baldvin, Davíd, Gunnlaugur
 - Í dag
@@ -43,14 +45,29 @@ Erum alveg að vera komnir með prototype og erum að undirbúa okkur fyrir prot
   2. Gera state diagram - **Adam**
   3. Klára prototype - **Baldvin**
   4. Klára class diagram - **Davíd**
-  5. Gera base flow og alternitive flow í use cases **Gulli**
+  5. Gera base flow og alternitive flow í use cases - **Gulli**
   - Á morgun
   1. Gera low-fi prototype testing
   2. Gera lokaorð og fara yfir skýrslu
   3. Endurvinna loka git handbókina
 ### Erum einum færri en gengur samt vel 😸 allir ná mjög vel saman og samvinna gengur vel!
 
+## 28/11/25 - Adam, Baldvin, David, Gunnlaugur
+Við náðum ekki alveg að klára allt sem við ætluðum okkur til en við náðum allavegana að klára happy paths að mestu leiti en eigum bara eftir að koma því fyrir í skýrslunni. Náðum líka að klára megnið af state diagram og B/C kröfur.
+- Í dag
+  1. Fínpússa use cases og error cases í interface- **Baldvin**
+  2. Klára state diagram - **Adam**
+  3. Setja inn Happy paths í skýrslu - **Gulli, Adam**
+  4. Gera prótótýpu fyrir testing - **David**
+  5. Testa prótótýpu - **Adam, Gulli, David**
+  6. Klára git handbók - **David**
+  7. Klára og fínpússa skýrslu
+### Góð samvinna í hópnum og við skiptum verkefnum vel á milli. Við ættum vonandi að vera komnir með ásættanlega skýrslu í lok dags🔥
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Vika 2
+
+## 01/12/25 - Adam, Baldvin, David, Gunnlaugur
 
 
 
