@@ -93,5 +93,6 @@ NOTE: minimum amount required: 16 teams
 """)
                                 svar=int(input())
                                 if svar==2:
+                                    useless_variable=True
                                     ret_to_menu=True
                                     break
