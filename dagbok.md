@@ -73,7 +73,7 @@ Kláruðum fyrstu skil af verkefni í síðasta tíma og ætlum við núna að p
   1. Skoða feedback
   2. Fá hjálp frá aðstoðarkennara
   3. Fara vel yfir klasarit(3-laga)
-     1. Fínpússuðum klasaritin, en höfum ekki alveg skilning í kringum það ennþá.
+     1. Fínpússuðum klasaritin, en höfum ekki alveg skilning í kringum þau ennþá.
   5. Lagfæra mistök
      1. Breyttum skýrsluna samkvæmt feedback frá kennara.
   7. Ræða um hvað við gerum í framhaldi
@@ -81,6 +81,7 @@ Kláruðum fyrstu skil af verkefni í síðasta tíma og ætlum við núna að p
 - Á morgun
   1. Gera okkur tilbúna fyrir kóðunina.
 ### 
+
 
 
 
