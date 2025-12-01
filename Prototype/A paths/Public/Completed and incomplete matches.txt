@@ -21,7 +21,7 @@ End date: 30. nov
 Tournament results and standings
 HA cup final
 
-View completed matches
+1. View completed matches
 2. View unfinished matches
 3. View full standings
 4. Back
