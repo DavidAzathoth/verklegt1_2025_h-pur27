@@ -68,6 +68,16 @@ Við náðum ekki alveg að klára allt sem við ætluðum okkur til en við ná
 # Vika 2
 
 ## 01/12/25 - Adam, Baldvin, David, Gunnlaugur
+Kláruðum fyrstu skil af verkefni í síðasta tíma og ætlum við núna að plana betur fyrir hvað við gerum héðan í frá.
+- Í dag
+  1. Skoða feedback
+  2. Fá hjálp frá aðstoðarkennara
+  3. Fara vel yfir klasarit(3-laga)
+  4. Lagfæra mistök
+  5. Ræða um hvað við gerum í framhaldi
+- Á morgun
+  1. Gera okkur tilbúna fyrir kóðunina.
+### 
 
 
 
