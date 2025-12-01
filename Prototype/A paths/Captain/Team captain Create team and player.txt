@@ -3,18 +3,16 @@ _____________________________________
 ---------------------------
  RU's e-Sport Extravaganza
 ---------------------------
-Main Menu
+Main menu
 
-1. Public
-2. Organizer
-3. Team captain
-4. Quit
+1. View tournaments
+2. View teams/players
+3. Log in as Captain/Organizer
+0. Quit
 
 > 3
 
 Team captain handle: Sheriff_Norris
-
-Password: ******
 
 Login successful.
 
