@@ -1,18 +1,20 @@
-from roughtest.LogicLayer.LogicHandler import LogicAPI
+from LogicLayer.logicAPI import LogicAPI
 from AllMenuUI import menuUI
 
 
 class MainMenuUI:
     def __init__(self, menuUI):
+        llapi=LogicAPI()
         """## UI strings ##
         main_menu - The main menu of the program\n
         public_menu - Public user interface\n
         organizer_menu - Shows organizer interface after login\n
         captain_menu - Shows team captain interface after login\n
         logic_auth - authenticates login (connected to logic layer)"""
-
+    
     # snake case used for this function to keep UI elements in the same style.
-
+    def testfunction(self): #<--- delete this at latest convenience 
+        pass
 
 #     def captain_menu(self):
 #         """prints captain_menu, needs captainID to be declared for MainMenu class before calling, otherwise None will be printed as Team Captain"""
@@ -31,14 +33,13 @@ class MainMenuUI:
 
 # Testing zone vv
 menu = MainMenu()
-
+#
 
 menu.captain_handle = "Sheriff Norris"
 print(menu.captain_menu())
 
-llapi = LogicAPI()
 # calls logic for findteam, which calls data to retrieve all teams, then logic will find team name and send it here.
-print(llapi.findteam("PARIVISION"))
+
 
 # Testing opening files, don't leave this in here
 

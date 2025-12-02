@@ -1,4 +1,4 @@
-from roughtest.LogicLayer.LogicHandler import LogicAPI
+from LogicLayer.logicAPI import LogicAPI
 
 
 class MenuUI:
