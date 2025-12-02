@@ -68,23 +68,5 @@ print(menu.captain_menu())
 
 llapi=LogicAPI()
 #calls logic for findteam, which calls data to retrieve all teams, then logic will find team name and send it here. 
-print(llapi.findteam('PARIVISION'))
+print(llapi.findteam('fnatic'))
 
-#Testing opening files, don't leave this in here
-
-
-##Finding team and printing team name and roster
-#IOapi=StorageManager()
-#teams=IOapi.loadTeams()
-#for team in teams:
-#    if team.get('teamName')=='PARIVISION':
-#        foundteam=team.get('teamName')
-#        players=team.get('roster').split(',')
-#
-#print(f"""
-#{'-'*len(foundteam)}
-#{foundteam}
-#{'-'*len(foundteam)}
-#""")
-#for player in players:
-#    print(player)
