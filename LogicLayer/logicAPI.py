@@ -14,9 +14,9 @@ class LogicAPI:
 
     def createteam(self, input: dict):
         return self.__Teamlogic.createteam(input)
+    
     def showTeams(self):
         return self.Menulogic.showTeams()
+    
     def getTeams(self) -> list[dict]:
         return self.Teamlogic.getTeams()
-    #def createTeamsString(self):
-    #    return self.Menulogic.createTeamsString()
