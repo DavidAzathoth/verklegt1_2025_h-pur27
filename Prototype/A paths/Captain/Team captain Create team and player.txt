@@ -1,0 +1,143 @@
+Team captain Create team and players
+_____________________________________
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Main menu
+
+1. View tournaments
+2. View teams/players
+3. Log in as Captain/Organizer
+0. Quit
+
+> 3
+
+Handle: Sheriff_Norris
+
+Login successful.
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Sheriff_Norris Menu
+
+You have no current team
+
+1. Create team
+2. Back
+
+> 1
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Team Creation Menu
+Team captain: Sheriff_Norris
+
+Enter team name: Team 1
+Team website(optional): https://twitch.tv/Team-1
+
+1. Add players to team
+2. Cancel
+
+> 1
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Add Player Menu
+
+Add players(3-5):
+
+Add Player 1:
+Handle: Sheriff_Norris
+Name: Chuck
+Date of birth(YYYY-MM-DD): 1940-03-10
+Address: 872 Navasota TX
+Phone number: +44 207 234 9455
+E-mail: gmail@chucknorris.com
+Link: https://www.facebook.com/share/1CxgXUzHaw/?mibextid=wwXIfr
+
+Player has been added to team!
+
+
+Add player 2:
+...
+
+
+Add player 3:
+...
+
+1. Add another player?(max 5)
+2. Confirm creation
+3. Cancel
+
+> 1
+
+Add player 4:
+...
+
+1. Add another player?(max 5)
+2. Confirm creation
+3. Cancel
+
+> 1
+
+Add player 5:
+...
+
+1. Confirm creation
+2. Cancel
+
+> 1
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Team "Team 1" has been successfully created.
+Team captain: Sheriff_Norris 
+
+1. Continue
+
+> 1
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Sheriff_Norris Menu
+
+1. View my team/players
+2. Edit team information
+3. Back
+
+
+----------------------------------------------------------
+# Same handle ERROR
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Add Player Menu
+
+Add players(3-5):
+
+Add Player 1:
+Handle: Sheriff_Norris
+Name: Chuck
+Date of birth(YYYY-MM-DD): 1940-03-10
+Address: 872 Navasota TX
+Phone number: +44 207 234 9455
+E-mail: gmail@chucknorris.com
+Link: https://www.facebook.com/share/1CxgXUzHaw/?mibextid=wwXIfr
+
+Player has been added to team!
+
+
+Add player 2:
+Handle: Sheriff_Norris
+
+ERROR: Handle already in use. Please choose another
+
+Handle: 
+
+-----------------------------------------------------------------------
+
