@@ -1,6 +1,4 @@
-from roughtest.LogicLayer.LogicHandler import LogicAPI
-
-
+from LogicLayer.logicAPI import LogicAPI
 class MenuUI:
     def __init__(self, logic_api: LogicAPI):
         self._logic_api = logic_api
@@ -36,6 +34,9 @@ q. Quit"""
         if choice == "1":
             return "TOURNAMENTS"
         if choice == "2":
+            #Testing purposes#
+            print(self._logic_api.showTeams())
+            #Testing purposes#
             return "TEAMS"
         if choice == "3":
             return "LOGIN"
