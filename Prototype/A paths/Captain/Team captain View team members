@@ -1,0 +1,105 @@
+Team captain Edit team members
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Sheriff_Norris Menu
+
+1. View my team/players
+2. Edit team information
+3. Back
+
+> 1 
+
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+View Team Menu
+
+Team name: Team 1
+Players:
+1. Sheriff_Norris
+2. Player_A
+3. Player_B
+4. Player_C
+5. Player_D
+6. Back
+
+Select player (1-5) or 6 to go back: 2
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Player_A personal info:
+
+Handle: Player_A
+Name: Bob
+Date of birth(YYYY-MM-DD): 2002-04-09
+Address: somestreetname 12
+Phone number: 980-4321
+E-mail: playera@gmail.com
+Link: https://www.twitch.tv/Player-A
+
+1. Edit player info
+2. Back
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Edit player information (Player_A)
+
+1. Edit Address
+2. Edit phone
+3. Edit E-mail
+4. Edit Link
+5. Cancel
+
+> 2
+
+New phone number: 980-1234
+
+Phone number has been updated!
+---------------------------------
+
+1. Go back to Player info
+2. Go back to team menu
+
+> 1
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Player_A personal info:
+
+Handle: Player_A
+Name: Bob
+Date of birth(YYYY-MM-DD): 2002-04-09
+Address: somestreetname 12
+Phone number: 980-1234
+E-mail: playera@gmail.com
+Link: https://www.twitch.tv/Player-A
+
+1. Edit player info
+2. Back
+
+
+--------------------------------------------------------
+# Error message invalid data
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Edit player information (Player_A)
+
+1. Edit Address
+2. Edit phone
+3. Edit E-mail
+4. Edit Link
+5. Cancel
+
+> 2
+
+New phone number:
+
+ERROR: Please fill in the required field.
+
+New phone number

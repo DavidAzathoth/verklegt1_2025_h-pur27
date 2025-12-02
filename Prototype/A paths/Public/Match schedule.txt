@@ -1,0 +1,69 @@
+Public Match schedule
+__________________________________________________
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Main menu
+
+1. View tournaments
+2. View teams/players
+3. Log in as Captain/Organizer
+0. Quit
+
+> 1
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+List of tournaments
+
+Ha cup Final
+HRingurinn
+Back
+
+Select tournament: 1
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Name: HA Cup Final
+Venue: HA
+start date: 28. nov
+End date: 30. nov
+
+1. View schedule
+2. View results/standings
+3. Back
+
+> 1
+
+--------------------------- 
+ RU's e-sport extravaganza
+---------------------------
+Match Schedule
+
+Match number: 1A
+Team 1 vs Team 2
+Date: 28. nov, 21:00
+Server: 1
+
+Match number: 1B
+Team 3 vs team 4
+date: 28. nov, 21:00
+Server 2
+
+.
+.
+.
+_____________________________
+
+Error no tournaments found
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+List of tournaments
+
+No tournaments found.
+
+1. Back

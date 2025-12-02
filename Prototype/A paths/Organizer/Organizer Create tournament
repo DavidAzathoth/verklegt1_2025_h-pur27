@@ -1,0 +1,101 @@
+Organizer create tournament 
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Main menu
+
+1. View tournaments
+2. View teams/players
+3. Log in as Captain/Organizer
+0. Quit
+
+> 3
+
+Handle: Organizer
+
+Login successful.
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Organizer Menu
+
+1. Create tournament
+2. Add teams to tournament
+3. Generate schedule
+4. Update results
+5. Back
+
+> 1
+
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Tournament Creation Menu
+
+Enter venue location: HA
+Enter tournament name: HA cup final
+
+Enter start date(YYYY-MM-DD): 2025-11-28
+Enter end date(YYYY-MM-DD): 2025-11-30
+
+Enter contact person's email: John@gmail.com
+Enter contact person's phone number: 909-1234
+
+1. Confirm creation
+2. Cancel
+
+> 1
+
+---------------------------------------------------
+Tournament has successfully been created!
+
+1. Back to organizer menu
+
+> 1
+
+---------------------------
+ RU's e-Sport Extravaganza  
+---------------------------
+Organizer Menu
+
+1. Create tournament
+2. Add teams to tournament  
+3. Generate schedule
+4. Update results
+5. Back
+
+
+---------------------------------------------------------------------
+# Making new tournament after this one
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Tournament Creation Menu
+
+Enter venue location: HA
+Enter tournament name: HA cup final
+
+ERROR: Tournament name already in use. Please choose another name.
+
+Enter tournament name: HA cup final
+
+------------------------------------------------------------------------------
+# Missing input
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Tournament Creation Menu
+
+Enter venue location: HA
+Enter tournament name: HA cup final
+
+Enter start date(YYYY-MM-DD): 
+
+ERROR: All required fields must be filled.
+
+Enter start date(YYYY-MM-DD): 
+
+------------------------------------------------------------------------------
+
+
