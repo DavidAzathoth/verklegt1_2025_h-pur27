@@ -1,9 +1,9 @@
 from roughtest.LogicLayer.LogicHandler import LogicAPI
-from MenuUI import allMenuUI
+from AllMenuUI import menuUI
 
 
 class MainMenuUI:
-    def __init__(self):
+    def __init__(self, menuUI):
         """## UI strings ##
         main_menu - The main menu of the program\n
         public_menu - Public user interface\n
