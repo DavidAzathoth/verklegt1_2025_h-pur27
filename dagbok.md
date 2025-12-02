@@ -80,7 +80,18 @@ Kláruðum fyrstu skil af verkefni í síðasta tíma og ætlum við núna að p
      1. Fórum yfir öðruvísi "naming conventions" fyrir forrittun á morgun(PascalCase, camelCase, snake_case... og fleira).
 - Á morgun
   1. Gera okkur tilbúna fyrir kóðunina.
-### 
+###
+## 02/12/25 - Adam, Baldvin, David, Gunnlaugur
+Byrjuðum að forrita og skipuleggja hver gerir hvað
+- Í dag
+  1. Skipta í hlutverk
+  2. Náðum að gera eitt short happy path frá ui til data og aftur upp
+- Á morgun
+  1. Halda áfram með forrit
+  2. Vinna saman á UI layer
+  3. Fara yfir kóðan
+  
+
 
 
 
