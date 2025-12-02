@@ -40,6 +40,3 @@ q. Quit"""
         if choice == "3":
             return "LOGIN"
         return "QUIT"
-
-
-MenuUI
