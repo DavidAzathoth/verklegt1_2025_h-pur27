@@ -1,10 +1,12 @@
 from LogicLayer.logicAPI import LogicAPI
-from AllMenuUI import menuUI
+#from AllMenuUI import menuUI
 
 
 class MainMenuUI:
-    def __init__(self, menuUI):
-        llapi=LogicAPI()
+    #def __init__(self, menuUI):
+    def __init__(self):
+        pass
+        self.llapi=LogicAPI()
         """## UI strings ##
         main_menu - The main menu of the program\n
         public_menu - Public user interface\n
@@ -32,11 +34,11 @@ class MainMenuUI:
 
 
 # Testing zone vv
-menu = MainMenu()
+#menu = MainMenu()
+##
 #
-
-menu.captain_handle = "Sheriff Norris"
-print(menu.captain_menu())
+#menu.captain_handle = "Sheriff Norris"
+#print(menu.captain_menu())
 
 # calls logic for findteam, which calls data to retrieve all teams, then logic will find team name and send it here.
 

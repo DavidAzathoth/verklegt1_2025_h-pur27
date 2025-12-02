@@ -1,5 +1,6 @@
 from LogicLayer.TeamLogic import Teamlogic
 from StorageLayer.storageApi import DataAPI
+from Models.ViewTeamsMenu import ShowTeams
 class MenuLogic:
     def __init__(self,dataApi: DataAPI):
         self.__dataApi = dataApi
@@ -13,3 +14,5 @@ class MenuLogic:
             teamnames.append(teamslist.get('teamName'))
         teamString="\n".join(teamnames)
         return teamString
+    def showTeams(self):
+        return ShowTeams(self.createTeamsString())
