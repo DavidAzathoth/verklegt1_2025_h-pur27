@@ -90,7 +90,8 @@ Byrjuðum að forrita og skipuleggja hver gerir hvað
   1. Halda áfram með forrit
   2. Vinna saman á UI layer
   3. Fara yfir kóðan
-###Smá hausverkur að byrja að forrita, en þegar allir voru komnir í gír þá var kóðinn fljótur að koma
+### Smá hausverkur að byrja að forrita, en þegar allir voru komnir í gír þá var kóðinn fljótur að koma
+
 
 
 
