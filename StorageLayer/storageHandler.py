@@ -7,20 +7,41 @@ class StorageHandler:
         try:
             with open(file,'r') as file:
                 csv_reader = csv.DictReader(file)
+                test=csv_reader.fieldnames
                 for row in csv_reader:
                     ret_list.append(row)
             file.close()
         except FileNotFoundError:
             return False
         return ret_list
-    def saveFile(self, csvfile: str, type: str = None):
+    def saveFile(self, addition, type):
         if type=='teams':
-            csvfile="teamID,teamName,roster,wins,losses,captainhandle"+csvfile
+            loaded=self.retrieveFile('StorageLayer/Data/testfile.csv')
             try:
+                with open('StorageLayer/Data/testfile.csv','r') as file:
+                    csvreader=csv.DictReader(file)
+                    keys=csvreader.fieldnames
+                file.close()
                 with open('StorageLayer/Data/testfile.csv','w') as file:
-                    csv.writer=file
-                
+                    #keys = loaded[0].keys()
+                    csvwriter=csv.DictWriter(file, keys)
+                    csvwriter.writeheader()
+                    csvwriter.writerows(loaded)
+                    csvwriter.writerow(addition)
             except FileNotFoundError:
                 return False
-                    
-        pass
+        if type=='tournaments':
+            loaded=self.retrieveFile('StorageLayer/Data/tournaments.csv')
+            try:
+                with open('StorageLayer/Data/tournaments.csv','r') as file:
+                    csvreader=csv.DictReader(file)
+                    keys=csvreader.fieldnames
+                file.close()
+                with open('StorageLayer/Data/tournaments.csv','w') as file:
+                    #keys = csv.DictReader(file).fieldnames()
+                    csvwriter=csv.DictWriter(file, keys)
+                    csvwriter.writeheader()
+                    csvwriter.writerows(loaded)
+                    csvwriter.writerow(addition)
+            except FileNotFoundError:
+                return False

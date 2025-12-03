@@ -3,14 +3,17 @@ from Models.Team import Team
 
 class DataAPI:
     def __init__(self):
-        self.file="Storagelayer/Data/teams.csv"
         self.__storagehandler=StorageHandler()
     def loadTeams(self):
-        ret = self.__storagehandler.retrieveFile(self.file)
+        ret = self.__storagehandler.retrieveFile("Storagelayer/Data/teams.csv")
         if ret:
             return ret
         else:
             return False
-    def saveTeams(self):
-        self.__storagehandler.saveFile(self.file)
+    def saveTeams(self, addition):
+        self.__storagehandler.saveFile(addition,'teams')
         return
+    def loadTournaments(self):
+        self.__storagehandler.retrieveFile("Storagelayer/Data/tournaments.csv")
+    def saveTournaments(self,addition):
+        self.__storagehandler.saveFile(addition,'tournaments')
