@@ -18,5 +18,5 @@ class Tournamentmanager:
 
 
     def getTournament(self):
-        return self.__dataApi.loadTournament()
+        return self.__dataApi.loadTournaments()
 
