@@ -1,7 +1,15 @@
 from StorageLayer.storageHandler import StorageHandler
+
 class DataAPI:
     def __init__(self):
-        pass
+        self.file="Storagelayer/Data/teams.csv"
+        self.__storagehandler=StorageHandler()
     def loadTeams(self):
-        #REMOVE HARDCODED FILE PATH
-        return StorageHandler().retrieveFile("StorageLayer/Data/teams.csv")
+        ret = self.__storagehandler.retrieveFile(self.file)
+        if ret:
+            return ret
+        else:
+            return False
+    def saveTeams(self):
+        self.__storagehandler.saveFile(self.file)
+        return
