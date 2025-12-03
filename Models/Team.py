@@ -6,7 +6,7 @@ class Team:
       \nroster
       \nwins
       \nlosses"""
-    def __init__(self, teamID: str, teamName: str, roster: list, wins: int, losses: int, captainHandle: str):
+    def __init__(self, teamID: str, teamName: str, roster: str, wins: int, losses: int, captainHandle: str):
         self.teamID: str = teamID
         self.teamName: str = teamName
         self.roster: list = roster.split(',')
@@ -15,7 +15,10 @@ class Team:
         self.captainHandle: str = captainHandle
 
     def createCSVString(self):
-        """Creates a row to store in a csv file"""
+        """Creates a CSV file string"""
         ret_string=f'{self.teamID},{self.teamName},"{",".join(self.roster)}",{self.wins},{self.losses},{self.captainHandle}'
         return ret_string
-    
+    def createCSVDict(self)-> dict:
+        """Creates a dictionary to store in a csv file"""
+        ret_dic={'teamID':self.teamID,'teamName':self.teamName,'roster':(",".join(self.roster)),'wins':self.wins,'losses':self.losses,'captainHandle':self.captainHandle}
+        return ret_dic
