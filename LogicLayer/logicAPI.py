@@ -22,7 +22,9 @@ class LogicAPI:
     def temp(self):
         return DataAPI.loadTeams()
     
-    
+    def gettournament(self):
+        return self.__Tournamentmanager.getTournament()
+
     def createtournament(self, input):
         templist = ["HA", "HAringurinn", "20 12 2025", "24 12 2025", "blabla@gmail.com", "1234567"]
         #TODO check tournament for duplicates
