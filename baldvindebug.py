@@ -14,5 +14,11 @@ from Models.Player import Player
 from StorageLayer.storageApi import DataAPI
 from Models.ViewTeamsMenu import ShowTeams
 
+# required_inputs=['venue: ','name: ','startdate: ','enddate: ','contactemail: ','contactperson: ']
+# for inputs in required_inputs:
+#     add=input(f'{inputs}')
+#     inputlisti.append(add)
+
+# t2=llapi.createtournament(inputlisti)
 
 print(MenuUI(LogicAPI()).show_main_menu())
