@@ -1,3 +1,4 @@
 .vscode/launch.json
 daviddebug.py
 adamdebug.py
+**/__pycache__
