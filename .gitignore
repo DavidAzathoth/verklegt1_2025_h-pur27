@@ -2,3 +2,8 @@
 daviddebug.py
 adamdebug.py
 *.pyc
+*.pyc
+/StorageLayer/__pycache__
+/LogicLayer/__pycache__
+/Models/__pycache__
+/UiLayer/__pycache__
