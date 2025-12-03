@@ -26,4 +26,3 @@ if teams:
 else:
     print('File not found')
 print(f"Invalid input. Valid options are: {". ".join(valid_lower)}")
-
