@@ -13,14 +13,19 @@ class StorageHandler:
         except FileNotFoundError:
             return False
         return ret_list
-    def saveFile(self, csvfile: str, type: str = None):
+    def saveFile(self, addition, type):
         if type=='teams':
-            csvfile="teamID,teamName,roster,wins,losses,captainhandle"+csvfile
+            loaded=self.retrieveFile('StorageLayer/Data/teams.csv')
             try:
-                with open('StorageLayer/Data/testfile.csv','w') as file:
-                    csv.writer=file
+                with open('StorageLayer/Data/teams.csv','w') as file:
+                    keys = loaded[0].keys()
+                    csvwriter=csv.DictWriter(file, keys)
+                    csvwriter.writeheader()
+                    csvwriter.writerows(loaded)
+                    csvwriter.writerow(addition)
                 
             except FileNotFoundError:
                 return False
-                
+        if type=='tournaments':
+            pass
         pass
