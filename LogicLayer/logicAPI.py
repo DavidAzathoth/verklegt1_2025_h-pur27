@@ -4,12 +4,6 @@ from LogicLayer.TournamentManager import Tournamentmanager
 
 
 class LogicAPI:
-    def __init__(self):
-        dataAPI: DataAPI = DataAPI()
-        self.Menulogic = MenuLogic(dataAPI)
-        self.Teamlogic = Teamlogic(dataAPI)
-        
-
     def __init__(self, Teamlogic: Teamlogic, DataAPI: DataAPI, Tournamentmanager: Tournamentmanager):
         self.__Teamlogic = Teamlogic
         self.__DataAPI = DataAPI
