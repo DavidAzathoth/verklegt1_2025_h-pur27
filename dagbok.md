@@ -92,16 +92,16 @@ Byrjuðum að forrita og skipuleggja hver gerir hvað
   3. Fara yfir kóðan
 ### Smá hausverkur að byrja að forrita, en þegar allir voru komnir í gír þá var kóðinn fljótur að koma
 ## 03/12/25 Adam, Baldvin, David, Gunnlaugur
-Byrjuðum að forrita use casin fyrir Create/view tournament og create/view team.  Unnum í UI, logic og data
+Í dag gerðum við 2 use cases.  Forritið getur búið til lið og tournament.  Unnum í UI, logic og data.
 - í dag
 - 1. Vinna í Main Menu UI
-  2. Byrja á að forrita use cases
+  2. Gera einhver use cases
   3. Gera models
 - Á morgun
-  1. Reyna klára use case-inn sem við byrjuðum á
+  1. Byrja á fleiri use cases
   2. Reyna að vinna saman á Main menu UI ef það er tími
-  3. Byrja á örðu use case á morgun ef það er tími
-### Þetta er allt að koma og samvinna gengur vel.  Erum með solid foundation fyrir öll layer-in.
+### Þetta er allt að koma og samvinna gengur vel.  Erum sáttir með fyrstu use case-in.
+
 
 
 
