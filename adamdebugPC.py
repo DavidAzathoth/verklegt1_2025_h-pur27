@@ -9,6 +9,7 @@ from Models.ViewTeamsMenu import ShowTeams
 
 
 
-listi = input()
+
+listi = input("tournament info")
 minnlisti = listi.split()
 LogicAPI.createtournament(minnlisti)
