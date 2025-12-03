@@ -1,9 +1,6 @@
 .vscode/launch.json
 daviddebug.py
 adamdebug.py
+adamdebugPC.py
 *.pyc
-*.pyc
-/StorageLayer/__pycache__
-/LogicLayer/__pycache__
-/Models/__pycache__
-/UiLayer/__pycache__
+__pycache__
