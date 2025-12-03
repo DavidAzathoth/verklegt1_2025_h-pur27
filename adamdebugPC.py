@@ -10,7 +10,10 @@ from Models.ViewTeamsMenu import ShowTeams
 da = DataAPI()
 logic = LogicAPI()
 tournaments = logic.gettournament()
-print(tournaments)
+#print(tournaments)
+teams = logic.showTeams()
+print(teams)
+
 
 #listi = input("tournament info")
 #minnlisti = listi.split()
