@@ -5,4 +5,3 @@ class TeamCaptain:
     def createCSVString(self):
         ret_string=(self.player).createCSVString()
         return ret_string
-        
