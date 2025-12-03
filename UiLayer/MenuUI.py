@@ -12,7 +12,7 @@ class MenuUI:
             if choice in valid_lower:
                 return choice
 
-            print(f"Invalid input. Valid options are: {". ".join(valid_lower)}")
+            print(f"Invalid input. Valid options are: {'. '.join(valid_lower)}")
 
     def show_main_menu(self):
         """Prints out the main menu"""
