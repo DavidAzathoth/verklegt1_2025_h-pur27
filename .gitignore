@@ -1,0 +1,6 @@
+.vscode/launch.json
+daviddebug.py
+adamdebug.py
+adamdebugPC.py
+*.pyc
+__pycache__

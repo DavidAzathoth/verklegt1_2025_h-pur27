@@ -80,7 +80,32 @@ Kláruðum fyrstu skil af verkefni í síðasta tíma og ætlum við núna að p
      1. Fórum yfir öðruvísi "naming conventions" fyrir forrittun á morgun(PascalCase, camelCase, snake_case... og fleira).
 - Á morgun
   1. Gera okkur tilbúna fyrir kóðunina.
-### 
+###
+## 02/12/25 - Adam, Baldvin, David, Gunnlaugur
+Byrjuðum að forrita og skipuleggja hver gerir hvað
+- Í dag
+  1. Skipta í hlutverk
+  2. Náðum að gera eitt short happy path frá ui til data og aftur upp
+- Á morgun
+  1. Halda áfram með forrit
+  2. Vinna saman á UI layer
+  3. Fara yfir kóðan
+### Smá hausverkur að byrja að forrita, en þegar allir voru komnir í gír þá var kóðinn fljótur að koma
+## 03/12/25 Adam, Baldvin, David, Gunnlaugur
+Í dag gerðum við 2 use cases.  Forritið getur búið til lið og tournament.  Unnum í UI, logic og data.
+- í dag
+- 1. Vinna í Main Menu UI
+  2. Gera einhver use cases
+  3. Gera models
+- Á morgun
+  1. Byrja á fleiri use cases
+  2. Reyna að vinna saman á Main menu UI ef það er tími
+### Þetta er allt að koma og samvinna gengur vel.  Erum sáttir með fyrstu use case-in.
+
+
+
+
+
 
 
 
