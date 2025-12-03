@@ -22,5 +22,5 @@ class StorageHandler:
                 
             except FileNotFoundError:
                 return False
-                    
+                
         pass
