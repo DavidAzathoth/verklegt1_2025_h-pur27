@@ -91,7 +91,7 @@ Byrjuðum að forrita og skipuleggja hver gerir hvað
   2. Vinna saman á UI layer
   3. Fara yfir kóðan
 ### Smá hausverkur að byrja að forrita, en þegar allir voru komnir í gír þá var kóðinn fljótur að koma
-### 03/12/25 Adam, Baldvin, David, Gunnlaugur
+## 03/12/25 Adam, Baldvin, David, Gunnlaugur
 Byrjuðum að forrita use casin fyrir Create/view tournament og create/view team.  Unnum í UI, logic og data
 - í dag
 - 1. Vinna í Main Menu UI
@@ -102,6 +102,7 @@ Byrjuðum að forrita use casin fyrir Create/view tournament og create/view team
   2. Reyna að vinna saman á Main menu UI ef það er tími
   3. Byrja á örðu use case á morgun ef það er tími
 ### Þetta er allt að koma og samvinna gengur vel.  Erum með solid foundation fyrir öll layer-in.
+
 
 
 
