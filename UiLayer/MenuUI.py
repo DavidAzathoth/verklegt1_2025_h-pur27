@@ -128,8 +128,6 @@ q. Quit""")
             return "UPDATE RESULTS"
         if choice == "b":
             return "BACK"
-        if choice == "h":
-            return "HOME"
         return "QUIT"
 
 
@@ -189,3 +187,25 @@ q. Quit""")
             return "HOME"
         return "QUIT"
     
+    def show_tournament_creation_menu(self):
+        """Shows the tournament creation menu"""
+        print("""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Tournament creation menu""")
+        self.__logic_api.createtournament([input("Venue: "), input("Name: "), input("StartDate: "), input("EndDate: "), input("ContactEmail: "), input("ContactPhone: ")])
+        
+        print("-----------------------------")
+        print("Tournament has been created!")
+        print("""
+b. Back
+h. Home
+q. Quit""")
+        
+        choice = self.__prompt_options(["b", "h", "q"])
+        if choice == "b":
+            return "BACK"
+        if choice == "h":
+            return "HOME"
+        return "QUIT"
