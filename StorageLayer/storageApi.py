@@ -14,6 +14,6 @@ class DataAPI:
         self.__storagehandler.saveFile(addition,'teams')
         return
     def loadTournaments(self):
-        self.__storagehandler.retrieveFile("Storagelayer/Data/tournaments.csv")
+        return self.__storagehandler.retrieveFile("Storagelayer/Data/tournaments.csv")
     def saveTournaments(self,addition):
         self.__storagehandler.saveFile(addition,'tournaments')

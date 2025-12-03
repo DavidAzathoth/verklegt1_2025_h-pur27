@@ -7,7 +7,7 @@ from Models.Player import Player
 from StorageLayer.storageApi import DataAPI
 from Models.ViewTeamsMenu import ShowTeams
 
-
+da=DataAPI()
 
 
 listi = input("tournament info")
