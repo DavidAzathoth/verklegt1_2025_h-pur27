@@ -7,9 +7,14 @@ from Models.Player import Player
 from StorageLayer.storageApi import DataAPI
 from Models.ViewTeamsMenu import ShowTeams
 
-da=DataAPI()
+da = DataAPI()
+logic = LogicAPI()
+tournaments = logic.gettournament()
+#print(tournaments)
+teams = logic.showTeams()
+print(teams)
 
 
-listi = input("tournament info")
-minnlisti = listi.split()
-LogicAPI.createtournament(minnlisti)
+#listi = input("tournament info")
+#minnlisti = listi.split()
+#LogicAPI.createTournament(minnlisti)
