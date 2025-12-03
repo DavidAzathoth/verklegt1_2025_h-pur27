@@ -5,7 +5,7 @@ class Tournamentmanager:
         self.__dataApi = dataApi
         pass
 
-    def createTournament(self, tournament):
+    def createTournament(self, tournament: list):
         Venue = tournament[0]
         name = tournament[1]
         startDate = tournament[2]

@@ -12,7 +12,7 @@ class Tournament:
         self.active = active
     
     def createCSVString(self):
-        ret_str: str = f'{self.venue},{self.name},{self.startDate},{self.endDate},{self.contactEmail},{self.contactPhone},"{','.join(self.matchesList)}","{','.join(self.matchHistory)}","{','.join(self.teams)}",{self.active}'
+        ret_str: str = f'{self.venue},{self.name},{self.startDate},{self.endDate},{self.contactEmail},{self.contactPhone},"{",".join(self.matchesList)}","{",".join(self.matchHistory)}","{",".join(self.teams)}",{self.active}'
         return ret_str
     def createCSVDict(self)-> dict:
         """Creates a dictionary to store in a csv file"""
