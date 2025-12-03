@@ -123,10 +123,24 @@ q. Quit""")
         return "QUIT"
 
 
-    def show_captain_menu(self):
-        """Prints out captains menu"""
+    def show_captain_no_team_menu(self):
+        """Prints out captains menu if no team"""
+        
+        print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+{captain_handle} Menu
+
+You have no current team
+
+1. Create team
+2. Back""")
+
         pass
 
 
-    def validate_handle(self):
+    def show_captain_has_team_menu(self):
+        """Prints out captain menu if has team"""
         pass
+    
