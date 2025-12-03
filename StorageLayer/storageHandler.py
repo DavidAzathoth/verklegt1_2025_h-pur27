@@ -7,6 +7,7 @@ class StorageHandler:
         try:
             with open(file,'r') as file:
                 csv_reader = csv.DictReader(file)
+                test=csv_reader.fieldnames
                 for row in csv_reader:
                     ret_list.append(row)
             file.close()
@@ -15,17 +16,32 @@ class StorageHandler:
         return ret_list
     def saveFile(self, addition, type):
         if type=='teams':
-            loaded=self.retrieveFile('StorageLayer/Data/teams.csv')
+            loaded=self.retrieveFile('StorageLayer/Data/testfile.csv')
             try:
-                with open('StorageLayer/Data/teams.csv','w') as file:
-                    keys = loaded[0].keys()
+                with open('StorageLayer/Data/testfile.csv','r') as file:
+                    csvreader=csv.DictReader(file)
+                    keys=csvreader.fieldnames
+                file.close()
+                with open('StorageLayer/Data/testfile.csv','w') as file:
+                    #keys = loaded[0].keys()
                     csvwriter=csv.DictWriter(file, keys)
                     csvwriter.writeheader()
                     csvwriter.writerows(loaded)
                     csvwriter.writerow(addition)
-                
             except FileNotFoundError:
                 return False
         if type=='tournaments':
-            pass
-        pass
+            loaded=self.retrieveFile('StorageLayer/Data/tournaments.csv')
+            try:
+                with open('StorageLayer/Data/tournaments.csv','r') as file:
+                    csvreader=csv.DictReader(file)
+                    keys=csvreader.fieldnames
+                file.close()
+                with open('StorageLayer/Data/tournaments.csv','w') as file:
+                    #keys = csv.DictReader(file).fieldnames()
+                    csvwriter=csv.DictWriter(file, keys)
+                    csvwriter.writeheader()
+                    csvwriter.writerows(loaded)
+                    csvwriter.writerow(addition)
+            except FileNotFoundError:
+                return False
