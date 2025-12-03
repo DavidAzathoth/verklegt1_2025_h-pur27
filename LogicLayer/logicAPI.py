@@ -7,7 +7,7 @@ class LogicAPI:
     def __init__(self):
         dataAPI: DataAPI = DataAPI()
         self.__Menulogic = MenuLogic(dataAPI)
-        self.Teamlogic = Teamlogic(dataAPI)
+        self.__Teamlogic = Teamlogic(dataAPI)
         
 
         return
