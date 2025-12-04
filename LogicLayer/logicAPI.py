@@ -14,7 +14,7 @@ class LogicAPI:
 
     def createteam(self, input: dict):
         return self.__Teamlogic.createteam(input)
-        #not implemented#
+        
     
     def showTeams(self):
         return self.__Menulogic.showTeams()
@@ -35,4 +35,9 @@ class LogicAPI:
         templist = ["HA", "HAringurinn", "20 12 2025", "24 12 2025", "blabla@gmail.com", "1234567"]
         #TODO check tournament for duplicates
         return self.__Tournamentmanager.createTournament(input)
+    
+    def updatecaptain(self, input):
+        return self.__Teamlogic.updateCaptain(input)
 
+    def searchforteam(self, input):
+        return self.__Teamlogic.searchForTeams(input)
