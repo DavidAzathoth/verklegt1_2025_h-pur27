@@ -1,10 +1,10 @@
 from StorageLayer.storageHandler import StorageHandler
-class TournamentData:
+class PlayerData:
     def __init__(self, storagehandler: StorageHandler):
-        self.FILE='StorageLayer/Data/tournaments.csv'
+        self.FILE = 'StorageLayer/Data/players.csv'
         self.__storagehandler = storagehandler
-    def load_tournaments(self):
+    def load_players(self):
         return self.__storagehandler.retrieveFile(self.FILE)
-    def save_tournament(self,data):
+    def savePlayer(self,data):
         self.__storagehandler.saveFile(self.FILE,data)
         return
