@@ -39,7 +39,12 @@ q. Quit
             return "TOURNAMENTS"
         if choice == "2":
             #Testing purposes#
-            print(self.__logic_api.showTeams())
+            teams=self.__logic_api.showTeams()
+            while True:
+                print(teams)
+                next=input('Press enter to see next page')
+                teams.endpage+=5
+                teams.startpage+=5
             #Testing purposes#
             return "TEAMS"
         if choice == "3":
