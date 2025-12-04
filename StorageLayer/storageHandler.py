@@ -1,8 +1,9 @@
 import csv
+from datetime import datetime
 class StorageHandler:
     def __init__(self):
         pass
-    def retrieveFile(self,file: str,type: str = None) -> list[type]:
+    def retrieveFile(self,file: str) -> list[type]:
         ret_list=[]
         try:
             with open(file,'r') as file:
@@ -15,30 +16,53 @@ class StorageHandler:
         return ret_list
 
 
-    def saveFile(self, addition, type):
-
-        if type=='teams':
-            retr_file='StorageLayer/Data/teams.csv'
-            ##
-            loaded=self.retrieveFile(retr_file)
-            
-            
-        if type=='tournaments':
-            retr_file='StorageLayer/Data/tournaments.csv'
-            loaded=self.retrieveFile('StorageLayer/Data/tournaments.csv')
-            
+    def saveFile(self,file,data):
         try:
-            with open(retr_file,'r') as file: #We need to open the file first to get fieldnames for the DictReader
-                csvreader=csv.DictReader(file)
+            with open(file,'r') as fileT: #We need to open the file first to get fieldnames for the DictReader
+                csvreader=csv.DictReader(fileT)
                 keys=csvreader.fieldnames
-            file.close()
-            with open(retr_file,'w') as file:
-                csvwriter=csv.DictWriter(file, keys)
+            fileT.close()
+
+            loaded=self.retrieveFile(file)
+            self.createBackup(file,loaded,keys)
+            loaded.append(data)
+            with open(file,'w',newline='') as fileT:
+                csvwriter=csv.DictWriter(fileT, keys)
                 csvwriter.writeheader()
                 csvwriter.writerows(loaded)
-                csvwriter.writerow(addition)
-            file.close()
+            fileT.close()
+
         except FileNotFoundError:
             return False
-   #def editFile(self, addition, removal, type):
-   #    if 
+        return
+    
+    def createBackup(self,file,backup,keys):
+        date=datetime.today().strftime('%Y-%m-%d-%H-%M')
+        suffix=file.removeprefix('StorageLayer/Data/')
+        datatype=suffix.removesuffix('.csv')
+        file='StorageLayer/Data/Backup/'+datatype+date+'.csv'
+        with open(file,'w',newline='')as file:
+            csvwriter=csv.DictWriter(file,keys)
+            csvwriter.writeheader()
+            csvwriter.writerows(backup)
+        file.close()
+
+    def editFile(self,file,data):
+        try:
+            with open(file,'r') as fileT: #We need to open the file first to get fieldnames for the DictReader
+                csvreader=csv.DictReader(fileT)
+                keys=csvreader.fieldnames
+            fileT.close()
+
+            loaded=self.retrieveFile(file)
+            self.createBackup(file,loaded,keys)
+            with open(file,'w',newline='') as fileT:
+                csvwriter=csv.DictWriter(fileT, keys)
+                csvwriter.writeheader()
+                csvwriter.writerows(data)
+            fileT.close()
+
+        except FileNotFoundError:
+            return False
+        return
+    

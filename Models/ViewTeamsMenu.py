@@ -16,5 +16,6 @@ View teams
 """)
     def nextPage(self):
         page=self.teamslist[self.startpage:self.endpage]
+        
         page=('\n').join(page)
         return page
