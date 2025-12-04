@@ -12,9 +12,8 @@ from Models.Team import Team
 from Models.TeamCaptain import TeamCaptain
 from Models.Player import Player
 from StorageLayer.storageApi import DataAPI
-from Models.ViewTeamsMenu import ShowTeams
 from UiLayer.UIMain import UIMain
-from Models.ViewTeamsMenu import ShowTeams
+
 
 # required_inputs=['venue: ','name: ','startdate: ','enddate: ','contactemail: ','contactperson: ']
 # for inputs in required_inputs:
