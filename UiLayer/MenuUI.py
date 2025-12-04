@@ -30,8 +30,8 @@ Main Menu
 3. Organizer
 4. Team Captain
 
-q. Quit"""
-        )
+q. Quit
+""")
 
         choice = self.__prompt_options(["1", "2", "3", "4", "q"])
 
@@ -50,14 +50,14 @@ q. Quit"""
         if choice == "3":
             return "ORGANIZER"
         if choice == "4":
-            captain_handle: str = input("Handle: ")
+            captain_handle: str = input("Handle: ").strip
             team = self.__logic_api.get_team_by_captain(captain_handle)
             if team is None:
                 self.show_captain_no_team_menu(captain_handle)
-                return "DOES NOT HAVE TEAM"
+                return "CAPTAIN HAS NO TEAM"
             else:
                 self.show_captain_has_team_menu(captain_handle)
-                return "HAS TEAM"
+                return "CAPTAIN HAS TEAM"
         return "QUIT"
 
 
@@ -137,8 +137,8 @@ q. Quit""")
 
 
     def show_captain_no_team_menu(self, captain_handle: str):
-        """Prints out captains menu if no team
-        returns: "CREATE TEAM", "BACK", "HOME", "QUIT" """
+        """Prints out captains menu if he has no team
+        returns: "CREATE TEAM", "BACK", "QUIT" """
         
         print(f"""
 ---------------------------
@@ -151,17 +151,14 @@ You have no current team
 1. Create team
 
 b. Back
-h. Home
 q. Quit""")
         
-        choice = self.__prompt_options(["1", "b", "h", "q"])
+        choice = self.__prompt_options(["1", "b", "q"])
 
         if choice == "1":
             return "CREATE TEAM"
         if choice == "b":
             return "BACK"
-        if choice == "h":
-            return "HOME"
         return "QUIT"
 
 
@@ -192,6 +189,7 @@ q. Quit""")
             return "HOME"
         return "QUIT"
     
+
     def show_tournament_creation_menu(self):
         """Shows the tournament creation menu"""
         print("""
@@ -214,3 +212,9 @@ q. Quit""")
         if choice == "h":
             return "HOME"
         return "QUIT"
+    
+    def show_team_creation_menu(self):
+        """Prints out team creation menu where team information is given.
+        returns: "ADD PLAYERS TO TEAM" or "CANCEL" """
+
+        print()
