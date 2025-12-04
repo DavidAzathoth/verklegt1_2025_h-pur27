@@ -14,5 +14,6 @@ class MenuLogic:
             teamnames.append(teamslist.get('teamName'))
         teamString="\n".join(teamnames)
         return teamString
+    
     def showTeams(self):
         return ShowTeams(self.createTeamsString())
