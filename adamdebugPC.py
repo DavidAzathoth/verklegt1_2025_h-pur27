@@ -11,9 +11,9 @@ da = DataAPI()
 logic = LogicAPI()
 tournaments = logic.gettournament()
 #print(tournaments)
-teams = logic.showTeams()
-print(teams)
-
+#teams = logic.showTeams()
+#print(teams)
+MenuUI(logic).show_main_menu()
 
 #listi = input("tournament info")
 #minnlisti = listi.split()
