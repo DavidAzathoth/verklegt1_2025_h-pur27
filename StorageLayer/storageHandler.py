@@ -36,11 +36,11 @@ class StorageHandler:
             return False
         return
     
-    def createBackup(self,file,backup,keys):
-        date=datetime.today().strftime('%Y-%m-%d-%H-%M')
+    def createBackup(self,file,backup,keys): 
+        date=datetime.today().strftime('%Y-%m-%d-%H-%M') #Creates a string with current time
         suffix=file.removeprefix('StorageLayer/Data/')
         datatype=suffix.removesuffix('.csv')
-        file='StorageLayer/Data/Backup/'+datatype+date+'.csv'
+        file='StorageLayer/Data/Backup/'+datatype+date+'.csv' 
         with open(file,'w',newline='')as file:
             csvwriter=csv.DictWriter(file,keys)
             csvwriter.writeheader()
@@ -49,7 +49,7 @@ class StorageHandler:
 
     def editFile(self,file,data):
         try:
-            with open(file,'r') as fileT: #We need to open the file first to get fieldnames for the DictReader
+            with open(file,'r') as fileT:
                 csvreader=csv.DictReader(fileT)
                 keys=csvreader.fieldnames
             fileT.close()
