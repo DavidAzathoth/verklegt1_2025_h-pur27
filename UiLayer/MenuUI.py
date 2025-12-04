@@ -266,5 +266,4 @@ Team captain: {captain_handle}
             if choice == "b":
                 return "BACK"
             return "QUIT"
-            
-            
+        
