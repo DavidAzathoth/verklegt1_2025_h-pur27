@@ -18,6 +18,11 @@ class LogicAPI:
     def showTeams(self):
         return self.__Menulogic.showTeams()
     
+    def getTeams(self) -> list[dict]:
+        return self.__Teamlogic.getTeams()
+
+    def get_team_by_captain(self, captain_handle: str):
+        return self.__Teamlogic.get_team_by_captain(captain_handle)
     
     def temp(self):
         return DataAPI.loadTeams()

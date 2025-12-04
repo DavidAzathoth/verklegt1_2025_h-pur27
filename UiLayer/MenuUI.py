@@ -29,6 +29,7 @@ Main Menu
 2. Teams
 3. Organizer
 4. Team Captain
+
 q. Quit"""
         )
 
@@ -44,7 +45,14 @@ q. Quit"""
         if choice == "3":
             return "ORGANIZER"
         if choice == "4":
-            return "TEAM CAPTAIN"
+            captain_handle: str = input("Handle: ")
+            team = self.__logic_api.get_team_by_captain(captain_handle)
+            if team is None:
+                self.show_captain_no_team_menu(captain_handle)
+                return "DOES NOT HAVE TEAM"
+            else:
+                self.show_captain_has_team_menu(captain_handle)
+                return "HAS TEAM"
         return "QUIT"
 
 
@@ -71,6 +79,7 @@ Teams menu
 
 1. Print list of teams
 2. Search for team
+
 b. Back
 h. Home
 q. Quit""")
@@ -102,6 +111,7 @@ Organizer Menu
 2. Add teams to tournament
 3. Generate schedule
 4. Update results
+
 b. Back
 h. Home
 q. Quit""")
@@ -118,13 +128,12 @@ q. Quit""")
             return "UPDATE RESULTS"
         if choice == "b":
             return "BACK"
-        if choice == "h":
-            return "HOME"
         return "QUIT"
 
 
-    def show_captain_no_team_menu(self):
-        """Prints out captains menu if no team"""
+    def show_captain_no_team_menu(self, captain_handle: str):
+        """Prints out captains menu if no team
+        returns: "CREATE TEAM", "BACK", "HOME", "QUIT" """
         
         print(f"""
 ---------------------------
@@ -135,12 +144,68 @@ q. Quit""")
 You have no current team
 
 1. Create team
-2. Back""")
 
-        pass
+b. Back
+h. Home
+q. Quit""")
+        
+        choice = self.__prompt_options(["1", "b", "h", "q"])
+
+        if choice == "1":
+            return "CREATE TEAM"
+        if choice == "b":
+            return "BACK"
+        if choice == "h":
+            return "HOME"
+        return "QUIT"
 
 
-    def show_captain_has_team_menu(self):
+    def show_captain_has_team_menu(self, captain_handle: str):
         """Prints out captain menu if has team"""
-        pass
+
+        print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+{captain_handle} Menu
+
+1. View my team/players
+2. Edit team information
+
+b. Back
+h. Home
+q. Quit""")
+        
+        choice = self.__prompt_options(["1", "2", "b", "h", "q"])
+        if choice == "1":
+            return "VIEW MY TEAM/PLAYERS"
+        if choice == "2":
+            return "EDIT TEAM INFORMATION"
+        if choice == "b":
+            return "BACK"
+        if choice == "h":
+            return "HOME"
+        return "QUIT"
     
+    def show_tournament_creation_menu(self):
+        """Shows the tournament creation menu"""
+        print("""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Tournament creation menu""")
+        self.__logic_api.createtournament([input("Venue: "), input("Name: "), input("StartDate: "), input("EndDate: "), input("ContactEmail: "), input("ContactPhone: ")])
+        
+        print("-----------------------------")
+        print("Tournament has been created!")
+        print("""
+b. Back
+h. Home
+q. Quit""")
+        
+        choice = self.__prompt_options(["b", "h", "q"])
+        if choice == "b":
+            return "BACK"
+        if choice == "h":
+            return "HOME"
+        return "QUIT"
