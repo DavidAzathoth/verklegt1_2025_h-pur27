@@ -2,6 +2,7 @@ from LogicLayer.TeamLogic import Teamlogic
 from StorageLayer.storageApi import DataAPI
 from LogicLayer.TournamentManager import Tournamentmanager
 from LogicLayer.menuLogic import MenuLogic
+from Models.Team import Team
 
 class LogicAPI:
     def __init__(self):
@@ -18,7 +19,7 @@ class LogicAPI:
     def showTeams(self):
         return self.__Menulogic.showTeams()
     
-    def getTeams(self) -> list[dict]:
+    def getTeams(self) -> list[Team]:
         return self.__Teamlogic.getTeams()
 
     def get_team_by_captain(self, captain_handle: str):
