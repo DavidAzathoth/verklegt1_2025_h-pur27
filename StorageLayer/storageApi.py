@@ -11,11 +11,7 @@ class DataAPI:
         self.__teamData=TeamData(self.__storagehandler)
         self.__captainData=CaptainData(self.__storagehandler)
     def loadTeams(self):
-        ret = self.__storagehandler.retrieveFile("Storagelayer/Data/teams.csv")
-        if ret:
-            return ret
-        else:
-            return False
+        return self.__teamData.load_teams()
     def saveTeam(self,data):
         self.__teamData.save_team(data)
         return
