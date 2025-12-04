@@ -12,8 +12,8 @@ from Models.Team import Team
 from Models.TeamCaptain import TeamCaptain
 from Models.Player import Player
 from StorageLayer.storageApi import DataAPI
-from Models.ViewTeamsMenu import ShowTeams
 from UiLayer.UIMain import UIMain
+
 
 # required_inputs=['venue: ','name: ','startdate: ','enddate: ','contactemail: ','contactperson: ']
 # for inputs in required_inputs:
@@ -28,3 +28,7 @@ from UiLayer.UIMain import UIMain
 run = UIMain()
 
 run.mainloop()
+
+# page = ["blabla", "asdfj", "hjiege"]
+# for num in range(len(page)):
+#     print(f'{num+1}. {page[num]}')

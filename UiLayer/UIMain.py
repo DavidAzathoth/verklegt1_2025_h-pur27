@@ -10,6 +10,8 @@ class UIMain:
     def mainloop(self) -> None:
         """Main loop of the menus"""
         while True:
+
+#============================= MAIN MENU LOOP =======================
             if self.current_screen == "MAIN MENU":
                 options: str = self.__menu_ui.show_main_menu()
                 if options == "TOURNAMENTS":
@@ -18,18 +20,26 @@ class UIMain:
                     self.current_screen = "TEAMS MENU"
                 elif options == "ORGANIZER":
                     self.current_screen = "ORGANIZER MENU"
-                elif options == "TEAM CAPTAIN":
-                    self.current_screen = "CAPTAIN MENU"
+                elif options == "CAPTAIN HAS TEAM":
+                    self.current_screen = "CAPTAIN HAS TEAM MENU"
+                elif options == "CAPTAIN HAS NO TEAM":
+                    self.current_screen = "CAPTAIN HAS NO TEAM MENU"
                 elif options == "QUIT":
                     break
 
-
+#============================= TOURNAMENTS MENU LOOP =======================
             elif self.current_screen == "TOURNAMENTS":
                 ...
 
-            elif self.current_screen == "TEAMS":
-                ...
+#============================= TEAMS MENU LOOP =======================
+            elif self.current_screen == "TEAMS MENU":
+                options: str = self.__menu_ui.show_teams_menu()
+                if options == "PRINT LIST OF TEAMS":
+                    self.current_screen = "VIEW TEAMS MENU"
+                elif options == "SEARCH FOR A TEAM":
+                    self.current_screen = ""
             
+#============================= ORGANIZER MENU LOOP =======================
             elif self.current_screen == "ORGANIZER MENU":
                 options: str = self.__menu_ui.show_organizer_menu()
                 if options == "CREATE TOURNAMENT":
@@ -45,9 +55,29 @@ class UIMain:
                 elif options == "QUIT":
                     break
 
-            elif self.current_screen == "TEAM CAPTAIN":
-                ...
+#============================= CAPTAIN NO TEAM MENU LOOP =======================
+            elif self.current_screen == "CAPTAIN HAS NO TEAM MENU":
+                options: str = self.__menu_ui.show_captain_no_team_menu()
+                if options == "1":
+                    return "CREATE TEAM MENU"
+                elif options == "BACK":
+                    self.current_screen = "MAIN MENU"
+                elif options == "QUIT":
+                    break
 
+#============================= CAPTAIN HAS TEAM MENU LOOP =======================
+            elif self.current_screen == "CAPTAIN HAS TEAM MENU":
+                options: str = self.__menu_ui.show_captain_has_team_menu()
+                if options == "VIEW MY TEAM/PLAYERS":
+                    self.current_screen = "CAPTAIN VIEW TEAM MENU"
+                if options == "EDIT TEAM INFORMATION":
+                    self.current_screen = "VIEW TEAM MENU"
+                elif options == "BACK":
+                    self.current_screen = "MAIN MENU"
+                elif options == "QUIT":
+                    break
+
+#============================= TOURNAMENT CREATION MENU LOOP =======================
             elif self.current_screen == "TOURNAMENT CREATION MENU":
                 options: str = self.__menu_ui.show_tournament_creation_menu()
                 if options == "BACK":
@@ -57,3 +87,10 @@ class UIMain:
                 elif options == "QUIT":
                     break
                 
+#============================= VIEW TEAMS MENU LOOP =======================
+            elif self.current_screen == "VIEW TEAMS MENU":
+                options: str = self.__menu_ui.show_view_teams_menu()
+                if options == "BACK":
+                    self.current_screen = "TEAMS MENU"
+                elif options ==  "QUIT":
+                    break

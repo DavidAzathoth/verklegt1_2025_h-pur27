@@ -21,12 +21,12 @@ class DataAPI:
         return
     def loadTournaments(self):
         return self.__tournamentData.load_tournament()
-        #return self.__storagehandler.retrieveFile("Storagelayer/Data/tournaments.csv")
+
     def saveTournament(self,data):
         self.__tournamentData.save_tournament(data)
         return
     def loadCaptains(self):
-        return self.__storagehandler.retrieveFile("Storagelayer/Data/captains.csv")
+        return self.__captainData.load_captains()
     
     def updateCaptains(self,data):
         self.__captainData.update_captains(data)
