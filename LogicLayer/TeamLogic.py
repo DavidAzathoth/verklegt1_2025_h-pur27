@@ -57,14 +57,12 @@ class Teamlogic:
         return self.__dataApi.saveCaptain(captainslist)
     
     def searchForTeam(self, teamname):
-        allteams = self.__dataApi.loadTeams()
-        teamlist = []
-
+        allteams = self.getTeams()
         for team in allteams:
-            if team['teamName'] == teamname:
-                teamlist.append(team)
-        return teamlist
+            if teamname in team:
+                return team
+            
 
 
-    #team_names = [t.teamName for t in teams]
+
 
