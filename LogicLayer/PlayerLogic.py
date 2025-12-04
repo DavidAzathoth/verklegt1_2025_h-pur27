@@ -1,7 +1,7 @@
 from StorageLayer.storageApi import DataAPI
 from Models.Player import Player
 
-class PlayerLogic:
+class Playerlogic:
     def __init__(self, dataApi: DataAPI):
         self.__dataApi = dataApi
         pass
@@ -16,3 +16,4 @@ class PlayerLogic:
         link = player[6]
         dateOfBirth = player[7]
         self.__dataApi.savePlayer()
+        return
