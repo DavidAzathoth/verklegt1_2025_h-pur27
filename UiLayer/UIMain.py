@@ -16,14 +16,23 @@ class UIMain:
                 options: str = self.__menu_ui.show_main_menu()
                 if options == "TOURNAMENTS":
                     self.current_screen = "LIST OF TOURNAMENTS"
+
                 elif options == "TEAMS":
                     self.current_screen = "TEAMS MENU"
+
                 elif options == "ORGANIZER":
                     self.current_screen = "ORGANIZER MENU"
-                elif options == "CAPTAIN HAS TEAM":
-                    self.current_screen = "CAPTAIN HAS TEAM MENU"
-                elif options == "CAPTAIN HAS NO TEAM":
+
+                elif isinstance(options, tuple) and options[0] == "CAPTAIN HAS NO TEAM":
+                    captain_handle = options[1]
+                    self.captain_handle = captain_handle
                     self.current_screen = "CAPTAIN HAS NO TEAM MENU"
+
+                elif isinstance(options, tuple) and options[0] == "CAPTAIN HAS TEAM":
+                    captain_handle = options[1]
+                    self.captain_handle = captain_handle
+                    self.current_screen = "CAPTAIN HAS TEAM MENU"
+
                 elif options == "QUIT":
                     break
 
@@ -55,10 +64,10 @@ class UIMain:
                 elif options == "QUIT":
                     break
 
-#============================= CAPTAIN NO TEAM MENU LOOP =======================
+#============================= CAPTAIN HAS NO TEAM MENU LOOP =======================
             elif self.current_screen == "CAPTAIN HAS NO TEAM MENU":
-                options: str = self.__menu_ui.show_captain_no_team_menu()
-                if options == "1":
+                options: str = self.__menu_ui.show_captain_no_team_menu(self.captain_handle)
+                if options == "CREATE TEAM":
                     return "CREATE TEAM MENU"
                 elif options == "BACK":
                     self.current_screen = "MAIN MENU"
@@ -67,7 +76,7 @@ class UIMain:
 
 #============================= CAPTAIN HAS TEAM MENU LOOP =======================
             elif self.current_screen == "CAPTAIN HAS TEAM MENU":
-                options: str = self.__menu_ui.show_captain_has_team_menu()
+                options: str = self.__menu_ui.show_captain_has_team_menu(self.captain_handle)
                 if options == "VIEW MY TEAM/PLAYERS":
                     self.current_screen = "CAPTAIN VIEW TEAM MENU"
                 if options == "EDIT TEAM INFORMATION":
@@ -86,11 +95,32 @@ class UIMain:
                     self.current_screen = "MAIN MENU"
                 elif options == "QUIT":
                     break
+
+#============================= TOURNAMENT CREATION MENU LOOP =======================
+            elif self.current_screen == "CREATE TEAM MENU":
+                options: str = self.__menu_ui.show_team_creation_menu(self.captain_handle)
                 
 #============================= VIEW TEAMS MENU LOOP =======================
             elif self.current_screen == "VIEW TEAMS MENU":
                 options: str = self.__menu_ui.show_view_teams_menu()
-                if options == "BACK":
+
+                if isinstance(options, tuple) and options[0] == "TEAM INFO":
+                    selected_team = options[1]
+                    self.selected_team = selected_team
+                    self.current_screen = "TEAM INFO MENU"
+
+                elif options == "BACK":
                     self.current_screen = "TEAMS MENU"
+
+                elif options ==  "QUIT":
+                    break
+
+#============================= VIEW TEAM INFO LOOP =======================
+            elif self.current_screen == "TEAM INFO MENU":
+                options: str = self.__menu_ui.show_team_info(self.selected_team)
+                if options == "BACK":
+                    self.current_screen = "VIEW TEAMS MENU"
+                elif options == "HOME":
+                    self.current_screen = "MAIN MENU"
                 elif options ==  "QUIT":
                     break

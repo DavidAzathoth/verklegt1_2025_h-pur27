@@ -3,6 +3,7 @@ from StorageLayer.storageApi import DataAPI
 from LogicLayer.TournamentManager import Tournamentmanager
 from LogicLayer.menuLogic import MenuLogic
 from Models.Team import Team
+from LogicLayer.PlayerLogic import Playerlogic
 
 class LogicAPI:
     def __init__(self):
@@ -10,6 +11,7 @@ class LogicAPI:
         self.__Teamlogic = Teamlogic(__dataAPI)
         self.__Menulogic = MenuLogic(__dataAPI)
         self.__Tournamentmanager = Tournamentmanager(__dataAPI)
+        self.__Playerlogic = Playerlogic(__dataAPI)
         return
 
     def createteam(self, input: dict):
@@ -41,3 +43,11 @@ class LogicAPI:
 
     def searchforteam(self, input):
         return self.__Teamlogic.searchForTeams(input)
+    
+    def createPlayer(self, input):
+        return self.__Playerlogic.createplayer(input)
+    
+    def getPlayers(self):
+        return self.__Playerlogic.getplayers()
+    
+

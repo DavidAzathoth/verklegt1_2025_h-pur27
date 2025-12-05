@@ -6,13 +6,14 @@ class Team:
       \nroster
       \nwins
       \nlosses"""
-    def __init__(self, teamID: str, teamName: str, roster: str, wins: int, losses: int, captainHandle: str):
+    def __init__(self, teamID: str, teamName: str, roster: str, wins: int, losses: int, captainHandle: str, playerinstances:list = []):
         self.teamID: str = teamID
         self.teamName: str = teamName
         self.roster: list = roster.split(',')
         self.wins: int = wins
         self.losses: int = losses
         self.captainHandle: str = captainHandle
+        self.playerinstances = playerinstances
 
     def createCSVString(self):
         """Creates a CSV file string"""

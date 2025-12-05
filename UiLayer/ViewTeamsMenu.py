@@ -30,3 +30,9 @@ View teams menu
         if self.startpage >= len(self.teams):
             self.startpage = 0
             self.endpage = 5
+
+    def get_team_by_number(self, number: int) -> str | None:
+        teams_list: list = self.teams[self.startpage:self.endpage]
+        if 1 <= number <= len(teams_list):
+            return teams_list[number - 1]
+        return None
