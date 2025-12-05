@@ -13,8 +13,10 @@ class Tournamentmanager:
         return self.__logichandler.createModel(self.__tournamentmodel,tournament)
 
 
-    def getTournament(self):
-        return self.__dataApi.loadTournaments()
+    def getTournament(self) -> list[Tournament]:
+        raw_list: list[dict] = self.__dataApi.loadTournaments()
+        tournaments: list[Tournament] = self.__logichandler.loadmodels(self.__tournamentmodel, raw_list)
+        return tournaments
     
     def saveTournament(self,tournament: Tournament):
         self.__dataApi.saveTournament(tournament.createCSVDict())

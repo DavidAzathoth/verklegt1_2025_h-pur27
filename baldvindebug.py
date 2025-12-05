@@ -15,16 +15,21 @@ from StorageLayer.storageApi import DataAPI
 from UiLayer.UIMain import UIMain
 from LogicLayer.menuLogic import MenuLogic
 
-# required_inputs=['venue: ','name: ','startdate: ','enddate: ','contactemail: ','contactperson: ']
-# for inputs in required_inputs:
-#     add=input(f'{inputs}')
-#     inputlisti.append(add)
 
-# t2=llapi.createtournament(inputlisti)
-
-
-# print(MenuUI(LogicAPI()).show_main_menu())
-
+"""Main loop test"""
 run = UIMain()
 
 run.mainloop()
+
+
+"""Test for Email verification"""
+# data_api = DataAPI()
+# menu_logic = MenuLogic(data_api)
+# run: tuple = menu_logic.emailverification(input("Email: "))
+
+# if run[1] == True:
+#     print(run[0])
+# else:
+#     while run[1] == False:
+#         print(run[0])
+#         run = menu_logic.emailverification(input("Email: "))
