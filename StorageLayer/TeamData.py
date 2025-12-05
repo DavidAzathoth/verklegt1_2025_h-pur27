@@ -8,3 +8,6 @@ class TeamData:
     def save_team(self,data):
         self.__storagehandler.saveFile(self.FILE,data)
         return
+    def update_team(self, data: list):
+        self.__storagehandler.editFile(self.FILE, data)
+        return

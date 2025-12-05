@@ -2,7 +2,8 @@ class Player:
     """## Attributes for Player:
       \nteamID 
       \nplayerGamertag 
-      \nfullname phonenumber 
+      \nfullname 
+      \nphoneNumber 
       \nemailAddress 
       \naddress 
       \nlink 
