@@ -1,15 +1,35 @@
-from UiLayer.MenuUI import MenuUI
+#from UiLayer.MenuUI import MenuUI
+
 from LogicLayer.logicAPI import LogicAPI
-from StorageLayer.storageHandler import StorageHandler
-from Models.Team import Team
-from Models.TeamCaptain import TeamCaptain
-from Models.Player import Player
+from LogicLayer.PlayerLogic import Playerlogic
+#from StorageLayer.storageHandler import StorageHandler
+#from Models.Team import Team
+#from Models.TeamCaptain import TeamCaptain
+#from Models.Player import Player
 from StorageLayer.storageApi import DataAPI
-from Models.ViewTeamsMenu import ShowTeams
+#from Models.ViewTeamsMenu import ShowTeams
 
 da = DataAPI()
-logic = LogicAPI()
-tournaments = logic.gettournament()
+llapi=LogicAPI()
+pllogic = Playerlogic(da)
+inputlisti=['1','2','3',4,5,'6']
+#print(llapi.createteam(inputlisti).createCSVDict())
+teams=llapi.getTeams()
+team=teams[1]
+print(team.playerinstances)
+for player in team.playerinstances:
+    print(player.teamID)
+print(team.roster)
+#teams=llapi.getTeams()
+#for team in teams:
+#    print(team.teamID)
+#testlist=['1','2','3','4','5','6','dontforgetaboutme','lol']
+#p1=pllogic.createplayer(testlist)
+#pllogic.saveplayer(p1)
+#print(pllogic.loadplayers())
+
+
+#tournaments = logic.gettournament()
 #print(tournaments)
 #teams = logic.showTeams()
 #print(teams)
@@ -46,3 +66,7 @@ tournaments = logic.gettournament()
 
 #cap = input("Captain Handle")
 #logic.updatecaptain(cap)
+#def printnumbers(a,b,c,d,e,f):
+#    print(f,e,d,c,b,a)
+#listi=[1,2,3,4,5,6]
+#printnumbers(*listi)

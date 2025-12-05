@@ -47,4 +47,7 @@ class LogicAPI:
     def createPlayer(self, input):
         return self.__Playerlogic.createplayer(input)
     
+    def getPlayers(self):
+        return self.__Playerlogic.getplayers()
+    
 
