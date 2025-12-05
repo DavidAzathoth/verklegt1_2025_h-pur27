@@ -19,3 +19,5 @@ class Tournament:
         ret_dic={'venue':self.venue,'name':self.name,'startDate':self.startDate,'endDate':self.endDate,'contactEmail':self.contactEmail,'contactPhone':self.contactPhone,'matchesList':",".join(self.matchesList),'matchHistory':",".join(self.matchHistory),'teams':",".join(self.teams),'active':self.active}
         return ret_dic
     
+    
+    
