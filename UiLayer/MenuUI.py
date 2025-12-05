@@ -231,7 +231,7 @@ Tournament creation menu
             while enddate(ymd) < startdate(ymd):
                 print("Please enter a valid enddate")
                 enddate = datetime(year, month, day)
-        contactemail = self.email_verification(input("ContactEmail"))
+        contactemail = self.__logic_api.emailVerification(input("ContactEmail: "))
         contactphone = int(input("ContactPhone: "))
 
         self.__logic_api.createtournament([venue, name, startdate, enddate, contactemail, contactphone ])
