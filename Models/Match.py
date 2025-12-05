@@ -9,3 +9,4 @@ class Match:
     def createCSVDict(self):
         ret_dic={'matchID':self.matchID,'team_A':self.team_A,'team_B':self.team_B,'matchWinner':self.matchWinner,'playerScore':self.playerScore,'matchPlayed':self.matchPlayed}
         return ret_dic
+

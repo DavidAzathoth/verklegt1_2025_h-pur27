@@ -22,7 +22,7 @@ class DataAPI:
         return
     
     def loadTournaments(self):
-        return self.__tournamentData.load_tournament()
+        return self.__tournamentData.load_tournaments()
 
     def saveTournament(self,data):
         self.__tournamentData.save_tournament(data)
