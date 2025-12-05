@@ -13,7 +13,7 @@ class Tournamentmanager:
         contactEmail = tournament[4]
         contactPhone = tournament[5]
         tournament = Tournament(Venue, name, startDate, endDate, contactEmail, contactPhone)
-        self.__dataApi.saveTournaments(tournament.createCSVDict())
+        self.__dataApi.saveTournament(tournament.createCSVDict())
         return tournament
 
 
