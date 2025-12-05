@@ -19,16 +19,16 @@ class Teamlogic:
             team.playerinstances=players
         return teamlist
 
-
     def get_team_by_captain(self, captain_handle: str):
         teams = self.getTeams()
         for t in teams:
             if t.captainHandle.lower().strip() == captain_handle.lower().strip():
+                players=self.getTeamMembers(t)
+                t.playerinstances=players
                 return t
         return None
     
     def createteam(self, team: list):
-        
         return self.__logichandler.createModel(self.__teammodel,team)
 
     
@@ -58,6 +58,10 @@ class Teamlogic:
             if player.teamID == team.teamID:
                 ret_list.append(player)
         return ret_list
+    
+    def editTeam(self, ):
+        teams = self.__dataApi.loadTeams
+        return 
             
     
 
