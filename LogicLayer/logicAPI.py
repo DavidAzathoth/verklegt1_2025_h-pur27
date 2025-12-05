@@ -2,6 +2,7 @@ from LogicLayer.TeamLogic import Teamlogic
 from StorageLayer.storageApi import DataAPI
 from LogicLayer.TournamentManager import Tournamentmanager
 from LogicLayer.menuLogic import MenuLogic
+from LogicLayer.BracketGenerator import BracketGenerator
 from Models.Tournament import Tournament
 from Models.Team import Team
 from Models.Player import Player
@@ -14,6 +15,7 @@ class LogicAPI:
         self.__Menulogic = MenuLogic(__dataAPI)
         self.__Tournamentmanager = Tournamentmanager(__dataAPI)
         self.__Playerlogic = Playerlogic(__dataAPI)
+        self.__bracketgenerator = BracketGenerator()
         return
 
     def createteam(self, input: dict):
@@ -86,3 +88,5 @@ class LogicAPI:
         """Updates win or losses of team, options are updatewins and updatelosses"""
         self.__Teamlogic.updateTeam(None, option, team)
         return
+    def generatebracket(self, teams):
+        return self.__bracketgenerator.generatebracket(teams)
