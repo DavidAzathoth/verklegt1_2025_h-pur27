@@ -13,9 +13,7 @@ from Models.TeamCaptain import TeamCaptain
 from Models.Player import Player
 from StorageLayer.storageApi import DataAPI
 from UiLayer.UIMain import UIMain
-
-da=DataAPI()
-dd=LogicAPI()
+from LogicLayer.menuLogic import MenuLogic
 
 # required_inputs=['venue: ','name: ','startdate: ','enddate: ','contactemail: ','contactperson: ']
 # for inputs in required_inputs:
@@ -27,12 +25,10 @@ dd=LogicAPI()
 
 # print(MenuUI(LogicAPI()).show_main_menu())
 
-#run = UIMain()
-#
-#run.mainloop()
+# run = UIMain()
 
-# page = ["blabla", "asdfj", "hjiege"]
-# for num in range(len(page)):
-#     print(f'{num+1}. {page[num]}')
+# run.mainloop()
 
-print(dd.emailVerification('@hotmail.com'))
+run = LogicAPI()
+
+print(run.emailVerification(input("Email: ")))
