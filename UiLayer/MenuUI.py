@@ -1,5 +1,6 @@
 from LogicLayer.logicAPI import LogicAPI
 from UiLayer.ViewTeamsMenu import ShowTeams
+from datetime import datetime
 
 class MenuUI:
     def __init__(self, logic_api: LogicAPI):
@@ -55,6 +56,35 @@ q. Quit
         return "QUIT"
 
 
+    def set_start_end_date(self):
+        while True:
+            try:
+                startdate = datetime(
+                    int(input("Start date year: ")),
+                    int(input("Start date month: ")),
+                    int(input("Start date day: "))
+                    )
+                
+                enddate = datetime(
+                    int(input("End date year: ")),
+                    int(input("End date month: ")),
+                    int(input("End date day: "))
+                    )
+                
+            except ValueError:
+                print("please enter valid numbers for year, month, day")
+                continue
+
+            if enddate < startdate:
+                print("ERROR: End date must be after start date")
+                continue
+
+            print(f"Startdate: {startdate.date()} \nEnd date: {enddate.date()}")
+
+            return startdate, enddate
+
+        
+        
     def show_tournaments_menu(self):
         #TODO GET TOURNAMENTS
         """Prints list of tournaments
@@ -204,8 +234,26 @@ Tournament creation menu
 """)
 #===========================================================
         
+        venue: str = input("Venue: ").strip()
+        name: str = input("Name: ").strip()
+        startdate, enddate = self.set_start_end_date()
+        contactemail = self.__logic_api.emailVerification(input("ContactEmail: "))
+        contactphone = int(input("ContactPhone: "))
+
         # Asks to input informattion to create tournament
-        self.__logic_api.createtournament([input("Venue: "), input("Name: "), input("StartDate: "), input("EndDate: "), input("ContactEmail: "), input("ContactPhone: ")])
+        tournament = self.__logic_api.createtournament([venue, name, startdate.date(), enddate.date(), contactemail, contactphone ])
+
+        #self.__logic_api.saveTournament(tournament) <--- saves tournament
+        print("""
+
+1. Confirm creation
+c. Cancel
+""")
+        choice = self.__prompt_options(["1", "c"])
+        if choice == "c":
+            return "BACK"
+        if choice == "1":
+            self.__logic_api.saveTournament(tournament)
 
 #=============== TOURNAMENT HAS BEEN CREATED ==============
         print("""

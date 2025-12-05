@@ -1,5 +1,5 @@
 teamID,teamName,roster,wins,losses,captainHandle
-A1,FURIA,"FalleN,yuurih,YEKINDAR,KSCERATO,moloday,Testplayer",1,0,FalleN
+A1,FURIA,"FalleN,yuurih,YEKINDAR,KSCERATO,moloday,Testplayer",0,0,FalleN
 A2,Vitality,"apEX,ropz,zywOo,flameZ,mezii",0,0,apEX
 A3,Falcons,"NiKo,TeSeS,m0NESY,kyxsan,kyousuke",0,0,NiKo
 A4,MOUZ,"Brollan,torzsi,Spinx,jimpphat,xertioN",0,0,Brollan
@@ -29,4 +29,3 @@ C9,fnatic,"KRIMZ,blameF,fEAR,jambo,jackasmo",0,0,KRIMZ
 32,testteam,"['player1', 'player2', 'player3']",0,0,player1
 32,testteam,"player1,player2,player3",0,0,player1
 A12,FURIA2,"FalleN,yuurih,YEKINDAR,KSCERATO,moloday",0,0,FalleN
-99,99GANG,,102,100,captainhook
