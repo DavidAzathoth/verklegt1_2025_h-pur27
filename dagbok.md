@@ -94,13 +94,21 @@ Byrjuðum að forrita og skipuleggja hver gerir hvað
 ## 03/12/25 Adam, Baldvin, David, Gunnlaugur
 Í dag gerðum við 2 use cases.  Forritið getur búið til lið og tournament.  Unnum í UI, logic og data.
 - í dag
-- 1. Vinna í Main Menu UI
+  1. Vinna í Main Menu UI
   2. Gera einhver use cases
   3. Gera models
 - Á morgun
   1. Byrja á fleiri use cases
   2. Reyna að vinna saman á Main menu UI ef það er tími
 ### Þetta er allt að koma og samvinna gengur vel.  Erum sáttir með fyrstu use case-in.
+## 04/12/25 Adam, Baldvin, David
+Í dag gerðum við bracket generator í Logic layerinum og héldum áfram með UI
+- Í dag
+ 1. Byrja að gera logic fyrir bracket generator (Adam, Davíd)
+ 2. Klára Create Tournament og team í UI (Baldvin)
+- Á morgn
+1. Taka smá pásu svo við fáum ekki burnout
+### Gengur vel en erum alveg að fara vinna yfir okkur, ætlum að taka smá pásu á morgun.
 
 
 
