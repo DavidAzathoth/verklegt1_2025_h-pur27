@@ -8,3 +8,6 @@ class PlayerData:
     def savePlayer(self,data):
         self.__storagehandler.saveFile(self.FILE,data)
         return
+    def updatePlayers(self,data):
+        self.__storagehandler.editFile(self.FILE,data)
+        return
