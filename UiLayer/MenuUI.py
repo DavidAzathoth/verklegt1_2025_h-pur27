@@ -205,9 +205,26 @@ Tournament creation menu
 #===========================================================
         
         # Asks to input informattion to create tournament
-        self.__logic_api.createtournament([input("Venue: "), input("Name: "), input("StartDate: "), input("EndDate: "), input("ContactEmail: "), input("ContactPhone: ")])
+        tournament=self.__logic_api.createtournament([input("Venue: "), input("Name: "), input("\nStartDate: "), input("EndDate: "), input("\nContactEmail: "), input("ContactPhone: ")])
+        #self.__logic_api.saveTournament(tournament) <--- saves tournament
+
+        print("""
+
+1. Confirm creation
+2. Cancel
+""")
+        choice = self.__prompt_options(["1", "2"])
+        if choice == "2":
+            return "BACK"
+        if choice == "1":
+            self.__logic_api.saveTournament(tournament)
+        
 
 #=============== TOURNAMENT HAS BEEN CREATED ==============
+        
+        
+        
+
         print("""
               
 -----------------------------
