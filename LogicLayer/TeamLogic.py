@@ -28,9 +28,9 @@ class Teamlogic:
 
     def get_team_by_captain(self, captain_handle: str):
         teams = self.getTeams()
-        for team in teams:
-            if team.get("captainHandle") == captain_handle:
-                return team
+        for t in teams:
+            if t.captainHandle.lower().strip() == captain_handle.lower().strip():
+                return t
         return None
     
     def createteam(self, team: list):

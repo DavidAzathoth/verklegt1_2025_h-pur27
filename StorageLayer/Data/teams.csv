@@ -1,31 +1,31 @@
 teamID,teamName,roster,wins,losses,captainHandle
-A1,FURIA,"FalleN,yuurih,YEKINDAR,KSCERATO,moloday",,,
-A2,Vitality,"apEX,ropz,zywOo,flameZ,mezii",,,
-A3,Falcons,"NiKo,TeSeS,m0NESY,kyxsan,kyousuke",,,
-A4,MOUZ,"Brollan,torzsi,Spinx,jimpphat,xertioN",,,
-A5,The MongolZ,"bLitz,Techno,mzinho,910",,,
-A6,Spirit,"chopper,sh1ro,tN1R,donk,zweih",,,
-A7,Natus Vincere,"Aleksib,iM,b1t,w0nderful,makazze",,,
-A8,G2,"huNter-,malbsMd,SunPayus,HeavyGod,MATYS",,,
-A9,Aurora,"MAJ3R,XANTARES,woxic,Wicadia,jottAAA",,,
-B1,paiN,"dgt,biguzera,dav1deuS,nqz,snow",,,
-B2,Astralis,"device,Magisk,HooXi,jabbi,Staehr",,,
-B3,FaZe,"karrigan,frozen,Twistzz,broky,jcobbb",,,
-B4,3DMAX,"bodyy,Maka,Lucky,Ex3rcice,Graviti",,,
-B5,Legacy,"dumau,latto,n1ssim,lux,saadzin",,,
-B6,Liquid,"NAF,EliGE,NertZ,siuhy,ultimate",,,
-B7,B8,"headtr1ck,alex666,npl,kensizor,esenthial",,,
-B8,GamerLegion,"REZ,ztr,Tauson,PR,hypex",,,
-B9,HEROIC,"xfl0ud,nilo,Chr1zN,yxngsxr,Alkaren",,,
-C1,Virtus.rpo,"FL1T,Perfecto,fame,b1st,tO0RO",,,
-C2,SAW,"MUTiRiS,story,Ag1l,aragornN,krazy",,,
-C3,Passion UA,"JT,hallzerk,Grim,Kvem,nicx",,,
-C4,M80,"slaxz-,Swisher,HexT,s1n,Lake",,,
-C5,Lynn Vision,"Westmelon,z4kr,Starry,EmiliaQAQ,C4LLM3SU3",,,
-C6,FUT,"dem0n,lauNX,Krabeni,cmtry,dziugss",,,
-C7,PARIVISION,"Jame,BELCHONOKK,AW,xiELO,nota",,,
-C8,Ninjas in Pyjamas,"Snappi,sjuush,r1nkle,ewjerkz,xKacpersky",,,
-C9,fnatic,"KRIMZ,blameF,fEAR,jambo,jackasmo",,,
-32,testteam,"['player1', 'player2', 'player3']",,,
-32,testteam,"player1,player2,player3",,,
-A12,FURIA2,"FalleN,yuurih,YEKINDAR,KSCERATO,moloday",,,
+A1,FURIA,"FalleN,yuurih,YEKINDAR,KSCERATO,moloday",,,FalleN
+A2,Vitality,"apEX,ropz,zywOo,flameZ,mezii",,,apEX
+A3,Falcons,"NiKo,TeSeS,m0NESY,kyxsan,kyousuke",,,NiKo
+A4,MOUZ,"Brollan,torzsi,Spinx,jimpphat,xertioN",,,Brollan
+A5,The MongolZ,"bLitz,Techno,mzinho,910",,,bLitz
+A6,Spirit,"chopper,sh1ro,tN1R,donk,zweih",,,chopper
+A7,Natus Vincere,"Aleksib,iM,b1t,w0nderful,makazze",,,Aleksib
+A8,G2,"huNter-,malbsMd,SunPayus,HeavyGod,MATYS",,,huNter-
+A9,Aurora,"MAJ3R,XANTARES,woxic,Wicadia,jottAAA",,,MAJ3R
+B1,paiN,"dgt,biguzera,dav1deuS,nqz,snow",,,dgt
+B2,Astralis,"device,Magisk,HooXi,jabbi,Staehr",,,device
+B3,FaZe,"karrigan,frozen,Twistzz,broky,jcobbb",,,karrigan
+B4,3DMAX,"bodyy,Maka,Lucky,Ex3rcice,Graviti",,,bodyy
+B5,Legacy,"dumau,latto,n1ssim,lux,saadzin",,,dumau
+B6,Liquid,"NAF,EliGE,NertZ,siuhy,ultimate",,,NAF
+B7,B8,"headtr1ck,alex666,npl,kensizor,esenthial",,,headtr1ck
+B8,GamerLegion,"REZ,ztr,Tauson,PR,hypex",,,REZ
+B9,HEROIC,"xfl0ud,nilo,Chr1zN,yxngsxr,Alkaren",,,xfl0ud
+C1,Virtus.rpo,"FL1T,Perfecto,fame,b1st,tO0RO",,,FL1T
+C2,SAW,"MUTiRiS,story,Ag1l,aragornN,krazy",,,MUTiRiS
+C3,Passion UA,"JT,hallzerk,Grim,Kvem,nicx",,,JT
+C4,M80,"slaxz-,Swisher,HexT,s1n,Lake",,,slaxz-
+C5,Lynn Vision,"Westmelon,z4kr,Starry,EmiliaQAQ,C4LLM3SU3",,,Westmelon
+C6,FUT,"dem0n,lauNX,Krabeni,cmtry,dziugss",,,dem0n
+C7,PARIVISION,"Jame,BELCHONOKK,AW,xiELO,nota",,,Jame
+C8,Ninjas in Pyjamas,"Snappi,sjuush,r1nkle,ewjerkz,xKacpersky",,,Snappi
+C9,fnatic,"KRIMZ,blameF,fEAR,jambo,jackasmo",,,KRIMZ
+32,testteam,"['player1', 'player2', 'player3']",,,player1
+32,testteam,"player1,player2,player3",,,player1
+A12,FURIA2,"FalleN,yuurih,YEKINDAR,KSCERATO,moloday",,,FalleN
