@@ -25,10 +25,6 @@ from LogicLayer.menuLogic import MenuLogic
 
 # print(MenuUI(LogicAPI()).show_main_menu())
 
-# run = UIMain()
+run = UIMain()
 
-# run.mainloop()
-
-run = LogicAPI()
-
-print(run.emailVerification(input("Email: ")))
+run.mainloop()
