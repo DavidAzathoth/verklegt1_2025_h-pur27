@@ -19,7 +19,7 @@ class Playerlogic:
         playerlist=self.__logichandler.loadmodels(self.__playermodel,raw_data)
         return playerlist
     
-    def saveplayer(self,player: object):
+    def saveplayer(self, player: Player):
         self.__dataApi.savePlayer(player.createCSVDict())
         return
 

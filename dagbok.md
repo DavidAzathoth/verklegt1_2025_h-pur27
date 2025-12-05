@@ -101,6 +101,16 @@ Byrjuðum að forrita og skipuleggja hver gerir hvað
   1. Byrja á fleiri use cases
   2. Reyna að vinna saman á Main menu UI ef það er tími
 ### Þetta er allt að koma og samvinna gengur vel.  Erum sáttir með fyrstu use case-in.
+## 04/12/25 Adam, Baldvin, David
+í dag héldum við áfram að laga og vinna í Logic og UI.
+- Í dag
+  1. Bæta við captain menu og teams menu (Baldvin)
+  2. Búa til backup kerfi (David)
+  3. Logic fyrir klassa (Adam)
+- Á morgun
+  1. Halda áfram að vinna saman á logic
+  2. Halda áfram að vinna í UI
+### Misstum því miður annan meðlim en samvinna gengur vel og erum bjartsýnir.
 
 
 
