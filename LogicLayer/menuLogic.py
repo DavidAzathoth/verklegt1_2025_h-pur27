@@ -15,7 +15,7 @@ class MenuLogic:
         teamString="\n".join(teamnames)
         return teamString
 
-    def emailVerification(self, email):
+    def emailverification(self, email: str):
         atcount=0
         atposition=None
         extradotpos=None
@@ -30,7 +30,7 @@ class MenuLogic:
             if '@'==x:
                 atcount+=1
                 atposition=i
-                #print('-'i+'^')
+                #print('-'*i+'^')
             if '.'==x:
                 if email[i+1]=='@':
                     extradotpos=i
@@ -47,7 +47,7 @@ class MenuLogic:
                 return f"{email}\n{' ' * (atposition+1)}^--there is nothing after the @ symbol."
             elif email.find('.')==0:
                 return 'Email address starts with a dot.'
-            elif bool(email.find('.@') + 1)==True:
+            elif bool(email.find('.@')+1)==True:
                 return f"{email}\n{' ' * extradotpos}^--there is an extra dot here."
             elif cons_dots==True:
                 return f"{email}\n{' ' * cons_dots_pos}^--there are consecutive dots here."
