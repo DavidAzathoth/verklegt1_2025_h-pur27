@@ -25,7 +25,8 @@ class MenuLogic:
         #print(email.find('a'))
         for i, x in enumerate(email):
             if '@'==x and atcount>0:
-                return f"{email}\n{' ' * i}^--there is an extra @ symbol here."
+                ret_string = f"{email}\n{' ' * i}^--there is an extra @ symbol here."
+                allgood=False
 
             if '@'==x:
                 atcount+=1
@@ -38,20 +39,28 @@ class MenuLogic:
                     cons_dots_pos=i
                     cons_dots=True
 
-        if allgood==True:
-            if email.find('@') ==0:
-                return 'There is nothing before the @ symbol.'
-            elif atcount==0:
-                return '@ symbol is missing.'
-            elif email[::-1].find('@')==0:
-                return f"{email}\n{' ' * (atposition+1)}^--there is nothing after the @ symbol."
-            elif email.find('.')==0:
-                return 'Email address starts with a dot.'
-            elif bool(email.find('.@')+1)==True:
-                return f"{email}\n{' ' * extradotpos}^--there is an extra dot here."
-            elif cons_dots==True:
-                return f"{email}\n{' ' * cons_dots_pos}^--there are consecutive dots here."
-            elif email[::-1].find('@')<email[::-1].find('.') or email.find('.')==-1:
-                return 'Top-level-domain is missing.'
-            elif allgood==True:
-                return 'All good.'
+ 
+        if email.find('@') ==0:
+            ret_string='There is nothing before the @ symbol.'
+            allgood=False
+        elif atcount==0 and allgood:
+            ret_string = '@ symbol is missing.'
+            allgood=False
+        elif email[::-1].find('@')==0 and allgood:
+            ret_string = f"{email}\n{' ' * (atposition+1)}^--there is nothing after the @ symbol."
+            allgood=False
+        elif email.find('.')==0 and allgood:
+            ret_string = 'Email address starts with a dot.'
+            allgood=False
+        elif bool(email.find('.@')+1)==True and allgood:
+            ret_string = f"{email}\n{' ' * extradotpos}^--there is an extra dot here."
+            allgood=False
+        elif cons_dots==True and allgood:
+            ret_string = f"{email}\n{' ' * cons_dots_pos}^--there are consecutive dots here."
+            allgood=False
+        elif email[::-1].find('@')<email[::-1].find('.') or email.find('.')==-1 and allgood:
+            ret_string = 'Top-level-domain is missing.'
+            allgood=False
+        if allgood:
+            ret_string=email
+        return ret_string, allgood

@@ -1,10 +1,10 @@
 class logicHandler:
     def __init__(self):
         pass
-    def createModel(self,model,data: list):
+    def createModel(self,model: object,data: list):
         return model(*data)
     
-    def loadmodels(self,model,data):
+    def loadmodels(self,model: object,data):
         itemlist=[]
         for item in data:
             values=item.values()

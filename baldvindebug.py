@@ -35,4 +35,10 @@ dd=LogicAPI()
 # for num in range(len(page)):
 #     print(f'{num+1}. {page[num]}')
 
-print(dd.emailVerification('@hotmail.com'))
+print(dd.emailVerification('david@hotmail.com'))
+
+team: Team = (dd.get_team_by_captain('FalleN'))
+players: list[Player] = team.playerinstances
+for player in players:
+    print(player.playerGamertag)
+print(team.captainHandle)

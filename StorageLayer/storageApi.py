@@ -47,3 +47,5 @@ class DataAPI:
     def saveMatch(self, data):
         self.__matchData.save_match(data)
         return
+    def updateTeams(self, data):
+        self.__teamData.update_team(data)
