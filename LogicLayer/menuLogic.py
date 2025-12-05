@@ -21,7 +21,6 @@ class MenuLogic:
         extradotpos=None
         cons_dots=False
         cons_dots_pos=None
-        allgood=True
         #print(email.find('a'))
         for i, x in enumerate(email):
             if '@'==x and atcount>0:
@@ -38,20 +37,19 @@ class MenuLogic:
                     cons_dots_pos=i
                     cons_dots=True
 
-        if allgood==True:
-            if email.find('@') ==0:
-                return 'There is nothing before the @ symbol.'
-            elif atcount==0:
-                return '@ symbol is missing.'
-            elif email[::-1].find('@')==0:
-                return f"{email}\n{' ' * (atposition+1)}^--there is nothing after the @ symbol."
-            elif email.find('.')==0:
-                return 'Email address starts with a dot.'
-            elif bool(email.find('.@')+1)==True:
-                return f"{email}\n{' ' * extradotpos}^--there is an extra dot here."
-            elif cons_dots==True:
-                return f"{email}\n{' ' * cons_dots_pos}^--there are consecutive dots here."
-            elif email[::-1].find('@')<email[::-1].find('.') or email.find('.')==-1:
-                return 'Top-level-domain is missing.'
-            elif allgood==True:
-                return 'All good.'
+        if email.find('@') ==0:
+            print ('ERROR: There is nothing before the @ symbol.')
+        elif atcount==0:
+            print ('ERROR: @ symbol is missing.')
+        elif email[::-1].find('@')==0:
+            print (f"ERROR: {email}\n{' ' * (atposition+1)}^--there is nothing after the @ symbol.")
+        elif email.find('.')==0:
+            print ('ERROR: Email address starts with a dot.')
+        elif bool(email.find('.@')+1)==True:
+            print (f"ERROR: {email}\n{' ' * extradotpos}^--there is an extra dot here.")
+        elif cons_dots==True:
+            print (f"ERROR: {email}\n{' ' * cons_dots_pos}^--there are consecutive dots here.")
+        elif email[::-1].find('@')<email[::-1].find('.') or email.find('.')==-1:
+            print ('ERROR: Top-level-domain is missing.')
+        else:
+            return email
