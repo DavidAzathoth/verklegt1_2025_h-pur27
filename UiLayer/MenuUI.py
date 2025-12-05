@@ -17,51 +17,6 @@ class MenuUI:
 
             print(f"Invalid input. Valid options are: {'. '.join(valid_lower)}")
 
-    def email_verification(self, email):
-        atcount=0
-        atposition=None
-        extradotpos=None
-        cons_dots=False
-        cons_dots_pos=None
-        allgood=True
-        #print(email.find('a'))
-        for i, x in enumerate(email):
-            if '@'==x and atcount>0:
-                print(email)
-                print(' '*i+'^--there is an extra @ symbol here.')
-                allgood=False
-                break
-            if '@'==x:
-                atcount+=1
-                atposition=i
-                #print('-'*i+'^')
-            if '.'==x:
-                if email[i+1]=='@':
-                    extradotpos=i
-                if email[i+1]=='.':
-                    cons_dots_pos=i
-                    cons_dots=True
-
-        if allgood==True:
-            if email.find('@') ==0:
-                print('There is nothing before the @ symbol.')
-            elif atcount==0:
-                print('@ symbol is missing.')
-            elif email[::-1].find('@')==0:
-                print(email)
-                print(' '*(atposition+1)+'^--there is nothing after the @ symbol.')
-            elif email.find('.')==0:
-                print('Email address starts with a dot.')
-            elif bool(email.find('.@')+1)==True:
-                print(email)
-                print(extradotpos*' '+'^--there is an extra dot here.')
-            elif cons_dots==True:
-                print(email)
-                print(cons_dots_pos*' '+'^--there are consecutive dots here.')
-            elif email[::-1].find('@')<email[::-1].find('.') or email.find('.')==-1:
-                print('Top-level-domain is missing.')
-            elif allgood==True:
-                print('All good.')
 
     def show_main_menu(self):
         """Prints out the main menu
@@ -282,10 +237,6 @@ Tournament creation menu
         self.__logic_api.createtournament([venue, name, startdate, enddate, contactemail, contactphone ])
 
 #=============== TOURNAMENT HAS BEEN CREATED ==============
-        
-        
-        
-
         print("""
               
 -----------------------------
