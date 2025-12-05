@@ -57,6 +57,9 @@ class LogicAPI:
     
     def savePlayer(self, player: Player):
         self.__Playerlogic.saveplayer(player)
+    def getPlayer_teamID(self):
+        players = self.getPlayers()
 
     def emailVerification(self, email):
-        return self.__Menulogic.emailVerification(email)
+        return self.__Menulogic.emailverification(email)
+
