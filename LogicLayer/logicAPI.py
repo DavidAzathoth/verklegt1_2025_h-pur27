@@ -57,3 +57,6 @@ class LogicAPI:
     
     def savePlayer(self, player: Player):
         self.__Playerlogic.saveplayer(player)
+
+    def emailVerification(self, email):
+        return self.__Menulogic.emailVerification(email)
