@@ -2,6 +2,7 @@ from LogicLayer.TeamLogic import Teamlogic
 from StorageLayer.storageApi import DataAPI
 from LogicLayer.TournamentManager import Tournamentmanager
 from LogicLayer.menuLogic import MenuLogic
+from Models.Tournament import Tournament
 from Models.Team import Team
 from Models.Player import Player
 from LogicLayer.PlayerLogic import Playerlogic
@@ -38,6 +39,9 @@ class LogicAPI:
         templist = ["HA", "HAringurinn", "20 12 2025", "24 12 2025", "blabla@gmail.com", "1234567"]
         #TODO check tournament for duplicates
         return self.__Tournamentmanager.createTournament(input)
+    def saveTournament(self, tournament: Tournament):
+        self.__Tournamentmanager.saveTournament(tournament)
+        return
     
     def updatecaptain(self, input):
         return self.__Teamlogic.updateCaptain(input)
@@ -53,4 +57,3 @@ class LogicAPI:
     
     def savePlayer(self, player: Player):
         self.__Playerlogic.saveplayer(player)
-

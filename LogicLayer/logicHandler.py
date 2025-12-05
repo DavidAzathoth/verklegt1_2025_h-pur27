@@ -11,4 +11,3 @@ class logicHandler:
             iteminstance=self.createModel(model,values)
             itemlist.append(iteminstance)
         return itemlist
-        
