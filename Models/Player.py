@@ -22,7 +22,7 @@ class Player:
         return ret_string
     def createCSVDict(self):
         """Creates a dict to store in a csv file"""
-        ret_dic: dict = {'teamID':self.teamID,'playerGamertag':self.playerGamertag,'fullname':self.fullname,'phoneNumber':self.phoneNumber,'emailAddress':self.emailAddress,'address':self.address,'dateOfBirth':self.dateOfBirth}
+        ret_dic: dict = {'teamID':self.teamID,'playerGamertag':self.playerGamertag,'fullname':self.fullname,'phoneNumber':self.phoneNumber,'emailAddress':self.emailAddress,'address':self.address,'link':self.link,'dateOfBirth':self.dateOfBirth}
         return ret_dic
     def __str__(self):
         return f"""

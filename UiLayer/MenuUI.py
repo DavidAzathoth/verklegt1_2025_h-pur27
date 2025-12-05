@@ -46,14 +46,12 @@ q. Quit
         if choice == "3":
             return "ORGANIZER"
         if choice == "4":
-            captain_handle: str = input("Handle: ").strip
+            captain_handle: str = input("Handle: ")
             team = self.__logic_api.get_team_by_captain(captain_handle)
             if team is None:
-                self.show_captain_no_team_menu(captain_handle)
-                return "CAPTAIN HAS NO TEAM"
+                return ("CAPTAIN HAS NO TEAM", captain_handle)
             else:
-                self.show_captain_has_team_menu(captain_handle)
-                return "CAPTAIN HAS TEAM"
+                return ("CAPTAIN HAS TEAM", captain_handle)
         return "QUIT"
 
 
@@ -240,30 +238,92 @@ q. Quit
 ---------------------------
 Team creation menu
 Team captain: {captain_handle}
-
 """)
+#=======================================================
+        totalTeams = self.__logic_api.getTeams()
+        newTeam = self.__logic_api.createteam([])
+        newPlayer = self.__logic_api.createPlayer([])
+        self.__logic_api.savePlayer(newPlayer)
+        # TODO CREATE TEAM AND PLAYER MENU
+
 
     def show_view_teams_menu(self):
+        """shows list of 5 teams at a time. allows to view team info.
+        returns: "TEAM INFO", "BACK", "QUIT" """
         
-        teams=self.__logic_api.getTeams()
+        teams = self.__logic_api.getTeams()
 
-        team_names = [t.teamName for t in teams]
+        team_names: list = [t.teamName for t in teams]
 
         viewer = ShowTeams(team_names)
         
+        # loop to view 5 teams at a time
         while True:
+
+#=============== View teams menu interface ===============
             print(viewer)
-            print()
-            print("ENTER. Next Page")
-            print("b. Back")
-            print("q. Quit")
-            choice = self.__prompt_options(["", "b", "q"])
-            
-            
+            print("""             
+ENTER. Next Page
+1-5. View team details
+b. Back
+q. Quit
+""")
+#=========================================================
+
+            choice = self.__prompt_options(["1", "2", "3", "4", "5", "", "b", "q"])
+
+            #select team by number
+            if choice.isdigit():
+                number = int(choice)
+                team_name = viewer.get_team_by_number(number)
+                
+                #find team object
+                for t in teams:
+                    if t.teamName == team_name:
+                        return ("TEAM INFO", t)
+                continue
+
             if choice == "":
                 viewer.next_page()
                 continue
+
             if choice == "b":
                 return "BACK"
+            
             return "QUIT"
         
+
+    def show_team_info(self, team):
+        """Shows team information for selected team
+        returns: "BACK", "HOME", "QUIT" """
+
+        print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+View {team.teamName} information
+
+Name: {team.teamName}
+Captain: {team.captainHandle}
+Player handles:""")
+        for p in team.roster:
+            print(f"- {p}")
+        
+        print(f"""
+Wins: {team.wins}
+Losses: {team.losses}
+
+b. Back
+h. Home
+q. Quit
+""")
+
+        choice = self.__prompt_options(["b", "h", "q"])
+
+        if choice == "b":
+            return "BACK"
+        
+        if choice == "h":
+            return "HOME"
+        
+        return "QUIT"
