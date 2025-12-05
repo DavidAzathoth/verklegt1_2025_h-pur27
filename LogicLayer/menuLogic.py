@@ -21,7 +21,6 @@ class MenuLogic:
         extradotpos=None
         cons_dots=False
         cons_dots_pos=None
-        allgood=True
         #print(email.find('a'))
         for i, x in enumerate(email):
             if '@'==x and atcount>0:
