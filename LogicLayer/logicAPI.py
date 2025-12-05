@@ -3,6 +3,7 @@ from StorageLayer.storageApi import DataAPI
 from LogicLayer.TournamentManager import Tournamentmanager
 from LogicLayer.menuLogic import MenuLogic
 from Models.Team import Team
+from Models.Player import Player
 from LogicLayer.PlayerLogic import Playerlogic
 
 class LogicAPI:
@@ -50,4 +51,6 @@ class LogicAPI:
     def getPlayers(self):
         return self.__Playerlogic.getplayers()
     
+    def savePlayer(self, player: Player):
+        self.__Playerlogic.saveplayer(player)
 
