@@ -242,6 +242,9 @@ Team captain: {captain_handle}
 #=======================================================
         totalTeams = self.__logic_api.getTeams()
         newTeam = self.__logic_api.createteam([])
+        newPlayer = self.__logic_api.createPlayer([])
+        self.__logic_api.savePlayer(newPlayer)
+        # TODO CREATE TEAM AND PLAYER MENU
 
 
     def show_view_teams_menu(self):
