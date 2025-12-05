@@ -4,6 +4,7 @@ from Models.Player import Player
 
 class Playerlogic:
     def __init__(self, dataApi: DataAPI):
+        self.PLAYERATTRIBUTES = ['teamID','playerGamertag','fullname','phoneNumber','emailAddress','address','link']
         self.__logichandler = logicHandler()
         self.__dataApi = dataApi
         self.__playermodel = Player
@@ -22,4 +23,12 @@ class Playerlogic:
     def saveplayer(self, player: Player):
         self.__dataApi.savePlayer(player.createCSVDict())
         return
-
+    def getplayer_by_gamertag(self, tag):
+        players: list[Player] = self.getplayers()
+        for player in players:
+            if player.playerGamertag==tag:
+                return player
+    def editplayer(self, attribute: str):
+        if attribute in self.PLAYERATTRIBUTES:
+            pass 
+        #TODO IMPLEMENT
