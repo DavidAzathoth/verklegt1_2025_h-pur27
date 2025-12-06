@@ -1,10 +1,12 @@
 from LogicLayer.logicAPI import LogicAPI
-from UiLayer.ViewTeamsMenu import ShowTeams
+from UiLayer.selectfrompage import SelectFromPage
 from datetime import datetime
+from Models.Team import Team
 
 class MenuUI:
     def __init__(self, logic_api: LogicAPI):
         self.__logic_api = logic_api
+
 
     def __prompt_options(self, valid_options: list[str]):
         valid_lower = [i.lower() for i in valid_options]
@@ -16,6 +18,34 @@ class MenuUI:
                 return choice
 
             print(f"Invalid input. Valid options are: {'. '.join(valid_lower)}")
+
+
+    def set_start_end_date(self):
+        while True:
+            try:
+                startdate = datetime(
+                    int(input("Start date year: ")),
+                    int(input("Start date month: ")),
+                    int(input("Start date day: "))
+                    )
+                
+                enddate = datetime(
+                    int(input("End date year: ")),
+                    int(input("End date month: ")),
+                    int(input("End date day: "))
+                    )
+                
+            except ValueError:
+                print("please enter valid numbers for year, month, day")
+                continue
+
+            if enddate < startdate:
+                print("ERROR: End date must be after start date")
+                continue
+
+            print(f"Startdate: {startdate.date()} \nEnd date: {enddate.date()}")
+
+            return startdate, enddate
 
 
     def show_main_menu(self):
@@ -54,51 +84,58 @@ q. Quit
             else:
                 return ("CAPTAIN HAS TEAM", captain_handle)
         return "QUIT"
-
-
-    def set_start_end_date(self):
-        while True:
-            try:
-                startdate = datetime(
-                    int(input("Start date year: ")),
-                    int(input("Start date month: ")),
-                    int(input("Start date day: "))
-                    )
-                
-                enddate = datetime(
-                    int(input("End date year: ")),
-                    int(input("End date month: ")),
-                    int(input("End date day: "))
-                    )
-                
-            except ValueError:
-                print("please enter valid numbers for year, month, day")
-                continue
-
-            if enddate < startdate:
-                print("ERROR: End date must be after start date")
-                continue
-
-            print(f"Startdate: {startdate.date()} \nEnd date: {enddate.date()}")
-
-            return startdate, enddate
-
-        
+       
         
     def show_tournaments_menu(self):
-        #TODO GET TOURNAMENTS
         """Prints list of tournaments
-        returns: # TODO """
+        returns: ("TOURNAMENT INFO",  tournament: object), "BACK", "QUIT"  """
         
+        tournaments = self.__logic_api.gettournament()
+
+        tournament_names: list[str] = [t.name for t in tournaments]
+
+        viewer = SelectFromPage(tournament_names)
+
+        #loop to view tournaments 5 at a time
+        while True:
+
 #------LIST OF TOURNAMENTS INTERFACE---------------
-        print("""
+            print(f"""
 ---------------------------
- RU's e-Sport Extravaganza
+RU's e-Sport Extravaganza
 ---------------------------
 List of tournaments
+              
+{viewer.currentPage()}
+              
+ENTER. Next page
+1-5. View tournament details
+b. Back
+q. Quit              
 """) 
-        pass
-    
+            choice = self.__prompt_options(["1", "2", "3", "4", "5", "", "b", "q"])
+
+            #select tournament by number
+            if choice.isdigit():
+                num = int(choice)
+                tournament_name = viewer.select_item_by_number(num)
+                
+                # find tournament object
+                for t in tournaments:
+                    if t.name == tournament_name:
+                        return ("TOURNAMENT INFO", t)
+                continue
+            
+            #press ENTER to go to next page
+            if choice ==  "":
+                viewer.next_page()
+                continue
+
+            if choice == "b":
+                return "BACK"
+            
+            return "QUIT"
+        
 
     def show_teams_menu(self):
         """Prints teams menu
@@ -231,14 +268,20 @@ q. Quit
  RU's e-Sport Extravaganza
 ---------------------------
 Tournament creation menu
-""")
-#===========================================================
-        
+              
+Please enter tournament details:
+""")  
         venue: str = input("Venue: ").strip()
         name: str = input("Name: ").strip()
         startdate, enddate = self.set_start_end_date()
-        contactemail = self.__logic_api.emailVerification(input("ContactEmail: "))
+        check_contact_email: tuple = self.__logic_api.emailVerification(input("ContactEmail: "))
+        while check_contact_email[1] == False:
+            print(check_contact_email[0])
+            check_contact_email: tuple = self.__logic_api.emailVerification(input("ContactEmail: "))
+        contactemail = check_contact_email[0]
         contactphone = int(input("ContactPhone: "))
+
+#===========================================================
 
         # Asks to input informattion to create tournament
         tournament = self.__logic_api.createtournament([venue, name, startdate.date(), enddate.date(), contactemail, contactphone ])
@@ -275,7 +318,7 @@ q. Quit
         return "QUIT"
     
 
-    def show_team_creation_menu(self, captain_handle):
+    def show_team_creation_menu(self, captain_handle: str):
         """Prints out team creation menu where team information is given.
         returns: "ADD PLAYERS TO TEAM" or "CANCEL" """
 
@@ -303,15 +346,21 @@ Team captain: {captain_handle}
 
         team_names: list = [t.teamName for t in teams]
 
-        viewer = ShowTeams(team_names)
+        viewer = SelectFromPage(team_names)
         
         # loop to view 5 teams at a time
         while True:
 
 #=============== View teams menu interface ===============
-            print(viewer)
-            print("""             
-ENTER. Next Page
+            print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+View teams menu
+              
+{viewer.currentPage()}
+
+ENTER. Next page
 1-5. View team details
 b. Back
 q. Quit
@@ -323,14 +372,15 @@ q. Quit
             #select team by number
             if choice.isdigit():
                 number = int(choice)
-                team_name = viewer.get_team_by_number(number)
+                team_name = viewer.select_item_by_number(number)
                 
                 #find team object
                 for t in teams:
                     if t.teamName == team_name:
                         return ("TEAM INFO", t)
                 continue
-
+            
+            #press ENTER to go to next page
             if choice == "":
                 viewer.next_page()
                 continue
@@ -341,10 +391,11 @@ q. Quit
             return "QUIT"
         
 
-    def show_team_info(self, team):
+    def show_team_info(self, team: object):
         """Shows team information for selected team
         returns: "BACK", "HOME", "QUIT" """
 
+#=============== View team info menu interface ===============
         print(f"""
 ---------------------------
  RU's e-Sport Extravaganza
@@ -365,6 +416,7 @@ b. Back
 h. Home
 q. Quit
 """)
+#=============================================================
 
         choice = self.__prompt_options(["b", "h", "q"])
 
@@ -375,3 +427,46 @@ q. Quit
             return "HOME"
         
         return "QUIT"
+
+
+    def show_tournament_info(self, tournament: object):
+        """Shows tournament information for selected tournament
+        returns: "VIEW SCHEDULE", "VIEW STANDINGS", "BACK", "HOME", "QUIT" """
+
+#=============== View tournament info menu interface ===============
+        print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+View {tournament.name} information
+
+Name: {tournament.name}
+Venue: {tournament.venue}
+Start date: {tournament.startDate}
+End date: {tournament.endDate}
+
+Contact:
+Email: {tournament.contactEmail}
+Phone: {tournament.contactPhone}
+
+1. View schedule
+2. View results
+
+b. Back
+h. Home
+q. Quit
+""")
+#===================================================================
+
+        choice = self.__prompt_options(["1", "2", "b", "h", "q"])
+
+        if choice == "1":
+            return #TODO
+        if choice == "2":
+            return #TODO
+        if choice == "b":
+            return "BACK"
+        if choice == "h":
+            return "HOME"
+        return "QUIT"
+

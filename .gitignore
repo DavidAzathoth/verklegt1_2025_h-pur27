@@ -4,3 +4,4 @@ adamdebug.py
 adamdebugPC.py
 *.pyc
 __pycache__
+.vscode/settings.json

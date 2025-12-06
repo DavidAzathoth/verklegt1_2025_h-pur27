@@ -16,6 +16,8 @@ class MenuLogic:
         return teamString
 
     def emailverification(self, email: str):
+        ret_string = ""
+        allgood = True
         atcount=0
         atposition=None
         extradotpos=None
@@ -58,8 +60,8 @@ class MenuLogic:
             ret_string = f"{email}\n{' ' * cons_dots_pos}^--there are consecutive dots here."
             allgood=False
         elif email[::-1].find('@')<email[::-1].find('.') or email.find('.')==-1 and allgood:
-            ret_string = 'Top-level-domain is missing.'
+            ret_string: str = 'Top-level-domain is missing.'
             allgood=False
         if allgood:
             ret_string=email
-        return ret_string, allgood
+        return (ret_string, allgood)
