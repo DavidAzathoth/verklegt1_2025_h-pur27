@@ -34,8 +34,9 @@ class LogicAPI:
     def temp(self):
         return DataAPI.loadTeams()
     
-    def gettournament(self):
-        return self.__Tournamentmanager.getTournament()
+    def gettournaments(self):
+        return self.__Tournamentmanager.getTournaments()
+    #def gettournament
 
     def createtournament(self, input):
         templist = ["HA", "HAringurinn", "20 12 2025", "24 12 2025", "blabla@gmail.com", "1234567"]
@@ -44,6 +45,9 @@ class LogicAPI:
     def saveTournament(self, tournament: Tournament):
         self.__Tournamentmanager.saveTournament(tournament)
         return
+    def addTeamtoTournament(self, team: Team,tournament: Tournament):
+        """Adds team to tournament, both parameters must be an object"""
+        self.__Tournamentmanager.updateTournament(tournament, team, 'addteam')
     
     def updatecaptain(self, input):
         """Updates given captain in file"""
@@ -69,14 +73,15 @@ class LogicAPI:
         self.__Playerlogic.saveplayer(player)
     def getPlayer_teamID(self):
         """# Not implemented #"""
-        #NOT IMPLEMENTED
+        teams = self.getTeams()
         players = self.getPlayers()
+
 
     def emailVerification(self, email):
         """Verifies if email is valid"""
         return self.__Menulogic.emailverification(email)
     
-    def addplayer(self, input: list, team: Team):
+    def addplayer(self, input, team: Team):
         """Adds player to team. Input is a list to generate the player and team is the team object"""
         return self.__Teamlogic.addplayertoteam(input, team)
 
@@ -85,8 +90,12 @@ class LogicAPI:
         if len(team.roster)==5:
             return False
     def updatescore(self, team: Team, option: str):
-        """Updates win or losses of team, options are updatewins and updatelosses"""
+        """Updates win or losses of team, options are updatewins and updatelosses
+        \noptions: 'updatewins', 'updatelosses'"""
         self.__Teamlogic.updateTeam(None, option, team)
         return
     def generatebracket(self, teams):
         return self.__bracketgenerator.generatebracket(teams)
+
+
+###############testing area#############

@@ -13,23 +13,58 @@ class Tournamentmanager:
         return self.__logichandler.createModel(self.__tournamentmodel,tournament)
 
 
-    def getTournament(self) -> list[Tournament]:
-        raw_list: list[dict] = self.__dataApi.loadTournaments()
-        tournaments: list[Tournament] = self.__logichandler.loadmodels(self.__tournamentmodel, raw_list)
-        return tournaments
+    def getTournaments(self):
+        raw_list = self.__dataApi.loadTournaments()
+        tournamentlist: list[Tournament] = self.__logichandler.loadmodels(self.__tournamentmodel, raw_list)
+        return tournamentlist
     
     def saveTournament(self,tournament: Tournament):
         self.__dataApi.saveTournament(tournament.createCSVDict())
         return
-    def calculaterounds(self, teams: list[Team]):
-        oddrounds = 0
-        totalrounds = 0
-        divbytwo = len(teams)
-        while divbytwo != 1:
-            temp=divbytwo / 2
-            if divbytwo / 2 != 0:
-                oddrounds += 1
-                divbytwo=divbytwo-1
-            
+    
+    def updateTournament(self, tournament: Tournament, input: object, operation: str = None ):
+        tournaments = self.__dataApi.loadTournaments()
+        index = tournaments.index(tournament.createCSVDict())
+        rem_tournament=tournament.createCSVDict()
+        tournaments.remove(rem_tournament)
+
+        if tournament.teams[0] == '': #Cleans up empty string that appears when list is first created
+            tournament.teams.pop(0)
+        if tournament.matchesList[0] == '':
+            tournament.matchesList.pop(0)
+        if tournament.matchHistory[0] == '':
+            tournament.matchHistory.pop(0)
+
+        if operation == 'addteam':
+            tournament.teams.append(input.teamID)
+            tournament.teaminstances.append(input)
+        
+        tournaments.insert(index, tournament.createCSVDict())
+        self.__dataApi.updateTournaments(tournaments)
+
+    def addTeamtoTournament(self, tournament: Tournament, team: Team):
+        if self.checkTournamentDuplicates(tournament, team):
+            tournament.teams.append(team)
+
+    def checkTournamentDuplicates(self, tournament: Tournament, team: Team):
+        reg_team : Team
+        for reg_team in tournament.teams:
+            if reg_team.teamID == team.teamID:
+                return False
+            else:
+                return True
+
+
+#    def calculaterounds(self, teams: list[Team]):
+#        oddrounds = 0
+#        totalrounds = 0
+#        divbytwo = len(teams)
+#        while divbytwo != 1:
+#            temp=divbytwo / 2
+#            if divbytwo / 2 != 0:
+#                oddrounds += 1
+#                divbytwo=divbytwo-1
+
+#            
         
 

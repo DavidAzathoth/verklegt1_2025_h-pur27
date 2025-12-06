@@ -63,8 +63,8 @@ class Teamlogic:
         teams: list[Team]=self.__dataApi.loadTeams()
         index=teams.index(team.createCSVDict())
         teams.remove(team.createCSVDict())
-
-
+        if team.roster[0] == '':  #Clean empty string from list
+            team.roster.pop(0)
         if operation=='addplayer':
             team.roster.append(input.playerGamertag)
             team.playerinstances.append(input)
@@ -73,15 +73,18 @@ class Teamlogic:
         elif operation=='updatelosses':
             team.losses+=1
         
-        teams.insert(index,team.createCSVDict())
+        teams.insert(index, team.createCSVDict())
         self.__dataApi.updateTeams(teams)
             
         return team
     
-    def addplayertoteam(self, input: list, team: Team):
-        player = self.__logichandler.createModel(Player,input)
-        self.__dataApi.savePlayer(player.createCSVDict())
-        self.updateTeam(player, 'addplayer',team)
+    def addplayertoteam(self, input, team: Team):
+        if type(input) == list:
+            player = self.__logichandler.createModel(Player,input)
+            self.__dataApi.savePlayer(player.createCSVDict())
+            self.updateTeam(player, 'addplayer',team)
+        else:
+            self.updateTeam(input, 'addplayer',team)
 
         
             
