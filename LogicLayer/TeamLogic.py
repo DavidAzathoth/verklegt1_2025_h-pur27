@@ -28,6 +28,12 @@ class Teamlogic:
                 return t
         return None
     
+    def get_team_by_teamname(self, teamname: str, teamlist: list[Team]):
+        for team in teamlist:
+            if team.teamName==teamname:
+                return team
+        
+    
     def createteam(self, team: list):
         return self.__logichandler.createModel(self.__teammodel,team)
 
@@ -43,12 +49,7 @@ class Teamlogic:
         captainslist.pop(index)
         captainslist.insert(index,edited_captain)
         return self.__dataApi.updateCaptains(captainslist)
-    
-    def searchForTeam(self, teamname):
-        allteams = self.getTeams()
-        for team in allteams:
-            if teamname in team:
-                return team
+
             
     def getTeamMembers(self, team: Team):
         ret_list = []
