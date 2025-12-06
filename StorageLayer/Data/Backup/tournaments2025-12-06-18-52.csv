@@ -1,5 +1,5 @@
 venue,name,startDate,endDate,contactEmail,contactPhone,matchesList,matchHistory,teams,active
-HA,HAhringurinn,01/01/2025,01/13/2025,orgmaster@email.is,+354 123 1234,,,"A1,A1,A1",True
+HA,HAhringurinn,01/01/2025,01/13/2025,orgmaster@email.is,+354 123 1234,,,"A1,A1",True
 Ha,ha,ha,ha,ha,ha,,,,True
 HA,HAringurinn,25,25,sdf,asdf,,,,True
 HA,HAringurinn,2025-12-12 00:00:00,2025-12-15 00:00:00,All good.,8989123,,,,True

@@ -27,10 +27,8 @@ class BracketGenerator:
         letterslol=['A','B','C','D','E','F','G']
         gamedata=self.playingames(teams)
         roundsplayed: dict ={}
-        totalteams=len(teams)
         totalrounds=gamedata[0]
         extrarounds=gamedata[1]
-        extrateams=[]
         isodd=1
 
         if extrarounds>0:
