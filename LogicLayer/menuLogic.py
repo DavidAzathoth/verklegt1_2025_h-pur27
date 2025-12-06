@@ -16,6 +16,7 @@ class MenuLogic:
         return teamString
 
     def emailverification(self, email: str):
+        email = email.lower().strip().replace(" ", "")
         ret_string = ""
         allgood = True
         atcount=0

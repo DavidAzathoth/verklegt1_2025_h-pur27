@@ -13,7 +13,7 @@ class LogicAPI:
         __dataAPI = DataAPI()
         self.__Teamlogic = Teamlogic(__dataAPI)
         self.__Menulogic = MenuLogic(__dataAPI)
-        self.__Tournamentmanager = Tournamentmanager(__dataAPI,self)
+        self.__Tournamentmanager = Tournamentmanager(__dataAPI)
         self.__Playerlogic = Playerlogic(__dataAPI)
         self.__bracketgenerator = BracketGenerator()
         return

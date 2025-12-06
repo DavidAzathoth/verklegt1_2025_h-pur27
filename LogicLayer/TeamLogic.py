@@ -28,10 +28,11 @@ class Teamlogic:
                 return t
         return None
     
-    def get_team_by_teamname(self, teamname: str, teamlist: list[Team]):
+    def get_team_by_teamname(self, teamname: str, teamlist: list[Team]) -> Team | None:
         for team in teamlist:
-            if team.teamName==teamname:
+            if team.teamName.lower().strip() == teamname.lower().strip():
                 return team
+        return None
         
     
     def createteam(self, team: list):
