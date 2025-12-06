@@ -13,7 +13,7 @@ class LogicAPI:
         __dataAPI = DataAPI()
         self.__Teamlogic = Teamlogic(__dataAPI)
         self.__Menulogic = MenuLogic(__dataAPI)
-        self.__Tournamentmanager = Tournamentmanager(__dataAPI)
+        self.__Tournamentmanager = Tournamentmanager(__dataAPI,self)
         self.__Playerlogic = Playerlogic(__dataAPI)
         self.__bracketgenerator = BracketGenerator()
         return
@@ -37,6 +37,11 @@ class LogicAPI:
     def gettournaments(self):
         return self.__Tournamentmanager.getTournaments()
     #def gettournament
+    def populateTournament(self, name: str, tournamentlist: list[Tournament]):
+        """Populates tournament with all objects and returns it, must give tournament name and already loaded list of tournament objects"""
+        tournament = self.__Tournamentmanager.getTournamentbyName(name, tournamentlist)
+        return self.__Tournamentmanager.populateTournament(tournament)
+        
 
     def createtournament(self, input):
         templist = ["HA", "HAringurinn", "20 12 2025", "24 12 2025", "blabla@gmail.com", "1234567"]
@@ -46,7 +51,7 @@ class LogicAPI:
         self.__Tournamentmanager.saveTournament(tournament)
         return
     def addTeamtoTournament(self, team: Team,tournament: Tournament):
-        """Adds team to tournament, both parameters must be an object"""
+        """Adds team to tournament, both parameters must be an object. Returns false if the team is already in the tournament"""
         self.__Tournamentmanager.updateTournament(tournament, team, 'addteam')
     
     def updatecaptain(self, input):
@@ -54,7 +59,8 @@ class LogicAPI:
         return self.__Teamlogic.updateCaptain(input)
 
     def searchforteam(self, input):
-        return self.__Teamlogic.searchForTeams(input)
+        teams=self.__Teamlogic.getTeams()
+        return self.__Teamlogic.get_team_by_teamname(input, teams)
     
     def createPlayer(self, input):
         """Creates a player, does not automatically store in file"""

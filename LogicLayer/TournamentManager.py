@@ -2,12 +2,14 @@ from StorageLayer.storageApi import DataAPI
 from LogicLayer.logicHandler import logicHandler
 from Models.Tournament import Tournament
 from Models.Team import Team
+from LogicLayer.TeamLogic import Teamlogic
 class Tournamentmanager:
     def __init__(self, dataApi: DataAPI):
         self.__dataApi = dataApi
         self.__logichandler = logicHandler()
         self.__tournamentmodel = Tournament
-        pass
+        self.__teamlogic = Teamlogic(self.__dataApi)
+        
 
     def createTournament(self, tournament: list):
         return self.__logichandler.createModel(self.__tournamentmodel,tournament)
@@ -18,6 +20,18 @@ class Tournamentmanager:
         tournamentlist: list[Tournament] = self.__logichandler.loadmodels(self.__tournamentmodel, raw_list)
         return tournamentlist
     
+    def getTournamentbyName(self, name: str, tournamentlist: list[Tournament]):
+        for tournament in tournamentlist:
+            if name==tournament.name:
+                return tournament
+            
+    def populateTournament(self, tournament: Tournament):
+        teams = self.__teamlogic.getTeams()
+        #matches = implement this perhaps
+        teamobjects=list(map(self.__teamlogic.get_team_by_teamname, (tournament.teams)))
+        tournament.teams=teamobjects
+
+        
     def saveTournament(self,tournament: Tournament):
         self.__dataApi.saveTournament(tournament.createCSVDict())
         return
@@ -36,6 +50,8 @@ class Tournamentmanager:
             tournament.matchHistory.pop(0)
 
         if operation == 'addteam':
+            if self.checkDuplTeams(tournament, input) == False:
+                return False
             tournament.teams.append(input.teamID)
             tournament.teaminstances.append(input)
         
@@ -43,16 +59,15 @@ class Tournamentmanager:
         self.__dataApi.updateTournaments(tournaments)
 
     def addTeamtoTournament(self, tournament: Tournament, team: Team):
-        if self.checkTournamentDuplicates(tournament, team):
+        if self.checkDuplTeams(tournament, team):
             tournament.teams.append(team)
 
-    def checkTournamentDuplicates(self, tournament: Tournament, team: Team):
+    def checkDuplTeams(self, tournament: Tournament, team: Team):
         reg_team : Team
         for reg_team in tournament.teams:
             if reg_team.teamID == team.teamID:
                 return False
-            else:
-                return True
+        return True
 
 
 #    def calculaterounds(self, teams: list[Team]):
