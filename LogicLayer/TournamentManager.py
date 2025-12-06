@@ -28,8 +28,9 @@ class Tournamentmanager:
     def populateTournament(self, tournament: Tournament):
         teams = self.__teamlogic.getTeams()
         #matches = implement this perhaps
-        teamobjects=list(map(self.__teamlogic.get_team_by_teamname, (tournament.teams)))
+        teamobjects=list(map(lambda team: self.__teamlogic.get_team_by_teamid(team, teams), (tournament.teams)))
         tournament.teams=teamobjects
+        return tournament
 
         
     def saveTournament(self,tournament: Tournament):
