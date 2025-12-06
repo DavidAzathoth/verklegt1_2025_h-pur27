@@ -36,9 +36,17 @@ class UIMain:
                 elif options == "QUIT":
                     break
 
-#============================= TOURNAMENTS MENU LOOP =======================
-            elif self.current_screen == "TOURNAMENTS":
-                ...
+#============================= LIST OF TOURNAMENTS PUBLIC MENU LOOP =======================
+            elif self.current_screen == "LIST OF TOURNAMENTS":
+                options = self.__menu_ui.show_tournaments_menu()
+                if isinstance(options, tuple) and options[0] == "TOURNAMENT INFO":
+                    selected_tournament = options[1]
+                    self.selected_tournament = selected_tournament
+                    self.current_screen = "TOURNAMENT INFO MENU"
+                elif options == "BACK":
+                    self.current_screen = "MAIN MENU"
+                elif options == "QUIT":
+                    break
 
 #============================= TEAMS MENU LOOP =======================
             elif self.current_screen == "TEAMS MENU":
@@ -47,6 +55,10 @@ class UIMain:
                     self.current_screen = "VIEW TEAMS MENU"
                 elif options == "SEARCH FOR A TEAM":
                     self.current_screen = ""
+                elif options == "BACK":
+                    self.current_screen = "MAIN MENU"
+                elif options == "QUIT":
+                    break
             
 #============================= ORGANIZER MENU LOOP =======================
             elif self.current_screen == "ORGANIZER MENU":
@@ -123,4 +135,14 @@ class UIMain:
                 elif options == "HOME":
                     self.current_screen = "MAIN MENU"
                 elif options ==  "QUIT":
+                    break
+
+#============================= VIEW TOURNAMENT INFO LOOP =======================
+            elif self.current_screen == "TOURNAMENT INFO MENU":
+                options: str = self.__menu_ui.show_tournament_info(self.selected_tournament)
+                if options == "BACK":
+                    self.current_screen = "LIST OF TOURNAMENTS"
+                elif options == "HOME":
+                    self.current_screen = "MAIN MENU"
+                elif options == "QUIT":
                     break
