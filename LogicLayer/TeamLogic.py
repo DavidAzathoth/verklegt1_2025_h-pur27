@@ -32,7 +32,11 @@ class Teamlogic:
         for team in teamlist:
             if team.teamName==teamname:
                 return team
-        
+    
+    def get_team_by_teamid(self, teamid: str, teamlist: list[Team]):
+        for team in teamlist:
+            if team.teamID==teamid:
+                return team
     
     def createteam(self, team: list):
         return self.__logichandler.createModel(self.__teammodel,team)

@@ -13,7 +13,7 @@ class LogicAPI:
         __dataAPI = DataAPI()
         self.__Teamlogic = Teamlogic(__dataAPI)
         self.__Menulogic = MenuLogic(__dataAPI)
-        self.__Tournamentmanager = Tournamentmanager(__dataAPI,self)
+        self.__Tournamentmanager = Tournamentmanager(__dataAPI)
         self.__Playerlogic = Playerlogic(__dataAPI)
         self.__bracketgenerator = BracketGenerator()
         return
@@ -37,9 +37,10 @@ class LogicAPI:
     def gettournaments(self):
         return self.__Tournamentmanager.getTournaments()
     #def gettournament
-    def populateTournament(self, name: str, tournamentlist: list[Tournament]):
+    #def populateTournament(self, name: str, tournamentlist: list[Tournament]):
+    def populateTournament(self, tournament: Tournament):
         """Populates tournament with all objects and returns it, must give tournament name and already loaded list of tournament objects"""
-        tournament = self.__Tournamentmanager.getTournamentbyName(name, tournamentlist)
+        #tournament = self.__Tournamentmanager.getTournamentbyName(name, tournamentlist)
         return self.__Tournamentmanager.populateTournament(tournament)
         
 
