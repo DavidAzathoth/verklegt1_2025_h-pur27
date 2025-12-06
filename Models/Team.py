@@ -9,7 +9,7 @@ class Team:
     def __init__(self, teamID: str, teamName: str, roster: str = '', wins: int = 0, losses: int = 0, captainHandle: str = None, playerinstances:list = []):
         self.teamID: str = teamID
         self.teamName: str = teamName
-        self.roster: list = roster.split(',')
+        self.roster: list = roster.strip('').split(',')
         self.wins: int = int(wins)
         self.losses: int = int(losses)
         self.captainHandle: str = captainHandle

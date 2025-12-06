@@ -1,3 +1,5 @@
+from Models.Team import Team
+from Models.Team import Team
 from LogicLayer.logicAPI import LogicAPI
 from UiLayer.selectfrompage import SelectFromPage
 from datetime import datetime
@@ -390,7 +392,7 @@ q. Quit
             return "QUIT"
         
 
-    def show_team_info(self, team: object):
+    def show_team_info(self, team: Team):
         """Shows team information for selected team
         returns: "BACK", "HOME", "QUIT" """
 
