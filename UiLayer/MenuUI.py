@@ -1,4 +1,5 @@
 from Models.Team import Team
+from Models.Team import Team
 from LogicLayer.logicAPI import LogicAPI
 from UiLayer.ViewTeamsMenu import ShowTeams
 from datetime import datetime
