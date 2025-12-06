@@ -163,8 +163,7 @@ q. Quit
         if choice == "1":
             return "PRINT LIST OF TEAMS"
         if choice == "2":
-            team = input("Team name: ").strip().lower()
-            return "SEARCH FOR A TEAM"
+            get_team = self.__logic_api.()
         if choice == "b":
             return "BACK"
         return "QUIT"
