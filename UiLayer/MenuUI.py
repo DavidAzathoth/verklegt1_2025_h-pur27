@@ -1,5 +1,5 @@
 from Models.Team import Team
-from Models.Team import Team
+from Models.TeamCaptain import TeamCaptain
 from LogicLayer.logicAPI import LogicAPI
 from UiLayer.selectfrompage import SelectFromPage
 from datetime import datetime
@@ -10,6 +10,7 @@ class MenuUI:
         self.__logic_api = logic_api
 
 
+#----------------------------------- Generic option prompts -----------------------------------------
     def __prompt_options(self, valid_options: list[str]):
         valid_lower = [i.lower() for i in valid_options]
 
@@ -22,6 +23,7 @@ class MenuUI:
             print(f"Invalid input. Valid options are: {'. '.join(valid_lower)}")
 
 
+#----------------------------------- Set start and end date for tournament -----------------------------------------
     def set_start_end_date(self):
         while True:
             try:
@@ -50,6 +52,7 @@ class MenuUI:
             return startdate, enddate
 
 
+#----------------------------------- MAIN MENU -----------------------------------------
     def show_main_menu(self):
         """Prints out the main menu
         returns: "TOURNAMENTS", "TEAMS", "ORGANIZER", "TEAM CAPTAIN", "QUIT" """
@@ -80,67 +83,69 @@ q. Quit
             return "ORGANIZER"
         if choice == "4":
             captain_handle: str = input("Handle: ")
-            team = self.__logic_api.get_team_by_captain(captain_handle)
+            captain = self.__logic_api.getCaptain(captain_handle)
+            if captain is None:
+                print("No captain registered")
+            else:
+                team = self.__logic_api.get_team_by_captain(captain.captainHandle)
             if team is None:
                 return ("CAPTAIN HAS NO TEAM", captain_handle)
             else:
                 return ("CAPTAIN HAS TEAM", captain_handle)
         return "QUIT"
-       
-        
+
+
+#----------------------------------- TOURNAMENTS OPTIONS MENU (PUBLIC) -----------------------------------------       
     def show_tournaments_menu(self):
-        """Prints list of tournaments
-        returns: ("TOURNAMENT INFO",  tournament: object), "BACK", "QUIT"  """
+        """Prints tournaments options menu.
+        returns: "PRINT LIST OF TOURNAMENTS", "SEARCH FOR A TOURNAMENT", "BACK", "QUIT" """
         
-        tournaments = self.__logic_api.gettournaments()
-
-        tournament_names: list[str] = [t.name for t in tournaments]
-
-        viewer = SelectFromPage(tournament_names)
-
-        #loop to view tournaments 5 at a time
-        while True:
-
-#------LIST OF TOURNAMENTS INTERFACE---------------
-            print(f"""
+#========= TOURNAMENTS MENU INTERFACE ========
+        print("""
 ---------------------------
-RU's e-Sport Extravaganza
+ RU's e-sport Extravaganza 
 ---------------------------
-List of tournaments
-              
-{viewer.currentPage()}
-              
-ENTER. Next page
-1-5. View tournament details
+Tournaments menu
+
+1. Print list of tournaments
+2. Search for tournament
+
 b. Back
-q. Quit              
-""") 
-            choice = self.__prompt_options(["1", "2", "3", "4", "5", "", "b", "q"])
+q. Quit
+""")
+#=======================================
 
-            #select tournament by number
-            if choice.isdigit():
-                num = int(choice)
-                tournament_name = viewer.select_item_by_number(num)
+        choice = self.__prompt_options(["1", "2", "b", "q"])
+
+        if choice == "1":
+            return "PRINT LIST OF TOURNAMENTS"
+        if choice == "2":
+            tournament_input = input("Please enter the tournament name: ")
+            tournament = self.__logic_api.getTournamentbyName(tournament_input)
+            while tournament == None:
+                print("\nERROR: tournament name invalid.")
+                print("\nContinue?")
+                print("\ny. Yes (continue)")
+                print("n. No (cancel)\n")
+
+                choice = self.__prompt_options(["y", "n"])
+                if choice == "y":
+                    tournament_input = input("Please enter the tournament name: ")
+                    tournament = self.__logic_api.getTournamentbyName(tournament_input)
+                else: 
+                    return "CANCEL"
                 
-                # find tournament object
-                for t in tournaments:
-                    if t.name == tournament_name:
-                        return ("TOURNAMENT INFO", t)
-                continue
-            
-            #press ENTER to go to next page
-            if choice ==  "":
-                viewer.next_page()
-                continue
+            return ("GET TOURNAMENT", tournament)
 
-            if choice == "b":
-                return "BACK"
-            
-            return "QUIT"
+        if choice == "b":
+            return "BACK"
         
+        return "QUIT"
+    
 
+#----------------------------------- TEAMS OPTIONS MENU (PUBLIC) -----------------------------------------
     def show_teams_menu(self):
-        """Prints teams menu
+        """Prints teams options menu
         returns: "PRINT LIST OF TEAMS", "SEARCH FOR A TEAM", "BACK", "QUIT" """
 
 #========= TEAMS MENU INTERFACE ========
@@ -186,6 +191,7 @@ q. Quit
         return "QUIT"
 
 
+#----------------------------------- ORGANIZER MENU -----------------------------------------
     def show_organizer_menu(self):
         """Print organizer menu.
         returns: "CREATE TOURNAMENT", "ADD TEAMS TO TOURNAMENT, "GENERATE SCHEDULE", "UPDATE RESULTS", "BACK", "QUIT" """
@@ -221,6 +227,7 @@ q. Quit""")
         return "QUIT"
 
 
+#----------------------------------- CAPTAIN MENU (NO TEAM) -----------------------------------------
     def show_captain_no_team_menu(self, captain_handle: str):
         """Prints out captains menu if he has no team
         returns: "CREATE TEAM", "BACK", "QUIT" """
@@ -249,6 +256,7 @@ q. Quit""")
         return "QUIT"
 
 
+#----------------------------------- CAPTAIN MENU (HAS TEAM) -----------------------------------------
     def show_captain_has_team_menu(self, captain_handle: str):
         """Prints out captain menu if has team"""
 
@@ -277,6 +285,7 @@ q. Quit
         return "QUIT"
     
 
+#----------------------------------- TOURNAMENT CREATION MENU (ORGANIZER) -----------------------------------------
     def show_tournament_creation_menu(self):
         """Shows the tournament creation menu"""
 
@@ -337,6 +346,7 @@ q. Quit
         return "QUIT"
     
 
+#----------------------------------- TEAM CREATION MENU (CAPTAIN) -----------------------------------------
     def show_team_creation_menu(self, captain_handle: str):
         """Prints out team creation menu where team information is given.
         returns: "ADD PLAYERS TO TEAM" or "CANCEL" """
@@ -357,6 +367,7 @@ Team captain: {captain_handle}
         # TODO CREATE TEAM AND PLAYER MENU
 
 
+#----------------------------------- VIEW ALL TEAMS MENU (PUBLIC) -----------------------------------------
     def show_view_teams_menu(self):
         """shows list of 5 teams at a time. allows to view team info.
         returns: "TEAM INFO", "BACK", "QUIT" """
@@ -408,8 +419,61 @@ q. Quit
                 return "BACK"
             
             return "QUIT"
+
+
+#----------------------------------- VIEW ALL TOURNAMENTS MENU (PUBLIC) -----------------------------------------    
+    def show_view_tournaments_menu(self):
+        """Prints list of tournaments
+        returns: ("TOURNAMENT INFO",  tournament: object), "BACK", "QUIT"  """
+        
+        tournaments = self.__logic_api.gettournaments()
+
+        tournament_names: list[str] = [t.name for t in tournaments]
+
+        viewer = SelectFromPage(tournament_names)
+
+        #loop to view tournaments 5 at a time
+        while True:
+
+#------LIST OF TOURNAMENTS INTERFACE---------------
+            print(f"""
+---------------------------
+RU's e-Sport Extravaganza
+---------------------------
+List of tournaments
+              
+{viewer.currentPage()}
+              
+ENTER. Next page
+1-5. View tournament details
+b. Back
+q. Quit              
+""") 
+            choice = self.__prompt_options(["1", "2", "3", "4", "5", "", "b", "q"])
+
+            #select tournament by number
+            if choice.isdigit():
+                num = int(choice)
+                tournament_name = viewer.select_item_by_number(num)
+                
+                # find tournament object
+                for t in tournaments:
+                    if t.name == tournament_name:
+                        return ("TOURNAMENT INFO", t)
+                continue
+            
+            #press ENTER to go to next page
+            if choice ==  "":
+                viewer.next_page()
+                continue
+
+            if choice == "b":
+                return "BACK"
+            
+            return "QUIT"
         
 
+#----------------------------------- TEAM INFO MENU (PUBLIC) -----------------------------------------
     def show_team_info(self, team: Team):
         """Shows team information for selected team
         returns: "BACK", "HOME", "QUIT" """
@@ -448,6 +512,7 @@ q. Quit
         return "QUIT"
 
 
+#----------------------------------- TOURNAMENT INFO MENU (PUBLIC) -----------------------------------------
     def show_tournament_info(self, tournament: object):
         """Shows tournament information for selected tournament
         returns: "VIEW SCHEDULE", "VIEW STANDINGS", "BACK", "HOME", "QUIT" """
@@ -488,4 +553,3 @@ q. Quit
         if choice == "h":
             return "HOME"
         return "QUIT"
-

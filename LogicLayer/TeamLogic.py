@@ -2,6 +2,7 @@ from StorageLayer.storageApi import DataAPI
 from LogicLayer.logicHandler import logicHandler
 from Models.Player import Player
 from Models.Team import Team
+from Models.TeamCaptain import TeamCaptain
 
 class Teamlogic:
     def __init__(self, dataApi: DataAPI):
@@ -9,6 +10,7 @@ class Teamlogic:
         self.__logichandler = logicHandler()
         self.__teammodel = Team
         self.__playermodel = Player
+        self.__teamCaptainmodel = TeamCaptain
         
     
     def getTeams(self) -> list[Team]:
@@ -88,9 +90,15 @@ class Teamlogic:
         else:
             self.updateTeam(input, 'addplayer',team)
 
-        
+    def getCaptain(self, captain_input: str) -> TeamCaptain | None:
+        raw_list = self.__dataApi.loadCaptains()
+        captain_list: list[TeamCaptain] = self.__logichandler.loadmodels(self.__teamCaptainmodel, raw_list)
+        for c in captain_list:
+            if c.captainHandle.lower().strip() == captain_input.lower().strip():
+                return c
+            else:
+                return None
             
     
-
 
 

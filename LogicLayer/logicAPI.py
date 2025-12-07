@@ -58,6 +58,13 @@ class LogicAPI:
     def updatecaptain(self, input):
         """Updates given captain in file"""
         return self.__Teamlogic.updateCaptain(input)
+    
+    def getCaptains(self):
+        return self.__Teamlogic.getCaptains()
+    
+    def getTournamentbyName(self, name: str):
+        tournamentlist = self.__Tournamentmanager.getTournaments()
+        return self.__Tournamentmanager.getTournamentbyName(name, tournamentlist)
 
     def searchforteam(self, input):
         teams=self.__Teamlogic.getTeams()

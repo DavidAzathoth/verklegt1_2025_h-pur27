@@ -16,7 +16,7 @@ class UIMain:
             if self.current_screen == "MAIN MENU":
                 options: str = self.__menu_ui.show_main_menu()
                 if options == "TOURNAMENTS":
-                    self.current_screen = "LIST OF TOURNAMENTS"
+                    self.current_screen = "TOURNAMENTS MENU"
 
                 elif options == "TEAMS":
                     self.current_screen = "TEAMS MENU"
@@ -37,16 +37,33 @@ class UIMain:
                 elif options == "QUIT":
                     break
 
+#============================= TOURNAMENTS MENU LOOP =======================
+            elif self.current_screen == "TOURNAMENTS MENU":
+                options = self.__menu_ui.show_tournaments_menu()
+                if options == "PRINT LIST OF TOURNAMENTS":
+                    self.current_screen = "LIST OF TOURNAMENTS"
+                elif isinstance(options, tuple) and options[0] == "GET TOURNAMENT":
+                    selected_tournament = options[1]
+                    self.selected_tournament = selected_tournament
+                    self.current_screen = "TOURNAMENT INFO MENU"
+                    self.prev_screen = "TOURNAMENTS MENU"
+                elif options == "CANCEL":
+                    self.current_screen = "TOURNAMENTS MENU"
+                elif options == "BACK":
+                    self.current_screen = "MAIN MENU"
+                elif options == "QUIT":
+                    break
+
 #============================= LIST OF TOURNAMENTS PUBLIC MENU LOOP =======================
             elif self.current_screen == "LIST OF TOURNAMENTS":
-                options = self.__menu_ui.show_tournaments_menu()
+                options = self.__menu_ui.show_view_tournaments_menu()
                 if isinstance(options, tuple) and options[0] == "TOURNAMENT INFO":
                     selected_tournament = options[1]
                     self.selected_tournament = selected_tournament
                     self.current_screen = "TOURNAMENT INFO MENU"
-                    
+                    self.prev_screen = "LIST OF TOURNAMENTS"
                 elif options == "BACK":
-                    self.current_screen = "MAIN MENU"
+                    self.current_screen = "TOURNAMENTS MENU"
                 elif options == "QUIT":
                     break
 
@@ -61,7 +78,7 @@ class UIMain:
                     self.current_screen = "TEAM INFO MENU"
                     self.prev_screen = "TEAMS MENU"
                 elif options == "CANCEL":
-                    self.current_screen = "TEAMS"
+                    self.current_screen = "TEAMS MENU"
                 elif options == "BACK":
                     self.current_screen = "MAIN MENU"
                 elif options == "QUIT":
@@ -149,8 +166,17 @@ class UIMain:
             elif self.current_screen == "TOURNAMENT INFO MENU":
                 options: str = self.__menu_ui.show_tournament_info(self.selected_tournament)
                 if options == "BACK":
-                    self.current_screen = "LIST OF TOURNAMENTS"
+                    self.current_screen = self.prev_screen
                 elif options == "HOME":
                     self.current_screen = "MAIN MENU"
                 elif options == "QUIT":
                     break
+
+
+
+
+
+
+
+
+
