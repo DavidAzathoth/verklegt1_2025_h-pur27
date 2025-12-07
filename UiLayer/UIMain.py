@@ -6,6 +6,7 @@ class UIMain:
         logic_api = LogicAPI()
         self.__menu_ui =  MenuUI(logic_api)
         self.current_screen = "MAIN MENU"
+        self.prev_screen = ""
 
     def mainloop(self) -> None:
         """Main loop of the menus"""
@@ -43,6 +44,7 @@ class UIMain:
                     selected_tournament = options[1]
                     self.selected_tournament = selected_tournament
                     self.current_screen = "TOURNAMENT INFO MENU"
+                    
                 elif options == "BACK":
                     self.current_screen = "MAIN MENU"
                 elif options == "QUIT":
@@ -53,8 +55,13 @@ class UIMain:
                 options: str = self.__menu_ui.show_teams_menu()
                 if options == "PRINT LIST OF TEAMS":
                     self.current_screen = "VIEW TEAMS MENU"
-                elif options == "SEARCH FOR A TEAM":
-                    self.current_screen = ""
+                elif isinstance(options, tuple) and options[0] == "GET TEAM":
+                    selected_team = options[1]
+                    self.selected_team = selected_team
+                    self.current_screen = "TEAM INFO MENU"
+                    self.prev_screen = "TEAMS MENU"
+                elif options == "CANCEL":
+                    self.current_screen = "TEAMS"
                 elif options == "BACK":
                     self.current_screen = "MAIN MENU"
                 elif options == "QUIT":
@@ -112,7 +119,7 @@ class UIMain:
             elif self.current_screen == "CREATE TEAM MENU":
                 options: str = self.__menu_ui.show_team_creation_menu(self.captain_handle)
                 
-#============================= VIEW TEAMS MENU LOOP =======================
+#============================= VIEW LIST OF TEAMS MENU LOOP =======================
             elif self.current_screen == "VIEW TEAMS MENU":
                 options: str = self.__menu_ui.show_view_teams_menu()
 
@@ -120,6 +127,7 @@ class UIMain:
                     selected_team = options[1]
                     self.selected_team = selected_team
                     self.current_screen = "TEAM INFO MENU"
+                    self.prev_screen = "VIEW TEAMS MENU"
 
                 elif options == "BACK":
                     self.current_screen = "TEAMS MENU"
@@ -131,7 +139,7 @@ class UIMain:
             elif self.current_screen == "TEAM INFO MENU":
                 options: str = self.__menu_ui.show_team_info(self.selected_team)
                 if options == "BACK":
-                    self.current_screen = "VIEW TEAMS MENU"
+                    self.current_screen = self.prev_screen
                 elif options == "HOME":
                     self.current_screen = "MAIN MENU"
                 elif options ==  "QUIT":
