@@ -27,6 +27,8 @@ class DataAPI:
     def saveTournament(self,data):
         self.__tournamentData.save_tournament(data)
         return
+    def loadMatches(self):
+        return self.__matchData.load_matches()
     
     def updateTournaments(self, data):
         self.__tournamentData.update_tournaments(data)

@@ -33,6 +33,12 @@ class Teamlogic:
             if team.teamName.lower().strip() == teamname.lower().strip():
                 return team
         return None
+    
+    def get_team_by_teamID(self, teamid: str, teamlist: list[Team]) -> Team | None:
+        for team in teamlist:
+            if team.teamID.lower().strip() == teamid.lower().strip():
+                return team
+        return None
         
     
     def createteam(self, team: list):
