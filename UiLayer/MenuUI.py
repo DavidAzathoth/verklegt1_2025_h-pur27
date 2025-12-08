@@ -2,7 +2,7 @@ from Models.Team import Team
 from Models.TeamCaptain import TeamCaptain
 from LogicLayer.logicAPI import LogicAPI
 from UiLayer.selectfrompage import SelectFromPage
-from datetime import datetime
+from datetime import datetime, date
 from Models.Team import Team
 
 class MenuUI:
@@ -27,17 +27,9 @@ class MenuUI:
     def set_start_end_date(self):
         while True:
             try:
-                startdate = datetime(
-                    int(input("Start date year: ")),
-                    int(input("Start date month: ")),
-                    int(input("Start date day: "))
-                    )
+                startdate = datetime.strptime(input("Tournament start date (YYYY-MM-DD): "), "%Y-%m-%d")
                 
-                enddate = datetime(
-                    int(input("End date year: ")),
-                    int(input("End date month: ")),
-                    int(input("End date day: "))
-                    )
+                enddate = datetime.strptime(input("Tournament end date (YYYY-MM-DD): "), "%Y-%m-%d")
                 
             except ValueError:
                 print("please enter valid numbers for year, month, day")
@@ -50,6 +42,28 @@ class MenuUI:
             print(f"Startdate: {startdate.date()} \nEnd date: {enddate.date()}")
 
             return startdate, enddate
+
+
+#----------------------------------- Checks if player date of birth is valid -----------------------------------------
+    def check_player_age(self):
+        
+        minimum_age = 18
+
+        while True:
+                try:
+                    dob = datetime.strptime(input("Date of birth (YYYY-MM-DD): "), "%Y-%m-%d").date()
+                except ValueError:
+                    print("ERROR: Invalid input. Please enter a valid date")
+                    continue
+                
+                today = date.today()
+                age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+
+                if age < minimum_age:
+                    print(f"ERROR: You must be at lease {minimum_age} years old. please enter a valid age")
+                    continue
+
+                break
 
 
 #----------------------------------- MAIN MENU -----------------------------------------
@@ -82,16 +96,26 @@ q. Quit
         if choice == "3":
             return "ORGANIZER"
         if choice == "4":
-            captain_handle: str = input("Handle: ")
-            captain = self.__logic_api.getCaptain(captain_handle)
-            if captain is None:
-                print("No captain registered")
-            else:
-                team = self.__logic_api.get_team_by_captain(captain.captainHandle)
-            if team is None:
-                return ("CAPTAIN HAS NO TEAM", captain_handle)
-            else:
-                return ("CAPTAIN HAS TEAM", captain_handle)
+
+            print("\n1. Continue\n2. Cancel\n")
+            choice = self.__prompt_options(["1", "2"])
+
+            while choice != "2":
+                captain_handle: str = input("Handle: ")
+                captain = self.__logic_api.getCaptain(captain_handle)
+
+                if captain is False:
+                    print("\nERROR: Captain is not registered into the system\n")
+                    print("1. Continue\n2. Cancel")
+                    choice = self.__prompt_options(["1", "2"])
+
+                else:
+                    if captain.get('hasTeam').strip() == 'True':
+                        return ("CAPTAIN HAS TEAM", captain.get("captainHandle"))
+                    else:
+                        return ("CAPTAIN HAS NO TEAM", captain.get("captainHandle"))
+                    
+            return "BACK"
         return "QUIT"
 
 
@@ -207,12 +231,13 @@ Organizer Menu
 2. Add teams to tournament
 3. Generate schedule
 4. Update results
+5. Register a new team captain
 
 b. Back
 q. Quit""")
 #=========================================
         
-        choice = self.__prompt_options(["1", "2", "3", "4", "b", "q"])
+        choice = self.__prompt_options(["1", "2", "3", "4", "5", "b", "q"])
 
         if choice == "1":
             return "CREATE TOURNAMENT"
@@ -222,11 +247,37 @@ q. Quit""")
             return "GENERATE SCHEDULE"
         if choice == "4":
             return "UPDATE RESULTS"
+        if choice == "5":
+            while True:
+                captain_handle = input("Please enter captain handle here: ").strip()
+                
+                #Ef team captain er núþegar til þá ERROR
+                if self.__logic_api.getCaptain(captain_handle):
+                    print("ERROR: Team captain already exists, please try again.")
+                    continue
+                #Annars býr til team captain
+
+                else:
+                    print()
+                    print("-" * 50)
+                    print(f"Team captain {captain_handle} can be registered.")
+                    print("\nconfirm?\n")
+                    print("y. Yes, confirm")
+                    print("n. No, cancel")
+
+                    choice = self.__prompt_options(["y", "n"])
+                    if choice == "y":
+                        self.__logic_api.registerCaptain(captain_handle)
+                        print(f"\nTeam captain: {captain_handle} has been registered")
+                        print("\nPress ENTER to Go back\n")
+                        choice = self.__prompt_options([""])
+                    return"CANCEL"
+                
         if choice == "b":
             return "BACK"
         return "QUIT"
 
-
+   
 #----------------------------------- CAPTAIN MENU (NO TEAM) -----------------------------------------
     def show_captain_no_team_menu(self, captain_handle: str):
         """Prints out captains menu if he has no team
@@ -359,7 +410,75 @@ q. Quit
 Team creation menu
 Team captain: {captain_handle}
 """)
+
+        team_name = input("Team name: ").strip()
 #=======================================================
+
+        #Use search for team to check duplicates
+        check_team_duplicate = self.__logic_api.searchforteam((team_name))
+
+        #repeats until team name is unique and nonempty
+        while check_team_duplicate != None or team_name == "":
+
+            if team_name == "":
+                print("\nPlease enter a valid name")
+                team_name = input("Team name: ").strip()
+                check_team_duplicate = self.__logic_api.searchforteam((team_name))
+
+            else:
+                print("\nERROR: Team name already exists, please try another name")
+                team_name = input("Team name: ").strip()
+                check_team_duplicate = self.__logic_api.searchforteam((team_name))
+  
+        print("\n1. Add players to team")
+        print("2. Cancel\n")
+
+        choice = self.__prompt_options(["1", "2"])
+        if choice == "1":
+            return ("PLAYER CREATION", team_name, captain_handle)
+        return "CANCEL"
+
+
+#----------------------------------- PLAYER CREATION MENU (CAPTAIN) -----------------------------------------
+    def show_player_creation_menu(self, team_name, captain_handle):
+        """Displays the player creation menu interface"""
+        
+        #Counts members in team
+        count = 0
+        while True:
+            count += 1
+
+        #============ PLAYER CREATION MENU INTERFACE =============
+            print("""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Player creation menu
+""")
+            if count == 1:
+                handle = captain_handle
+            else:
+                handle = input("Player handle: ").strip()
+            name = input("Player name: ").strip()
+            date_of_birth = self.check_player_age()
+            address = input("Player address: ")
+            phone_num = int(input("Player phone number: ").strip())
+            
+            check_player_email: tuple = self.__logic_api.emailVerification(input("Player Email: "))
+            while check_player_email[1] == False:
+                print(check_player_email[0])
+                check_player_email: tuple = self.__logic_api.emailVerification(input("Player Email: "))
+
+            playeremail = check_player_email[0]
+            print(("Player Email: "), playeremail)
+
+            
+            choice = self.__prompt_options()
+        #=======================================================
+        count = 1
+        while True:
+            pass
+
         totalTeams = self.__logic_api.getTeams()
         newTeam = self.__logic_api.createteam([])
         newPlayer = self.__logic_api.createPlayer([])

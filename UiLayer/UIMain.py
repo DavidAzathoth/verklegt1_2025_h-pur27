@@ -34,6 +34,9 @@ class UIMain:
                     self.captain_handle = captain_handle
                     self.current_screen = "CAPTAIN HAS TEAM MENU"
 
+                elif options == "BACK":
+                    self.current_screen = "MAIN MENU"
+
                 elif options == "QUIT":
                     break
 
@@ -95,6 +98,8 @@ class UIMain:
                     self.current_screen = "CHOOSE TOURNAMENT TO GENERATE"
                 elif options == "UPDATE RESULTS":
                     self.current_screen = "CHOOSE TOURNAMENT TO UPDATE"
+                elif options == "CANCEL":
+                    self.current_screen = "ORGANIZER MENU"
                 elif options == "BACK":
                     self.current_screen = "MAIN MENU"
                 elif options == "QUIT":
