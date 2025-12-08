@@ -1,5 +1,5 @@
 class Tournament:
-    def __init__(self, venue: str, name: str, startDate: str, endDate: str, contactEmail: str, contactPhone: str, matchesList: str = '', matchHistory: str = '', teams: str = '', active: bool = True, teaminstances: list = []):
+    def __init__(self, venue: str, name: str, startDate: str, endDate: str, contactEmail: str, contactPhone: str, matchesList: str = '', matchHistory: str = '', teams: str = '', active: bool = True, bracket: dict[list] = None):
         self.contactEmail = contactEmail
         self.contactPhone = contactPhone
         self.venue = venue
@@ -10,7 +10,7 @@ class Tournament:
         self.matchHistory: list = matchHistory.split(',')
         self.teams: list = teams.split(',')
         self.active = active
-        self.teaminstances: list = teaminstances
+        self.bracket: dict[list] = bracket
     
     def createCSVString(self):
         ret_str: str = f'{self.venue},{self.name},{self.startDate},{self.endDate},{self.contactEmail},{self.contactPhone},"{",".join(self.matchesList)}","{",".join(self.matchHistory)}","{",".join(self.teams)}",{self.active}'

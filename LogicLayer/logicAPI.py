@@ -3,6 +3,7 @@ from StorageLayer.storageApi import DataAPI
 from LogicLayer.TournamentManager import Tournamentmanager
 from LogicLayer.menuLogic import MenuLogic
 from LogicLayer.BracketGenerator import BracketGenerator
+from LogicLayer.MatchLogic import MatchLogic
 from Models.Tournament import Tournament
 from Models.Team import Team
 from Models.Player import Player
@@ -16,6 +17,7 @@ class LogicAPI:
         self.__Tournamentmanager = Tournamentmanager(__dataAPI)
         self.__Playerlogic = Playerlogic(__dataAPI)
         self.__bracketgenerator = BracketGenerator()
+        self.__matchlogic = MatchLogic(__dataAPI)
         return
 
     def createteam(self, input: list):
@@ -38,6 +40,10 @@ class LogicAPI:
         return self.__Tournamentmanager.getTournaments()
     #def gettournament
     #def populateTournament(self, name: str, tournamentlist: list[Tournament]):
+
+    def gettournamentbyname(self, tournaments: list[Tournament], name: str):
+        self.__Tournamentmanager.getTournamentbyName(name, tournaments)
+
     def populateTournament(self, tournament: Tournament):
         """Populates tournament with all objects and returns it, must give tournament name and already loaded list of tournament objects"""
         #tournament = self.__Tournamentmanager.getTournamentbyName(name, tournamentlist)
@@ -113,6 +119,11 @@ class LogicAPI:
         return
     def generatebracket(self, teams):
         return self.__bracketgenerator.generatebracket(teams)
+    def roundsplayed(self, teams):
+        return self.__bracketgenerator.playingames(teams)
+    
+    def getMatchbyID(self, id: str):
+        return self.__matchlogic.getMatchbyID(id)
 
 
 ###############testing area#############

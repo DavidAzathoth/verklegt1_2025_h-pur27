@@ -27,6 +27,8 @@ class DataAPI:
     def saveTournament(self,data):
         self.__tournamentData.save_tournament(data)
         return
+    def loadMatches(self):
+        return self.__matchData.load_matches()
     
     def updateTournaments(self, data):
         self.__tournamentData.update_tournaments(data)
@@ -58,3 +60,6 @@ class DataAPI:
         return
     def updateTeams(self, data):
         self.__teamData.update_team(data)
+    def updatePlayers(self, data):
+        self.__playerData.updatePlayers(data)
+        return

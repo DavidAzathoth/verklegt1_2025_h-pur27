@@ -2,13 +2,16 @@ from StorageLayer.storageApi import DataAPI
 from LogicLayer.logicHandler import logicHandler
 from Models.Tournament import Tournament
 from Models.Team import Team
+from Models.Bracket import Bracket
 from LogicLayer.TeamLogic import Teamlogic
+from LogicLayer.MatchLogic import MatchLogic
 class Tournamentmanager:
     def __init__(self, dataApi: DataAPI):
         self.__dataApi = dataApi
         self.__logichandler = logicHandler()
         self.__tournamentmodel = Tournament
         self.__teamlogic = Teamlogic(self.__dataApi)
+        self.__matchlogic = MatchLogic(self.__dataApi)
         
 
     def createTournament(self, tournament: list):
@@ -27,11 +30,15 @@ class Tournamentmanager:
             
     def populateTournament(self, tournament: Tournament):
         teams = self.__teamlogic.getTeams()
-        #matches = implement this perhaps
-        teamobjects=list(map(lambda team: self.__teamlogic.get_team_by_teamid(team, teams), (tournament.teams)))
+        teamobjects=list(map(lambda team: self.__teamlogic.get_team_by_teamID(team, teams), (tournament.teams)))
         tournament.teams=teamobjects
         return tournament
-
+    def unpopulateTournament(self, tournament: Tournament):
+        teamids = [x.teamID for x in tournament.teams]
+        tournament.teams=teamids
+        return tournament
+    
+    
         
     def saveTournament(self,tournament: Tournament):
         self.__dataApi.saveTournament(tournament.createCSVDict())
@@ -69,6 +76,26 @@ class Tournamentmanager:
             if reg_team.teamID == team.teamID:
                 return False
         return True
+    
+    def populateBracket(self, bracket: Bracket):
+        matches = self.__matchlogic.getMatches()
+        rounds: dict[list]
+        for round in bracket.rounds.keys():
+            roundobjects = list(map(self.__matchlogic.getMatchbyID, bracket.rounds[round]))
+            print(roundobjects)
+            print(bracket.rounds)
+        return bracket
+    ###NOT IMPLEMENTED TODO
+
+
+    def unpopulateBracket(self, bracket):
+        matchids=self.__dataApi.loadMatches()
+
+#def populateTournament(self, tournament: Tournament):
+#        teams = self.__teamlogic.getTeams()
+#        teamobjects=list(map(lambda team: self.__teamlogic.get_team_by_teamID(team, teams), (tournament.teams)))
+#        tournament.teams=teamobjects
+#        return tournament
 
 
 #    def calculaterounds(self, teams: list[Team]):
