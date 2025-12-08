@@ -56,3 +56,6 @@ class DataAPI:
         return
     def updateTeams(self, data):
         self.__teamData.update_team(data)
+    def updatePlayers(self, data):
+        self.__playerData.updatePlayers(data)
+        return

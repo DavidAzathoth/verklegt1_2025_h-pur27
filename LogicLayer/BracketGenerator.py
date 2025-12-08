@@ -62,7 +62,7 @@ class BracketGenerator:
             for t in range(int(tempextrarounds)):
                 '''If this returns pop from empty string error then the amount of teams is under 16 validate before generating bracket'''
                 team_A=teams.pop(0)
-                team_B=f'{roundsplayed.get('1')[t].team_A} or {roundsplayed.get('1')[t].team_B}'
+                team_B=f'{roundsplayed.get("1")[t].team_A} or {roundsplayed.get("1")[t].team_B}'
                 matchid=f'{letterslol[random.randint(0,6)]}{random.randint(0,9)}'
                 roundsplayed[f'{i}'].append(self.__matchmodel(matchid,team_A.teamName,team_B))
         return roundsplayed
