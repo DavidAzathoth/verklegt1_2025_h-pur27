@@ -512,7 +512,7 @@ Create player {handle}?
                 if choice == "1":
                     continue
                 if choice == "2":
-                    return #TODO save information
+                    newTeam = self.__logic_api.create
                 return "CANCEL"
         
         print("""

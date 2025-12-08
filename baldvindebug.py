@@ -17,9 +17,9 @@ from LogicLayer.menuLogic import MenuLogic
 from datetime import datetime
 
 """Main loop test"""
-run = UIMain()
+# run = UIMain()
 
-run.mainloop()
+# run.mainloop()
 
 
 """Test for Email verification"""
@@ -51,3 +51,5 @@ run.mainloop()
 
 # print(dob.date())
 
+run = MenuUI()
+run.show_player_creation_menu()
