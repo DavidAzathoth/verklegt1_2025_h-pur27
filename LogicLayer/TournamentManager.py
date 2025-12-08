@@ -76,19 +76,25 @@ class Tournamentmanager:
             if reg_team.teamID == team.teamID:
                 return False
         return True
-    
+    def saveBracket(self, bracket: Bracket):
+        bracket=self.unpopulateBracket(bracket)
+        self.__dataApi.saveBracket(bracket.createCSVDict())
+
     def populateBracket(self, bracket: Bracket):
-        matches = self.__matchlogic.getMatches()
         rounds: dict[list]
         for round in bracket.rounds.keys():
+            matchesinround=bracket.rounds.get(round)
             roundobjects = list(map(self.__matchlogic.getMatchbyID, bracket.rounds.get(round)))
-            print(roundobjects)
-            print(bracket.rounds)
+            bracket.rounds[round]=roundobjects
         return bracket
 
 
-    def unpopulateBracket(self, bracket):
-        matchids=self.__dataApi.loadMatches()
+    def unpopulateBracket(self, bracket: Bracket):
+        for round in bracket.rounds.keys():
+            matchids=[match.matchID for match in bracket.rounds.get(round)]
+            bracket.rounds[round] = matchids
+        return bracket
+
 
 #def populateTournament(self, tournament: Tournament):
 #        teams = self.__teamlogic.getTeams()

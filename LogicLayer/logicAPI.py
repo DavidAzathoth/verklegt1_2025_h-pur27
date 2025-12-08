@@ -114,5 +114,6 @@ class LogicAPI:
     
     def getMatchbyID(self, id: str):
         return self.__matchlogic.getMatchbyID(id)
-
+    def saveBracket(self, bracket):
+        self.__Tournamentmanager.saveBracket(bracket)
 ###############testing area#############
