@@ -16,6 +16,7 @@ class MenuLogic:
         return teamString
 
     def emailverification(self, email: str):
+        email = email.lower().strip().replace(" ", "")
         ret_string = ""
         allgood = True
         atcount=0
@@ -34,11 +35,15 @@ class MenuLogic:
                 atposition=i
                 #print('-'*i+'^')
             if '.'==x:
-                if email[i+1]=='@':
-                    extradotpos=i
-                if email[i+1]=='.':
-                    cons_dots_pos=i
-                    cons_dots=True
+                try:
+                    if email[i+1]=='@':
+                        extradotpos=i
+                    if email[i+1]=='.':
+                        cons_dots_pos=i
+                        cons_dots=True
+                except IndexError:
+                    ret_string = "Top level domain is missing"
+                    allgood = False
 
  
         if email.find('@') ==0:

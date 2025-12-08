@@ -23,14 +23,14 @@ class BracketGenerator:
         rounds=int(math.log2(teamcount_in_a_perfect_scenario_that_perfectly_fits_inside_a_bracket))
 
         return rounds, extramatches
+    
     def generatebracket(self, teams: list[Team]):
         letterslol=['A','B','C','D','E','F','G']
         gamedata=self.playingames(teams)
         roundsplayed: dict ={}
-        totalteams=len(teams)
         totalrounds=gamedata[0]
         extrarounds=gamedata[1]
-        extrateams=[]
+        tempextrarounds=0
         isodd=1
 
         if extrarounds>0:
@@ -40,29 +40,30 @@ class BracketGenerator:
              teamsinround = (2**(totalrounds))/2
         for i in range(1,isodd+1):
             if extrarounds>0:
-                roundsplayed[(f'round{i}')]=[]
+                roundsplayed[(f'{i}')]=[]
                 
                 for y in range(extrarounds):
                     team_A: Team = teams.pop(0)
                     team_B: Team = teams.pop(0)
                     matchid=f'{letterslol[random.randint(0,6)]}{random.randint(0,9)}' #note: matchid can have duplicates in this configuration, consider changing it
-                    roundsplayed[(f'round{i}')].append((self.__matchmodel(matchid,team_A.teamName,team_B.teamName)))
+                    roundsplayed[(f'{i}')].append((self.__matchmodel(matchid,team_A.teamName,team_B.teamName)))
                 tempextrarounds=extrarounds
                 extrarounds=0
                 continue
 
-            roundsplayed[f'round{i}'] = []
+            roundsplayed[f'{i}'] = []
 
             for y in range(int(teamsinround-tempextrarounds)):    
                 team_A = teams.pop(0)
                 team_B = teams.pop(0)
                 matchid=f'{letterslol[random.randint(0,6)]}{random.randint(0,9)}'
-                roundsplayed[f'round{i}'].append(self.__matchmodel(matchid,team_A.teamName,team_B.teamName))
+                roundsplayed[f'{i}'].append(self.__matchmodel(matchid,team_A.teamName,team_B.teamName))
 
             for t in range(int(tempextrarounds)):
+                '''If this returns pop from empty string error then the amount of teams is under 16 validate before generating bracket'''
                 team_A=teams.pop(0)
-                team_B=f'{roundsplayed.get('round1')[t].team_A} or {roundsplayed.get('round1')[t].team_B}'
+                team_B=f'{roundsplayed.get('1')[t].team_A} or {roundsplayed.get('1')[t].team_B}'
                 matchid=f'{letterslol[random.randint(0,6)]}{random.randint(0,9)}'
-                roundsplayed[f'round{i}'].append(self.__matchmodel(matchid,team_A.teamName,team_B))
+                roundsplayed[f'{i}'].append(self.__matchmodel(matchid,team_A.teamName,team_B))
         return roundsplayed
     

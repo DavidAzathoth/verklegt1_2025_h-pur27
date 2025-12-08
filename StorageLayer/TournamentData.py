@@ -8,3 +8,5 @@ class TournamentData:
     def save_tournament(self,data):
         self.__storagehandler.saveFile(self.FILE,data)
         return
+    def update_tournaments(self, data):
+        self.__storagehandler.editFile(self.FILE, data)

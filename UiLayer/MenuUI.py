@@ -1,3 +1,5 @@
+from Models.Team import Team
+from Models.Team import Team
 from LogicLayer.logicAPI import LogicAPI
 from UiLayer.selectfrompage import SelectFromPage
 from datetime import datetime
@@ -90,7 +92,7 @@ q. Quit
         """Prints list of tournaments
         returns: ("TOURNAMENT INFO",  tournament: object), "BACK", "QUIT"  """
         
-        tournaments = self.__logic_api.gettournament()
+        tournaments = self.__logic_api.gettournaments()
 
         tournament_names: list[str] = [t.name for t in tournaments]
 
@@ -161,10 +163,26 @@ q. Quit
         if choice == "1":
             return "PRINT LIST OF TEAMS"
         if choice == "2":
-            team = input("Team name: ").strip().lower()
-            return "SEARCH FOR A TEAM"
+            team_input = input("Please enter the team name: ")
+            team = self.__logic_api.searchforteam(team_input)
+            while team == None:
+                print("\nERROR: team name invalid.")
+                print("\nContinue?")
+                print("\ny. Yes (continue)")
+                print("n. No (cancel)")
+
+                choice = self.__prompt_options(["y", "n"])
+                if choice == "y":
+                    team_input = input("Please enter the team name: ")
+                    team = self.__logic_api.searchforteam(team_input)
+                else: 
+                    return "CANCEL"
+                
+            return ("GET TEAM", team)
+
         if choice == "b":
             return "BACK"
+        
         return "QUIT"
 
 
@@ -279,7 +297,8 @@ Please enter tournament details:
             print(check_contact_email[0])
             check_contact_email: tuple = self.__logic_api.emailVerification(input("ContactEmail: "))
         contactemail = check_contact_email[0]
-        contactphone = int(input("ContactPhone: "))
+        print(("ContactEmail: "), contactemail)
+        contactphone = int(input("ContactPhone: ").strip())
 
 #===========================================================
 
@@ -391,7 +410,7 @@ q. Quit
             return "QUIT"
         
 
-    def show_team_info(self, team: object):
+    def show_team_info(self, team: Team):
         """Shows team information for selected team
         returns: "BACK", "HOME", "QUIT" """
 

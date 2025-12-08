@@ -28,6 +28,19 @@ class Teamlogic:
                 return t
         return None
     
+    def get_team_by_teamname(self, teamname: str, teamlist: list[Team]) -> Team | None:
+        for team in teamlist:
+            if team.teamName.lower().strip() == teamname.lower().strip():
+                return team
+        return None
+    
+    def get_team_by_teamID(self, teamid: str, teamlist: list[Team]) -> Team | None:
+        for team in teamlist:
+            if team.teamID.lower().strip() == teamid.lower().strip():
+                return team
+        return None
+        
+    
     def createteam(self, team: list):
         return self.__logichandler.createModel(self.__teammodel,team)
 
@@ -43,12 +56,7 @@ class Teamlogic:
         captainslist.pop(index)
         captainslist.insert(index,edited_captain)
         return self.__dataApi.updateCaptains(captainslist)
-    
-    def searchForTeam(self, teamname):
-        allteams = self.getTeams()
-        for team in allteams:
-            if teamname in team:
-                return team
+
             
     def getTeamMembers(self, team: Team):
         ret_list = []
@@ -63,8 +71,8 @@ class Teamlogic:
         teams: list[Team]=self.__dataApi.loadTeams()
         index=teams.index(team.createCSVDict())
         teams.remove(team.createCSVDict())
-
-
+        if team.roster[0] == '':  #Clean empty string from list
+            team.roster.pop(0)
         if operation=='addplayer':
             team.roster.append(input.playerGamertag)
             team.playerinstances.append(input)
@@ -73,15 +81,18 @@ class Teamlogic:
         elif operation=='updatelosses':
             team.losses+=1
         
-        teams.insert(index,team.createCSVDict())
+        teams.insert(index, team.createCSVDict())
         self.__dataApi.updateTeams(teams)
             
         return team
     
-    def addplayertoteam(self, input: list, team: Team):
-        player = self.__logichandler.createModel(Player,input)
-        self.__dataApi.savePlayer(player.createCSVDict())
-        self.updateTeam(player, 'addplayer',team)
+    def addplayertoteam(self, input, team: Team):
+        if type(input) == list:
+            player = self.__logichandler.createModel(Player,input)
+            self.__dataApi.savePlayer(player.createCSVDict())
+            self.updateTeam(player, 'addplayer',team)
+        else:
+            self.updateTeam(input, 'addplayer',team)
 
         
             
