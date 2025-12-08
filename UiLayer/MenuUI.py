@@ -432,14 +432,14 @@ Team captain: {captain_handle}
                 check_team_duplicate = self.__logic_api.searchforteam((team_name))
 
         teamID = len(self.__logic_api.getTeams()) + 1
-        team = self.__logic_api.createteam([teamID, team_name])
+        newteam = self.__logic_api.createteam([teamID, team_name])
         print("""
 1. Add players to team
 2. Cancel
 """)
         choice = self.__prompt_options(["1", "2"])
         if choice == "1":
-            return ("PLAYER CREATION", team, captain_handle)
+            return ("PLAYER CREATION", newteam, captain_handle)
         return "CANCEL"
 
 
@@ -448,7 +448,7 @@ Team captain: {captain_handle}
         """Displays the player creation menu interface"""
         
         #stores players before creating
-        player_list = []
+        player_list: list[Player] = []
         player_count = 1
         while player_count != 5:
 
@@ -512,7 +512,9 @@ Create player {handle}?
                 if choice == "1":
                     continue
                 if choice == "2":
-                    newTeam = self.__logic_api.create
+                    for player in player_list:
+                        self.__logic_api.savePlayer(player)
+                        self.__logic_api.addplayer(player, team)
                 return "CANCEL"
         
         print("""
