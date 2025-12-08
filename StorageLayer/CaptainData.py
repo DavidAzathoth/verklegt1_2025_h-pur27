@@ -7,3 +7,6 @@ class CaptainData:
         return self.__storagehandler.retrieveFile(self.FILE)
     def update_captains(self,data):
         self.__storagehandler.editFile(self.FILE,data)
+    def save_captain(self,data):
+        self.__storagehandler.saveFile(self.FILE,data)
+        return        
