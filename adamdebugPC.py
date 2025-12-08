@@ -9,17 +9,17 @@ from LogicLayer.PlayerLogic import Playerlogic
 from StorageLayer.storageApi import DataAPI
 #from Models.ViewTeamsMenu import ShowTeams
 
-da = DataAPI()
-llapi=LogicAPI()
-pllogic = Playerlogic(da)
-inputlisti=['1','2','3',4,5,'6']
+#da = DataAPI()
+#llapi=LogicAPI()
+#pllogic = Playerlogic(da)
+#inputlisti=['1','2','3',4,5,'6']
 #print(llapi.createteam(inputlisti).createCSVDict())
-teams=llapi.getTeams()
-team=teams[1]
-print(team.playerinstances)
-for player in team.playerinstances:
-    print(player.teamID)
-print(team.roster)
+#teams=llapi.getTeams()
+#team=teams[1]
+#print(team.playerinstances)
+#for player in team.playerinstances:
+    #print(player.teamID)
+#print(team.roster)
 #teams=llapi.getTeams()
 #for team in teams:
 #    print(team.teamID)
@@ -70,3 +70,6 @@ print(team.roster)
 #    print(f,e,d,c,b,a)
 #listi=[1,2,3,4,5,6]
 #printnumbers(*listi)
+da = DataAPI()
+logic = Playerlogic(da)
+print(logic.editplayer("FalleN", "address", "6"))

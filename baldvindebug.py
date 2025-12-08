@@ -14,12 +14,12 @@ from Models.Player import Player
 from StorageLayer.storageApi import DataAPI
 from UiLayer.UIMain import UIMain
 from LogicLayer.menuLogic import MenuLogic
-
+from datetime import datetime
 
 """Main loop test"""
-run = UIMain()
+# run = UIMain()
 
-run.mainloop()
+# run.mainloop()
 
 
 """Test for Email verification"""
@@ -33,3 +33,23 @@ run.mainloop()
 #     while run[1] == False:
 #         print(run[0])
 #         run = menu_logic.emailverification(input("Email: "))
+
+
+# if (LogicAPI().getCaptain("FalleN")):
+#     print('Captain exists!')
+
+
+# MenuUI(LogicAPI()).show_team_creation_menu("baldvin")
+
+
+# while True:
+#     try:
+#         dob = datetime.strptime(input("Date of birth (YYYY-MM-DD): "), "%Y-%m-%d")
+#         break
+#     except ValueError:
+#         print("ERROR: Invalid input. Please enter a valid date")
+
+# print(dob.date())
+
+run = MenuUI()
+run.show_player_creation_menu()

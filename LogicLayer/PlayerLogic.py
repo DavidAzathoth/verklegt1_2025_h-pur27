@@ -10,7 +10,7 @@ class Playerlogic:
         self.__playermodel = Player
         
 
-    def createplayer(self, player: list):
+    def createplayer(self, player: list) -> Player:
         return self.__logichandler.createModel(self.__playermodel,player)
 
 
@@ -28,7 +28,29 @@ class Playerlogic:
         for player in players:
             if player.playerGamertag==tag:
                 return player
-    def editplayer(self, attribute: str):
+    def editplayer(self, gamertag: str, attribute: str, newValue: str):
         if attribute in self.PLAYERATTRIBUTES:
-            pass 
-        #TODO IMPLEMENT
+            players = self.getplayers()
+            for p in players:
+                if p.playerGamertag == gamertag:
+                    if attribute == "teamID":
+                        p.teamID = newValue
+                    elif attribute == "playerGamertag":
+                        p.playerGamertag = newValue
+                    elif attribute == "fullname":
+                        p.fullname = newValue
+                    elif attribute == "phoneNumber":
+                        p.phoneNumber = newValue
+                    elif attribute == "emailAddress":
+                        p.emailAddress = newValue
+                    elif attribute == "address":
+                        p.address = newValue
+                    elif attribute == "link":
+                        p.link = newValue
+                    elif attribute == "dateOfBirth":
+                        p.dateOfBirth = newValue
+
+                    data = [pl.createCSVDict() for pl in players]
+                    self.__dataApi.updatePlayers(data)
+                    return True
+        return False    

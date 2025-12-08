@@ -50,6 +50,10 @@ class DataAPI:
         self.__playerData.savePlayer(data)
         return
     
+    def saveCaptain(self, data):
+        self.__captainData.save_captain(data)
+        return
+    
     def loadMatches(self):
         return self.__matchData.load_matches()
     
@@ -61,5 +65,10 @@ class DataAPI:
 
     def loadBrackets(self):
         return self.__bracketData.loadBrackets()
+      
     def saveBracket(self, data):
         self.__bracketData.saveBracket(data)
+        
+    def updatePlayers(self, data):
+        self.__playerData.updatePlayers(data)
+        return
