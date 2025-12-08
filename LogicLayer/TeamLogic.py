@@ -45,6 +45,9 @@ class Teamlogic:
     
     def createteam(self, team: list) -> Team:
         return self.__logichandler.createModel(self.__teammodel,team)
+    
+    def saveTeam(self, team: Team):
+        self.__dataApi.saveTeam(team)
 
     
     def updateCaptain(self, captainHandle):

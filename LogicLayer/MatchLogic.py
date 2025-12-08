@@ -21,7 +21,8 @@ class MatchLogic:
             if match.matchID == id:
                 return match
         return None
-    def updateMatch(match: Match):
+    def updateMatch(self, match: Match):
+        matches = self.getMatchesCSV
         pass
 
 
