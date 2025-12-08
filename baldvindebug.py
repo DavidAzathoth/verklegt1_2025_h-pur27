@@ -17,9 +17,9 @@ from LogicLayer.menuLogic import MenuLogic
 from datetime import datetime
 
 """Main loop test"""
-# run = UIMain()
+run = UIMain()
 
-# run.mainloop()
+run.mainloop()
 
 
 """Test for Email verification"""
@@ -42,11 +42,12 @@ from datetime import datetime
 # MenuUI(LogicAPI()).show_team_creation_menu("baldvin")
 
 
-while True:
-    try:
-        dob = datetime.strptime(input("Date of birth (YYYY-MM-DD): "), "%Y-%m-%d")
-        break
-    except ValueError:
-        print("ERROR: Invalid input. Please enter a valid date")
+# while True:
+#     try:
+#         dob = datetime.strptime(input("Date of birth (YYYY-MM-DD): "), "%Y-%m-%d")
+#         break
+#     except ValueError:
+#         print("ERROR: Invalid input. Please enter a valid date")
 
-print(dob.date())
+# print(dob.date())
+

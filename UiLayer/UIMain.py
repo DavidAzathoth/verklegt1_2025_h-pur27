@@ -109,7 +109,7 @@ class UIMain:
             elif self.current_screen == "CAPTAIN HAS NO TEAM MENU":
                 options: str = self.__menu_ui.show_captain_no_team_menu(self.captain_handle)
                 if options == "CREATE TEAM":
-                    return "CREATE TEAM MENU"
+                    self.current_screen = "CREATE TEAM MENU"
                 elif options == "BACK":
                     self.current_screen = "MAIN MENU"
                 elif options == "QUIT":
@@ -137,9 +137,16 @@ class UIMain:
                 elif options == "QUIT":
                     break
 
-#============================= TOURNAMENT CREATION MENU LOOP =======================
+#============================= TEAM CREATION MENU LOOP =======================
             elif self.current_screen == "CREATE TEAM MENU":
                 options: str = self.__menu_ui.show_team_creation_menu(self.captain_handle)
+                if isinstance(options, tuple) and options[0] == "PLAYER CREATION":
+                    team = options[1]
+                    self.team = team
+                    self.captain_handle = options[2]
+                    self.current_screen = "CREATE PLAYER MENU"
+                elif options == "CANCEL":
+                    self.current_screen = "CAPTAIN HAS NO TEAM MENU"
                 
 #============================= VIEW LIST OF TEAMS MENU LOOP =======================
             elif self.current_screen == "VIEW TEAMS MENU":
@@ -177,11 +184,8 @@ class UIMain:
                 elif options == "QUIT":
                     break
 
-
-
-
-
-
-
-
-
+#============================= PLAYER CREATION MENU LOOP =======================
+            elif self.current_screen == "CREATE PLAYER MENU":
+                options = self.__menu_ui.show_player_creation_menu(self.team, self.captain_handle)
+                if options == "CANCEL":
+                    self.current_screen = "CREATE TEAM MENU"

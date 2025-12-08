@@ -18,7 +18,7 @@ class LogicAPI:
         self.__bracketgenerator = BracketGenerator()
         return
 
-    def createteam(self, input: dict):
+    def createteam(self, input: list):
         return self.__Teamlogic.createteam(input)
         
     
@@ -73,7 +73,7 @@ class LogicAPI:
         teams=self.__Teamlogic.getTeams()
         return self.__Teamlogic.get_team_by_teamname(input, teams)
     
-    def createPlayer(self, input):
+    def createPlayer(self, input: list) -> Player:
         """Creates a player, does not automatically store in file"""
         return self.__Playerlogic.createplayer(input)
     

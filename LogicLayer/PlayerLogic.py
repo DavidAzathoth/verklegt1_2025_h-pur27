@@ -10,7 +10,7 @@ class Playerlogic:
         self.__playermodel = Player
         
 
-    def createplayer(self, player: list):
+    def createplayer(self, player: list) -> Player:
         return self.__logichandler.createModel(self.__playermodel,player)
 
 
@@ -31,4 +31,4 @@ class Playerlogic:
     def editplayer(self, attribute: str):
         if attribute in self.PLAYERATTRIBUTES:
             pass 
-        #TODO IMPLEMENT
+        #TODO IMPLEMENT RIGHT NOW

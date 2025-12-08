@@ -4,6 +4,7 @@ from LogicLayer.logicAPI import LogicAPI
 from UiLayer.selectfrompage import SelectFromPage
 from datetime import datetime, date
 from Models.Team import Team
+from Models.Player import Player
 
 class MenuUI:
     def __init__(self, logic_api: LogicAPI):
@@ -429,55 +430,104 @@ Team captain: {captain_handle}
                 print("\nERROR: Team name already exists, please try another name")
                 team_name = input("Team name: ").strip()
                 check_team_duplicate = self.__logic_api.searchforteam((team_name))
-  
-        print("\n1. Add players to team")
-        print("2. Cancel\n")
 
+        teamID = len(self.__logic_api.getTeams()) + 1
+        team = self.__logic_api.createteam([teamID, team_name])
+        print("""
+1. Add players to team
+2. Cancel
+""")
         choice = self.__prompt_options(["1", "2"])
         if choice == "1":
-            return ("PLAYER CREATION", team_name, captain_handle)
+            return ("PLAYER CREATION", team, captain_handle)
         return "CANCEL"
 
 
 #----------------------------------- PLAYER CREATION MENU (CAPTAIN) -----------------------------------------
-    def show_player_creation_menu(self, team_name, captain_handle):
+    def show_player_creation_menu(self, team: Team, captain_handle: str):
         """Displays the player creation menu interface"""
         
-        #Counts members in team
-        count = 0
-        while True:
-            count += 1
+        #stores players before creating
+        player_list = []
+        player_count = 1
+        while player_count != 5:
 
-        #============ PLAYER CREATION MENU INTERFACE =============
-            print("""
+#============ PLAYER CREATION MENU INTERFACE =============
+            print(f"""
 ---------------------------
  RU's e-Sport Extravaganza
 ---------------------------
 Player creation menu
+                  
+Add player {player_count}
 """)
-            if count == 1:
+#=========================================================
+            
+            #Fill in list for player, first player is team captain
+            if player_count == 1:
                 handle = captain_handle
+                print(f"player handle: {handle}")
             else:
                 handle = input("Player handle: ").strip()
             name = input("Player name: ").strip()
-            date_of_birth = self.check_player_age()
+            dob = self.check_player_age()
             address = input("Player address: ")
             phone_num = int(input("Player phone number: ").strip())
+            teamID = len(self.__logic_api.getTeams()) + 1
             
             check_player_email: tuple = self.__logic_api.emailVerification(input("Player Email: "))
             while check_player_email[1] == False:
                 print(check_player_email[0])
                 check_player_email: tuple = self.__logic_api.emailVerification(input("Player Email: "))
-
             playeremail = check_player_email[0]
             print(("Player Email: "), playeremail)
 
+            link = input("Player link: ").strip()
+
+            #confirm player creation
+            print(f"""
+Create player {handle}?
+
+1. Yes
+2. Cancel                  
+""")
+            choice = self.__prompt_options(["1", "2"])
+            if choice == "1":
+                player = self.__logic_api.createPlayer([teamID, handle, name, phone_num, playeremail, address, link, dob])
+                player_list.append(player)
+                player_count += 1
+            else:
+                return "CANCEL"
             
-            choice = self.__prompt_options()
-        #=======================================================
-        count = 1
-        while True:
-            pass
+            if player_count < 3:
+                continue
+                
+            else: 
+                print("""
+1. Add another player?
+2. Confirm creation
+3. Cancel
+""")
+                choice = self.__prompt_options(["1", "2", "3"])
+                if choice == "1":
+                    continue
+                if choice == "2":
+                    return #TODO save information
+                return "CANCEL"
+        
+        print("""
+1. Confirm creation
+2. Cancel              
+""")
+        choice = self.__prompt_options(["1", "2"]) 
+        if choice == "1":
+            return #TODO save information
+        return "CANCEL"
+            
+                
+
+            
+
 
         totalTeams = self.__logic_api.getTeams()
         newTeam = self.__logic_api.createteam([])

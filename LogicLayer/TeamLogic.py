@@ -37,7 +37,7 @@ class Teamlogic:
         return None
         
     
-    def createteam(self, team: list):
+    def createteam(self, team: list) -> Team:
         return self.__logichandler.createModel(self.__teammodel,team)
 
     
