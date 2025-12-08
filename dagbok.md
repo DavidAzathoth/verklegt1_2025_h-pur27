@@ -111,6 +111,9 @@ Byrjuðum að forrita og skipuleggja hver gerir hvað
   1. Halda áfram að vinna saman á logic
   2. Halda áfram að vinna í UI
 ### Misstum því miður annan meðlim en samvinna gengur vel og erum bjartsýnir.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Vika 3
 ## 08/12/25 Adam, Baldvin Davíd
 Í dag vorum við mikið að hugsa um modelin og hvernig þau koma saman
 - Í dag
@@ -122,6 +125,7 @@ Byrjuðum að forrita og skipuleggja hver gerir hvað
   1. Klára team og player creation
   2. Gera ui virkni fyrir bracket og schedule generation
   3. Gera virkni sem vistar öllum upplýsingum á pökkuðum tournament(overwrite)
+
 
 
 
