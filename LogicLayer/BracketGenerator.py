@@ -2,6 +2,7 @@ from StorageLayer.storageApi import DataAPI
 from Models.Bracket import Bracket
 from Models.Match import Match
 from Models.Team import Team
+from Models.Tournament import Tournament
 import math
 import random
 
@@ -25,7 +26,9 @@ class BracketGenerator:
 
         return rounds, extramatches
     
-    def generatebracket(self, teams: list[Team]):
+    def generatebracket(self, tournament: Tournament):
+        """Generate inital bracket for tournament, accounting for a non base 2 number of teams(16,32,64...)"""
+        teams = tournament.teams
         existingmatches=self.__dataapi.loadMatches()
         existingmatchids=[x.get('matchID') for x in existingmatches]
         num=1
@@ -54,7 +57,7 @@ class BracketGenerator:
                             num+=1
                             break
                         else:
-                             i+=1
+                             num+=1
                     roundsplayed[(f'{i}')].append((self.__matchmodel(matchid,team_A.teamName,team_B.teamName)))
                 tempextrarounds=extrarounds
                 extrarounds=0
@@ -71,7 +74,7 @@ class BracketGenerator:
                         num+=1
                         break
                     else:
-                        i+=1
+                        num+=1
                 roundsplayed[f'{i}'].append(self.__matchmodel(matchid,team_A.teamName,team_B.teamName))
 
             for t in range(int(tempextrarounds)):
@@ -83,10 +86,15 @@ class BracketGenerator:
                         if matchid not in existingmatchids:
                             num+=1
                             break
+                        else:
+                            num+=1
                 roundsplayed[f'{i}'].append(self.__matchmodel(matchid,team_A.teamName,team_B))
         #Save all matches before returning
-        for round in roundsplayed.keys():
-            for match in roundsplayed.get(round):
-                self.__dataapi.saveMatch(match.createCSVDict())
-        return roundsplayed
-    
+        #for round in roundsplayed.keys():
+        #    for match in roundsplayed.get(round):
+        #        self.__dataapi.saveMatch(match.createCSVDict())
+        bracket=Bracket(tournament.name,roundsplayed)
+        tournament.bracket=bracket
+        return
+    def updateBracket(self, bracket):
+        pass

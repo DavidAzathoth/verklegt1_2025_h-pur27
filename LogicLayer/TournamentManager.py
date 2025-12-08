@@ -3,6 +3,7 @@ from LogicLayer.logicHandler import logicHandler
 from Models.Tournament import Tournament
 from Models.Team import Team
 from Models.Bracket import Bracket
+from Models.Match import Match
 from LogicLayer.TeamLogic import Teamlogic
 from LogicLayer.MatchLogic import MatchLogic
 class Tournamentmanager:
@@ -10,8 +11,11 @@ class Tournamentmanager:
         self.__dataApi = dataApi
         self.__logichandler = logicHandler()
         self.__tournamentmodel = Tournament
+        self.__bracketmodel = Bracket
+        self.__matchmodel = Match
         self.__teamlogic = Teamlogic(self.__dataApi)
         self.__matchlogic = MatchLogic(self.__dataApi)
+        
         
 
     def createTournament(self, tournament: list):
@@ -31,8 +35,12 @@ class Tournamentmanager:
     def populateTournament(self, tournament: Tournament):
         teams = self.__teamlogic.getTeams()
         teamobjects=list(map(lambda team: self.__teamlogic.get_team_by_teamID(team, teams), (tournament.teams)))
-        tournament.teams=teamobjects
+        bracket = self.getBracketByTournament(tournament)
+        tournament.bracket = bracket
+        tournament.teams = teamobjects
+
         return tournament
+    
     def unpopulateTournament(self, tournament: Tournament):
         teamids = [x.teamID for x in tournament.teams]
         tournament.teams=teamids
@@ -76,14 +84,32 @@ class Tournamentmanager:
             if reg_team.teamID == team.teamID:
                 return False
         return True
+    
+    def getBrackets(self)->list[Bracket]:
+        raw_list = self.__dataApi.loadBrackets()
+        bracketlist: list[Bracket] = self.__logichandler.loadmodels(self.__bracketmodel, raw_list)
+        for bracket in bracketlist:
+            bracket.rounds=eval(bracket.rounds)
+        return bracketlist
+    
+    def getBracketByTournament(self,tournament: Tournament):
+        bracketlist = self.getBrackets()
+        bracket: Bracket
+        for bracket in bracketlist:
+            if bracket.tournamentname==tournament.name:
+                self.populateBracket(bracket)
+                return bracket
+        return
+            
+
     def saveBracket(self, bracket: Bracket):
         bracket=self.unpopulateBracket(bracket)
         self.__dataApi.saveBracket(bracket.createCSVDict())
 
+
     def populateBracket(self, bracket: Bracket):
         rounds: dict[list]
         for round in bracket.rounds.keys():
-            matchesinround=bracket.rounds.get(round)
             roundobjects = list(map(self.__matchlogic.getMatchbyID, bracket.rounds.get(round)))
             bracket.rounds[round]=roundobjects
         return bracket

@@ -59,5 +59,7 @@ class DataAPI:
     def updateTeams(self, data):
         self.__teamData.update_team(data)
 
+    def loadBrackets(self):
+        return self.__bracketData.loadBrackets()
     def saveBracket(self, data):
         self.__bracketData.saveBracket(data)

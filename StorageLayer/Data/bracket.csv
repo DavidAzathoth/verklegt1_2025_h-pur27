@@ -1,2 +1,2 @@
 tournamentname,rounds
-HAhringurinn,"{'1': ['M1', 'M2', 'M3'], '2': ['M4', 'M5', 'M6', 'M7', 'M8', 'M9', 'M10', 'M11']}"
+HAhringurinn,"{'1': [<Models.Match.Match object at 0x000002530ED72CF0>, <Models.Match.Match object at 0x000002530EE1F110>, <Models.Match.Match object at 0x000002530EE1F250>, <Models.Match.Match object at 0x000002530ED47100>, <Models.Match.Match object at 0x000002530ED475C0>, <Models.Match.Match object at 0x000002530EE4E7B0>, <Models.Match.Match object at 0x000002530EE1A250>, <Models.Match.Match object at 0x000002530EE1A690>]}"
