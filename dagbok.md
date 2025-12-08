@@ -120,11 +120,11 @@ Byrjuðum að forrita og skipuleggja hver gerir hvað
   1. Create team virkni í menu (Baldvin)
   2. Gerði fall sem pakkar tournament klasarit með öðrum klasaritum (Davíd)
   3. Gerði logic til að skila liðum sem passa geta verið bætt í tournament (Adam)
-### Erum með hausverk vegna klasaritum
 - Á morgun
   1. Klára team og player creation
   2. Gera ui virkni fyrir bracket og schedule generation
   3. Gera virkni sem vistar öllum upplýsingum á pökkuðum tournament(overwrite)
+### Erum með hausverk vegna klasaritum
 
 
 
