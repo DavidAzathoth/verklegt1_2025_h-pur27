@@ -81,11 +81,10 @@ class Tournamentmanager:
         matches = self.__matchlogic.getMatches()
         rounds: dict[list]
         for round in bracket.rounds.keys():
-            roundobjects = list(map(self.__matchlogic.getMatchbyID, bracket.rounds[round]))
+            roundobjects = list(map(self.__matchlogic.getMatchbyID, bracket.rounds.get(round)))
             print(roundobjects)
             print(bracket.rounds)
         return bracket
-    ###NOT IMPLEMENTED TODO
 
 
     def unpopulateBracket(self, bracket):
