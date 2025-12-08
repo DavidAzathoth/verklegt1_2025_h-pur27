@@ -42,12 +42,12 @@ class LogicAPI:
     #def populateTournament(self, name: str, tournamentlist: list[Tournament]):
 
     def gettournamentbyname(self, tournaments: list[Tournament], name: str):
-        self.__Tournamentmanager.getTournamentbyName(name, tournaments)
+        return self.__Tournamentmanager.getTournamentbyName(name, tournaments)
 
     def populateTournament(self, tournament: Tournament):
         """Populates tournament with all objects and returns it, must give tournament name and already loaded list of tournament objects"""
         #tournament = self.__Tournamentmanager.getTournamentbyName(name, tournamentlist)
-        return self.__Tournamentmanager.populateTournament(tournament)
+        self.__Tournamentmanager.populateTournament(tournament)
         
 
     def createtournament(self, input):
@@ -106,7 +106,7 @@ class LogicAPI:
     
     def addplayer(self, input: list[Player], team: Team):
         """Adds player to team. Input is a list to generate the player and team is the team object"""
-        return self.__Teamlogic.addplayertoteam(input, team)
+        return self.__Teamlogic.updateTeam(input, 'addplayers',team)
 
     def validateTeam(self, team: Team):
         """Returns False if team has reached maximum players (5)"""
@@ -124,6 +124,9 @@ class LogicAPI:
     
     def getMatchbyID(self, id: str):
         return self.__matchlogic.getMatchbyID(id)
+    def saveBracket(self, bracket):
+        self.__Tournamentmanager.saveBracket(bracket)
 
-
+    def saveTeam(self, team: Team):
+        self.__Teamlogic.saveTeam(team)
 ###############testing area#############

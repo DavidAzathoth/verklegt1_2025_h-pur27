@@ -1,10 +1,10 @@
 from StorageLayer.storageHandler import StorageHandler
-class MatchData:
+class BracketData:
     def __init__(self, storagehandler: StorageHandler):
+        self.FILE = 'StorageLayer/Data/bracket.csv'
         self.__storagehandler = storagehandler
-        self.FILE = 'StorageLayer/Data/matches.csv'
-    def load_matches(self):
+
+    def loadBrackets(self):
         return self.__storagehandler.retrieveFile(self.FILE)
-    def save_match(self, data):
-        self.__storagehandler.saveFile(self.FILE, data)
-        return
+    def saveBracket(self, bracket):
+        self.__storagehandler.saveFile(self.FILE, bracket)

@@ -2,12 +2,14 @@ from StorageLayer.storageApi import DataAPI
 from Models.Bracket import Bracket
 from Models.Match import Match
 from Models.Team import Team
+from Models.Tournament import Tournament
 import math
 import random
 
 class BracketGenerator:
     def __init__(self):
         self.__matchmodel=Match
+        self.__dataapi=DataAPI()
     
         pass
 
@@ -24,8 +26,12 @@ class BracketGenerator:
 
         return rounds, extramatches
     
-    def generatebracket(self, teams: list[Team]):
-        letterslol=['A','B','C','D','E','F','G']
+    def generatebracket(self, tournament: Tournament):
+        """Generate inital bracket for tournament, accounting for a non base 2 number of teams(16,32,64...)"""
+        teams = tournament.teams
+        existingmatches=self.__dataapi.loadMatches()
+        existingmatchids=[x.get('matchID') for x in existingmatches]
+        num=1
         gamedata=self.playingames(teams)
         roundsplayed: dict ={}
         totalrounds=gamedata[0]
@@ -42,10 +48,16 @@ class BracketGenerator:
             if extrarounds>0:
                 roundsplayed[(f'{i}')]=[]
                 
-                for y in range(extrarounds):
+                for x in range(extrarounds):
                     team_A: Team = teams.pop(0)
                     team_B: Team = teams.pop(0)
-                    matchid=f'{letterslol[random.randint(0,6)]}{random.randint(0,9)}' #note: matchid can have duplicates in this configuration, consider changing it
+                    while True:
+                        matchid=f'M{len(existingmatches)+num}' #note: matchid can have duplicates in this configuration, consider changing it
+                        if matchid not in existingmatchids:
+                            num+=1
+                            break
+                        else:
+                             num+=1
                     roundsplayed[(f'{i}')].append((self.__matchmodel(matchid,team_A.teamName,team_B.teamName)))
                 tempextrarounds=extrarounds
                 extrarounds=0
@@ -56,14 +68,33 @@ class BracketGenerator:
             for y in range(int(teamsinround-tempextrarounds)):    
                 team_A = teams.pop(0)
                 team_B = teams.pop(0)
-                matchid=f'{letterslol[random.randint(0,6)]}{random.randint(0,9)}'
+                while True:
+                    matchid=f'M{len(existingmatches)+num}' #note: matchid can have duplicates in this configuration, consider changing it
+                    if matchid not in existingmatchids:
+                        num+=1
+                        break
+                    else:
+                        num+=1
                 roundsplayed[f'{i}'].append(self.__matchmodel(matchid,team_A.teamName,team_B.teamName))
 
             for t in range(int(tempextrarounds)):
                 '''If this returns pop from empty string error then the amount of teams is under 16 validate before generating bracket'''
                 team_A=teams.pop(0)
-                team_B=f'{roundsplayed.get("1")[t].team_A} or {roundsplayed.get("1")[t].team_B}'
-                matchid=f'{letterslol[random.randint(0,6)]}{random.randint(0,9)}'
+                team_B=f'{roundsplayed.get('1')[t].team_A} or {roundsplayed.get('1')[t].team_B}'
+                while True:
+                        matchid=f'M{len(existingmatches)+num}' #note: matchid can have duplicates in this configuration, consider changing it
+                        if matchid not in existingmatchids:
+                            num+=1
+                            break
+                        else:
+                            num+=1
                 roundsplayed[f'{i}'].append(self.__matchmodel(matchid,team_A.teamName,team_B))
-        return roundsplayed
-    
+        #Save all matches before returning
+        #for round in roundsplayed.keys():
+        #    for match in roundsplayed.get(round):
+        #        self.__dataapi.saveMatch(match.createCSVDict())
+        bracket=Bracket(tournament.name,roundsplayed)
+        tournament.bracket=bracket
+        return
+    def updateBracket(self, bracket):
+        pass
