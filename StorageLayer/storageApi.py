@@ -48,6 +48,10 @@ class DataAPI:
         self.__playerData.savePlayer(data)
         return
     
+    def saveCaptain(self, data):
+        self.__captainData.save_captain(data)
+        return
+    
     def loadMatches(self):
         return self.__matchData.load_matches()
     

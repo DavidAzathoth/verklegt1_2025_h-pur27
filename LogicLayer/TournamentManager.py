@@ -25,7 +25,7 @@ class Tournamentmanager:
     
     def getTournamentbyName(self, name: str, tournamentlist: list[Tournament]):
         for tournament in tournamentlist:
-            if name==tournament.name:
+            if name.lower().strip() == tournament.name.lower().strip():
                 return tournament
             
     def populateTournament(self, tournament: Tournament):

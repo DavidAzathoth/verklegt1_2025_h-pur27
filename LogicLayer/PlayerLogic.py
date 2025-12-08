@@ -10,7 +10,7 @@ class Playerlogic:
         self.__playermodel = Player
         
 
-    def createplayer(self, player: list):
+    def createplayer(self, player: list) -> Player:
         return self.__logichandler.createModel(self.__playermodel,player)
 
 

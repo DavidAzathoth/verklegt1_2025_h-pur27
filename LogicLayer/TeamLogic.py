@@ -2,6 +2,7 @@ from StorageLayer.storageApi import DataAPI
 from LogicLayer.logicHandler import logicHandler
 from Models.Player import Player
 from Models.Team import Team
+from Models.TeamCaptain import TeamCaptain
 
 class Teamlogic:
     def __init__(self, dataApi: DataAPI):
@@ -9,6 +10,7 @@ class Teamlogic:
         self.__logichandler = logicHandler()
         self.__teammodel = Team
         self.__playermodel = Player
+        self.__teamCaptainmodel = TeamCaptain
         
     
     def getTeams(self) -> list[Team]:
@@ -41,13 +43,12 @@ class Teamlogic:
         return None
         
     
-    def createteam(self, team: list):
+    def createteam(self, team: list) -> Team:
         return self.__logichandler.createModel(self.__teammodel,team)
 
     
     def updateCaptain(self, captainHandle):
-        captains = self.__dataApi.loadCaptains()
-        captainslist = captains
+        captainslist: list[dict] = self.__dataApi.loadCaptains()
         for captain in captainslist:
             if captain.get('captainHandle') == captainHandle:
                 index = captainslist.index(captain)
@@ -57,6 +58,10 @@ class Teamlogic:
         captainslist.insert(index,edited_captain)
         return self.__dataApi.updateCaptains(captainslist)
 
+    def registerCaptain(self, captainHandle):
+        new_captain_info: dict = {"captainHandle":captainHandle, "hasTeam":False}
+        self.__dataApi.saveCaptain(new_captain_info)
+        return
             
     def getTeamMembers(self, team: Team):
         ret_list = []
@@ -94,9 +99,13 @@ class Teamlogic:
         else:
             self.updateTeam(input, 'addplayer',team)
 
-        
+    def getCaptain(self, captain_input: str):
+        raw_list: list[dict] = self.__dataApi.loadCaptains()
+        for c in raw_list:
+            if (c.get('captainHandle')).lower().strip() == captain_input.lower().strip():
+                return c
+        return False
             
     
-
 
 

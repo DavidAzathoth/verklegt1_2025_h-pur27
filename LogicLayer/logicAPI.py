@@ -20,7 +20,7 @@ class LogicAPI:
         self.__matchlogic = MatchLogic(__dataAPI)
         return
 
-    def createteam(self, input: dict):
+    def createteam(self, input: list):
         return self.__Teamlogic.createteam(input)
         
     
@@ -64,12 +64,22 @@ class LogicAPI:
     def updatecaptain(self, input):
         """Updates given captain in file"""
         return self.__Teamlogic.updateCaptain(input)
+    
+    def getCaptain(self, captainHandle: str):
+        return self.__Teamlogic.getCaptain(captainHandle)
+    
+    def registerCaptain(self, captainHandle):
+        return self.__Teamlogic.registerCaptain(captainHandle)
+    
+    def getTournamentbyName(self, name: str):
+        tournamentlist = self.__Tournamentmanager.getTournaments()
+        return self.__Tournamentmanager.getTournamentbyName(name, tournamentlist)
 
     def searchforteam(self, input):
         teams=self.__Teamlogic.getTeams()
         return self.__Teamlogic.get_team_by_teamname(input, teams)
     
-    def createPlayer(self, input):
+    def createPlayer(self, input: list) -> Player:
         """Creates a player, does not automatically store in file"""
         return self.__Playerlogic.createplayer(input)
     
@@ -94,7 +104,7 @@ class LogicAPI:
         """Verifies if email is valid"""
         return self.__Menulogic.emailverification(email)
     
-    def addplayer(self, input, team: Team):
+    def addplayer(self, input: list[Player], team: Team):
         """Adds player to team. Input is a list to generate the player and team is the team object"""
         return self.__Teamlogic.addplayertoteam(input, team)
 
