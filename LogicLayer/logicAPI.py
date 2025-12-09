@@ -54,9 +54,11 @@ class LogicAPI:
         templist = ["HA", "HAringurinn", "20 12 2025", "24 12 2025", "blabla@gmail.com", "1234567"]
         #TODO check tournament for duplicates
         return self.__Tournamentmanager.createTournament(input)
+    
     def saveTournament(self, tournament: Tournament):
         self.__Tournamentmanager.saveTournament(tournament)
         return
+    
     def addTeamtoTournament(self, team: Team,tournament: Tournament):
         """Adds team to tournament, both parameters must be an object. Returns false if the team is already in the tournament"""
         self.__Tournamentmanager.updateTournament(tournament, team, 'addteam')
@@ -94,6 +96,7 @@ class LogicAPI:
     def savePlayer(self, player: Player):
         """Store player to file"""
         self.__Playerlogic.saveplayer(player)
+    
     def getPlayer_teamID(self):
         """# Not implemented #"""
         teams = self.getTeams()
@@ -112,18 +115,22 @@ class LogicAPI:
         """Returns False if team has reached maximum players (5)"""
         if len(team.roster)==5:
             return False
+        
     def updatescore(self, team: Team, option: str):
         """Updates win or losses of team, options are updatewins and updatelosses
         \noptions: 'updatewins', 'updatelosses'"""
         self.__Teamlogic.updateTeam(None, option, team)
         return
+    
     def generatebracket(self, teams):
         return self.__bracketgenerator.generatebracket(teams)
+    
     def roundsplayed(self, teams):
         return self.__bracketgenerator.playingames(teams)
     
     def getMatchbyID(self, id: str):
         return self.__matchlogic.getMatchbyID(id)
+    
     def saveBracket(self, bracket):
         self.__Tournamentmanager.saveBracket(bracket)
 
