@@ -38,7 +38,6 @@ class BracketGenerator:
         extrarounds=gamedata[1]
         tempextrarounds=0
         isodd=1
-        numberofteams=len(teams)
         teamnum=0
 
         if extrarounds>0:
