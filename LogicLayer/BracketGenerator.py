@@ -89,12 +89,46 @@ class BracketGenerator:
                         else:
                             num+=1
                 roundsplayed[f'{i}'].append(self.__matchmodel(matchid,team_A.teamName,team_B))
-        #Save all matches before returning
-        #for round in roundsplayed.keys():
-        #    for match in roundsplayed.get(round):
-        #        self.__dataapi.saveMatch(match.createCSVDict())
         bracket=Bracket(tournament.name,roundsplayed)
         tournament.bracket=bracket
         return
-    def updateBracket(self, bracket):
-        pass
+    
+    
+    
+
+    def updatebracket(self, roundsplayed : dict, finished_round : int, winners : list[str]):
+        
+        existingmatches = self.__dataapi.loadMatches()
+        existingids = [row.get('matchID') for row in existingmatches]
+
+        for round_key in roundsplayed:
+            for m in roundsplayed[round_key]:
+                existingids.append(m.matchID)
+
+        num = 1
+
+        next_round = finished_round + 1
+        next_round_key = str(next_round)
+        roundsplayed[next_round_key] = []
+
+        i = 0
+
+        while i < len(winners):
+                team_A_name = winners[i]
+                team_B_name = winners[i+1]
+            
+                while True:
+                    matchid = f'M{len(existingmatches) + num}'
+                    if matchid not in existingids:
+                        existingids.append(matchid)
+                        num += 1
+                        break
+                    else:
+                        num += 1
+                match = self.__matchmodel(matchid, team_A_name, team_B_name)
+
+                roundsplayed[next_round_key].append(match)
+
+                i += 2
+                
+        return roundsplayed
