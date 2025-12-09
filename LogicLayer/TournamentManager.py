@@ -113,6 +113,23 @@ class Tournamentmanager:
             roundobjects = list(map(self.__matchlogic.getMatchbyID, bracket.rounds.get(round)))
             bracket.rounds[round]=roundobjects
         return bracket
+    
+
+    def availableteams(self, tournament : Tournament):
+        all_teams = self.__teamlogic.getTeams()
+        teamIDs = []
+        for tID in tournament.teams:
+            tID = tID.strip()
+            if tID != "":
+                teamIDs.append(tID)
+        available = []
+        for team in all_teams:
+            if team.teamID not in teamIDs:
+                available.append(team)    
+        return available
+    
+
+    ###NOT IMPLEMENTED TODO
 
 
     def unpopulateBracket(self, bracket: Bracket):

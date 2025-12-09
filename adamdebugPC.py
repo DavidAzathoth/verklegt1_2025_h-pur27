@@ -11,7 +11,7 @@ from StorageLayer.storageApi import DataAPI
 
 #da = DataAPI()
 #llapi=LogicAPI()
-#pllogic = Playerlogic(da)
+
 #inputlisti=['1','2','3',4,5,'6']
 #print(llapi.createteam(inputlisti).createCSVDict())
 #teams=llapi.getTeams()
@@ -70,6 +70,12 @@ from StorageLayer.storageApi import DataAPI
 #    print(f,e,d,c,b,a)
 #listi=[1,2,3,4,5,6]
 #printnumbers(*listi)
-da = DataAPI()
-logic = Playerlogic(da)
-print(logic.editplayer("FalleN", "address", "6"))
+#tournaments = llapi.gettournaments()
+#t = tournaments[0]
+#da = DataAPI()
+#logic = Playerlogic(da)
+#available = llapi.availableteams(t)
+#print(logic.editplayer("FalleN", "address", "6"))
+#print("Teams available to add:")
+#for team in available:
+    #print(team.teamID, team.teamName)
