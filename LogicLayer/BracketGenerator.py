@@ -80,7 +80,7 @@ class BracketGenerator:
             for t in range(int(tempextrarounds)):
                 '''If this returns pop from empty string error then the amount of teams is under 16 validate before generating bracket'''
                 team_A=teams.pop(0)
-                team_B=f'{roundsplayed.get('1')[t].team_A} or {roundsplayed.get('1')[t].team_B}'
+                team_B=f'{roundsplayed.get("1")[t].team_A} or {roundsplayed.get("1")[t].team_B}'
                 while True:
                         matchid=f'M{len(existingmatches)+num}' #note: matchid can have duplicates in this configuration, consider changing it
                         if matchid not in existingmatchids:
@@ -96,41 +96,18 @@ class BracketGenerator:
     
     
 
-    def updatebracket(self, roundsplayed : dict, finished_round : int, winners : list[str]):
+    def updatebracket(self, bracket):
         
-        existingmatches = self.__dataapi.loadMatches()
-        existingids = [row.get('matchID') for row in existingmatches]
+        all_matches: list[Match] = []
+        for round_key, match_list in bracket.rounds.items():
+            all_matches.extend(match_list)
+        
+        existing_rows = self.__dataapi.loadMatches()
+        rows_by_id = {row["matchID"]: row for row in existing_rows}
 
-        for round_key in roundsplayed:
-            for m in roundsplayed[round_key]:
-                existingids.append(m.matchID)
-
-        num = 1
-
-        next_round = finished_round + 1
-        next_round_key = str(next_round)
-        roundsplayed[next_round_key] = []
-
-        i = 0
-
-        while i < len(winners):
-                team_A_name = winners[i]
-                team_B_name = winners[i+1]
-            
-                while True:
-                    matchid = f'M{len(existingmatches) + num}'
-                    if matchid not in existingids:
-                        existingids.append(matchid)
-                        num += 1
-                        break
-                    else:
-                        num += 1
-                match = self.__matchmodel(matchid, team_A_name, team_B_name)
-
-                roundsplayed[next_round_key].append(match)
-
-                self.__dataapi.saveMatch(match.createCSVdict())
-
-                i += 2
-                
-        return roundsplayed
+        for m in all_matches:
+            rows_by_id[m.matchID] = m.createCSVDict()
+        
+        updated_rows = list(rows_by_id.values())
+        self.__dataapi.updateMatches(updated_rows)
+        return

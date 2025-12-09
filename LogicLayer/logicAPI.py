@@ -133,6 +133,6 @@ class LogicAPI:
     def saveTeam(self, team: Team):
         self.__Teamlogic.saveTeam(team)
     
-    def updateBracket(self, roundsplayed:dict, finished_round: int, winners: list[str]):
-        return self.__bracketgenerator.updatebracket(roundsplayed, finished_round, winners)
+    def updateBracket(self, bracket):
+        return self.__bracketgenerator.updatebracket(bracket)
 ###############testing area#############
