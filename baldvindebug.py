@@ -23,8 +23,6 @@ run = UIMain()
 
 run.mainloop()
 
-
-
 # teams=llapi.getTeams()
 # for team in teams:
 #     print(team.createCSVDict())
