@@ -1,5 +1,5 @@
 teamID,teamName,roster,wins,losses,captainHandle
-A1,FURIA,"FalleN,yuurih,YEKINDAR,KSCERATO,moloday,Testplayer",9,0,FalleN
+A1,FURIA,"FalleN,yuurih,YEKINDAR,KSCERATO,moloday,Testplayer",3,0,FalleN
 A2,Vitality,"apEX,ropz,zywOo,flameZ,mezii",0,0,apEX
 A3,Falcons,"NiKo,TeSeS,m0NESY,kyxsan,kyousuke",0,0,NiKo
 A4,MOUZ,"Brollan,torzsi,Spinx,jimpphat,xertioN",0,0,Brollan
@@ -26,8 +26,7 @@ C6,FUT,"dem0n,lauNX,Krabeni,cmtry,dziugss",0,0,dem0n
 C7,PARIVISION,"Jame,BELCHONOKK,AW,xiELO,nota",0,0,Jame
 C8,Ninjas in Pyjamas,"Snappi,sjuush,r1nkle,ewjerkz,xKacpersky",0,0,Snappi
 C9,fnatic,"KRIMZ,blameF,fEAR,jambo,jackasmo",0,0,KRIMZ
-d1,sadfasf,"bla,blablabal,balbalblabla",0,0,bla
-d2,testteam,"player1,player2,player3",0,0,player1
+32,testteam,"['player1', 'player2', 'player3']",0,0,player1
+32,testteam,"player1,player2,player3",0,0,player1
 A12,FURIA2,"FalleN,yuurih,YEKINDAR,KSCERATO,moloday",0,0,FalleN
 A12,FURIA2,"FalleN,yuurih,YEKINDAR,KSCERATO,moloday",0,0,FalleN
-32,Team Norris,"Sheriff_Norris,Disciple1,Disciple2",0,0,Sheriff_Norris

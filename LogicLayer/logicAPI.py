@@ -38,15 +38,12 @@ class LogicAPI:
     
     def gettournaments(self):
         return self.__Tournamentmanager.getTournaments()
-    #def gettournament
-    #def populateTournament(self, name: str, tournamentlist: list[Tournament]):
 
     def gettournamentbyname(self, tournaments: list[Tournament], name: str):
         return self.__Tournamentmanager.getTournamentbyName(name, tournaments)
 
     def populateTournament(self, tournament: Tournament):
         """Populates tournament with all objects and returns it, must give tournament name and already loaded list of tournament objects"""
-        #tournament = self.__Tournamentmanager.getTournamentbyName(name, tournamentlist)
         self.__Tournamentmanager.populateTournament(tournament)
         
 
@@ -54,9 +51,14 @@ class LogicAPI:
         templist = ["HA", "HAringurinn", "20 12 2025", "24 12 2025", "blabla@gmail.com", "1234567"]
         #TODO check tournament for duplicates
         return self.__Tournamentmanager.createTournament(input)
+    
     def saveTournament(self, tournament: Tournament):
         self.__Tournamentmanager.saveTournament(tournament)
         return
+    def updateTournament(self, tournament: Tournament,):
+        """Updates all information about tournament, brackets, matches, teams and overwrites the files with the updated information"""
+        self.__Tournamentmanager.updateTournament(tournament,None, 'updateall')
+    
     def addTeamtoTournament(self, team: Team,tournament: Tournament):
         """Adds team to tournament, both parameters must be an object. Returns false if the team is already in the tournament"""
         self.__Tournamentmanager.updateTournament(tournament, team, 'addteam')
@@ -71,9 +73,9 @@ class LogicAPI:
     def registerCaptain(self, captainHandle):
         return self.__Teamlogic.registerCaptain(captainHandle)
     
-    def getTournamentbyName(self, name: str):
-        tournamentlist = self.__Tournamentmanager.getTournaments()
-        return self.__Tournamentmanager.getTournamentbyName(name, tournamentlist)
+    #def getTournamentbyName(self, name: str):
+    #    tournamentlist = self.__Tournamentmanager.getTournaments()
+    #    return self.__Tournamentmanager.getTournamentbyName(name, tournamentlist)
 
     def searchforteam(self, input):
         teams=self.__Teamlogic.getTeams()
@@ -112,10 +114,10 @@ class LogicAPI:
         """Returns False if team has reached maximum players (5)"""
         if len(team.roster)==5:
             return False
-    def updatescore(self, team: Team, option: str):
+    def updatescore(self, team: Team, option: str, amount: int = None):
         """Updates win or losses of team, options are updatewins and updatelosses
         \noptions: 'updatewins', 'updatelosses'"""
-        self.__Teamlogic.updateTeam(None, option, team)
+        self.__Teamlogic.updateTeam(None, option, team, amount)
         return
     def generatebracket(self, teams):
         return self.__bracketgenerator.generatebracket(teams)
@@ -124,12 +126,27 @@ class LogicAPI:
     
     def getMatchbyID(self, id: str):
         return self.__matchlogic.getMatchbyID(id)
+      
+    def updateMatchWinner(self, match, team):
+        self.__matchlogic.updateMatch(match, team, 'updatewinner')
+
     
     def availableteams(self, tournament : Tournament):
         return self.__Tournamentmanager.availableteams(tournament)
+      
     def saveBracket(self, bracket):
         self.__Tournamentmanager.saveBracket(bracket)
 
     def saveTeam(self, team: Team):
         self.__Teamlogic.saveTeam(team)
+
+    def updateBracket(self, bracket):
+        """Updates all edited matches inside a tournament, Perhaps automate this by updating tournament directly"""
+        self.__Tournamentmanager.updateBracket(bracket)
+
+    def returnMatchWinner(self, match, scores):
+        return self.__matchlogic.returnMatchWinnerconfirmation(match, scores)
+    
+    def confirmMatchWinner(self, match, scores):
+        self.__matchlogic.confirmMatchWinner(match, scores)
 ###############testing area#############
