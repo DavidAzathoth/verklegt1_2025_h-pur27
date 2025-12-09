@@ -1,7 +1,7 @@
 venue,name,startDate,endDate,contactEmail,contactPhone,matchesList,matchHistory,teams,active
-HA,HAhringurinn,01/01/2025,01/13/2025,orgmaster@email.is,+354 123 1234,,,"A1,A2,A3,A4,A5,A6,A7,A8,A9,B1,B2,B3,B4,B5,B6,B7,32,B8,B9,C1,C2,C3,C4,C5,C6,C7,C8,C9,d1,d2,A12,33",True
-Ha,ha,ha,ha,ha,ha,,,"A1,A2,A3",True
-HA,HAringurinn,25,25,sdf,asdf,,,"A4,A3,A1",True
+HA,HAhringurinn,01/01/2025,01/13/2025,orgmaster@email.is,+354 123 1234,,,"A1,A2,A3,A4,A5,A6,A7,A8,A9,B1,B2,B3,B4,B5,B6,B7",True
+Ha,ha,ha,ha,ha,ha,,,,True
+HA,HAringurinn,25,25,sdf,asdf,,,,True
 HA,HAringurinn,2025-12-12 00:00:00,2025-12-15 00:00:00,All good.,8989123,,,,True
 HA,HAringurinn,2025-12-12,2025-12-15,All good.,8912381,,,,True
 HA,HAringurin,2025-12-12,2025-12-15,@ symbol is missing.,12301951,,,,True

@@ -6,6 +6,7 @@ from datetime import datetime, date
 from Models.Team import Team
 from Models.Player import Player
 from Models.Tournament import Tournament
+import time
 
 class MenuUI:
     def __init__(self, logic_api: LogicAPI):
@@ -742,7 +743,7 @@ q. Quit
 
 
 #----------------------------------- TOURNAMENT INFO MENU (PUBLIC) -----------------------------------------
-    def show_tournament_info(self, tournament: object):
+    def show_tournament_info(self, tournament: Tournament):
         """Shows tournament information for selected tournament
         returns: "VIEW SCHEDULE", "VIEW STANDINGS", "BACK", "HOME", "QUIT" """
 
@@ -784,24 +785,73 @@ q. Quit
         return "QUIT"
     
 
-#----------------------------------- ADD TEAMS TO TOURNAMENT MENU (PUBLIC) -----------------------------------------
+#----------------------------------- ADD TEAMS TO TOURNAMENT MENU (ORGANIZER)) -----------------------------------------
     def show_add_teams_to_tournament_menu(self, tournament: Tournament):
         """displays menu to add teams into specified tournament"""
 
-        print(f"""
----------------------------
+        self.__logic_api.populateTournament(tournament)
+
+
+        #print 5 items per page loop
+        while True:
+
+            print(f"""
+----------------------------------------
  RU's e-Sport Extravaganza
----------------------------
-Add teams to tournament: {tournament}
+----------------------------------------
+Add teams to tournament: {tournament.name}
 
 Teams currently registered:
 """)
-        teams_list: list[Team] = tournament.teams
-        for team in teams_list:
-            print("-", team)
+            
+            registered_teams: list[Team] = tournament.teams
+            try:
+                for team in registered_teams:
+                    print("-", team.teamName)
+            except:
+                print("- No teams have been registered")
 
-        while True:
-            print("""
+            available_teams: list[Team] = self.__logic_api.availableteams(tournament)
+
+            team_names = [t.teamName.strip() for t in available_teams]
+
+            viewer = SelectFromPage(team_names)
+
+            print(f"""
 Available teams:
+                  
+{viewer.currentPage()}
+
+ENTER. Next page
+1-5. Add team
+b. Back
+h. Home (Organizer)
+q. Quit 
 """)
 
+            choice = self.__prompt_options(["1", "2", "3", "4", "5", "", "h", "b", "q"])
+
+            #select team by number
+            if choice.isdigit():
+                num = int(choice)
+                team_name = viewer.select_item_by_number(num)
+
+                # find team object
+                for t in available_teams:
+                    if t.teamName == team_name:
+                        self.__logic_api.addTeamtoTournament(t, tournament)
+                continue
+
+            if choice ==  "":
+                viewer.next_page()
+                continue
+
+            if choice == "b":
+                return "BACK"
+            
+            if choice == "h":
+                answer = "HOME"
+                break
+            
+            return "QUIT"
+        return answer
