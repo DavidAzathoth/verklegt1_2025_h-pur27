@@ -75,18 +75,11 @@ class Teamlogic:
                 ret_list.append(player)
         return ret_list
     
-    def updateTeam(self, input = None, operation: str = None, team: Team = None):
-        teams: list[dict]=self.__dataApi.loadTeams()
-
-        index = None
-        for i, t in enumerate(teams):
-            if str(t["teamID"]) == str(team.teamID):
-                index = i
-                break
-            
-        teams.pop(index)
-
-        if team.roster and team.roster[0] == '':  #Clean empty string from list
+    def updateTeam(self, input = None, operation: str = None, team: Team = None, amount = None):
+        teams: list[Team]=self.__dataApi.loadTeams()
+        index=teams.index(team.createCSVDict())
+        teams.remove(team.createCSVDict())
+        if team.roster[0] == '':  #Clean empty string from list
             team.roster.pop(0)
         if operation=='addplayers':
             for player in input:

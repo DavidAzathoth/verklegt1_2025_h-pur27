@@ -72,3 +72,7 @@ class DataAPI:
     def updatePlayers(self, data):
         self.__playerData.updatePlayers(data)
         return
+    
+    def updateMatch(self, data):
+        self.__matchData.update_match(data)
+        return

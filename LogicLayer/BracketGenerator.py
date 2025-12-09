@@ -38,6 +38,8 @@ class BracketGenerator:
         extrarounds=gamedata[1]
         tempextrarounds=0
         isodd=1
+        numberofteams=len(teams)
+        teamnum=0
 
         if extrarounds>0:
              teamsinround = (2**(totalrounds))/2
@@ -49,8 +51,10 @@ class BracketGenerator:
                 roundsplayed[(f'{i}')]=[]
                 
                 for x in range(extrarounds):
-                    team_A: Team = teams.pop(0)
-                    team_B: Team = teams.pop(0)
+                    team_A: Team = teams[teamnum]
+                    teamnum+=1
+                    team_B: Team = teams[teamnum]
+                    teamnum+=1
                     while True:
                         matchid=f'M{len(existingmatches)+num}' #note: matchid can have duplicates in this configuration, consider changing it
                         if matchid not in existingmatchids:
@@ -65,9 +69,11 @@ class BracketGenerator:
 
             roundsplayed[f'{i}'] = []
 
-            for y in range(int(teamsinround-tempextrarounds)):    
-                team_A = teams.pop(0)
-                team_B = teams.pop(0)
+            for y in range(int(teamsinround-tempextrarounds)):   
+                team_A = teams[teamnum]
+                teamnum+=1
+                team_B = teams[teamnum]
+                teamnum+=1
                 while True:
                     matchid=f'M{len(existingmatches)+num}' #note: matchid can have duplicates in this configuration, consider changing it
                     if matchid not in existingmatchids:
@@ -79,7 +85,8 @@ class BracketGenerator:
 
             for t in range(int(tempextrarounds)):
                 '''If this returns pop from empty string error then the amount of teams is under 16 validate before generating bracket'''
-                team_A=teams.pop(0)
+                teamnum+=1
+                team_A=[teamnum]
                 team_B=f'{roundsplayed.get('1')[t].team_A} or {roundsplayed.get('1')[t].team_B}'
                 while True:
                         matchid=f'M{len(existingmatches)+num}' #note: matchid can have duplicates in this configuration, consider changing it
@@ -90,9 +97,9 @@ class BracketGenerator:
                             num+=1
                 roundsplayed[f'{i}'].append(self.__matchmodel(matchid,team_A.teamName,team_B))
         #Save all matches before returning
-        #for round in roundsplayed.keys():
-        #    for match in roundsplayed.get(round):
-        #        self.__dataapi.saveMatch(match.createCSVDict())
+        for round in roundsplayed.keys():
+            for match in roundsplayed.get(round):
+               self.__dataapi.saveMatch(match.createCSVDict())
         bracket=Bracket(tournament.name,roundsplayed)
         tournament.bracket=bracket
         return
