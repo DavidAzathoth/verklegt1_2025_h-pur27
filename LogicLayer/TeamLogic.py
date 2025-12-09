@@ -94,9 +94,3 @@ class Teamlogic:
         else:
             self.updateTeam(input, 'addplayer',team)
 
-        
-            
-    
-
-
-

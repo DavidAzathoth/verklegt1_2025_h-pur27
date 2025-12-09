@@ -85,6 +85,15 @@ class Tournamentmanager:
             print(roundobjects)
             print(bracket.rounds)
         return bracket
+    
+
+    def availableteams(self):
+        all_teams = self.__teamlogic.getTeams()
+        tournaments = self.getTournaments()
+        teamIDs = []
+        return
+    
+
     ###NOT IMPLEMENTED TODO
 
 

@@ -114,6 +114,9 @@ class LogicAPI:
     
     def getMatchbyID(self, id: str):
         return self.__matchlogic.getMatchbyID(id)
+    
+    def availableteams(self):
+        return self.__Tournamentmanager.availableteams()
 
 
 ###############testing area#############
