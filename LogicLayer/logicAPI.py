@@ -104,9 +104,9 @@ class LogicAPI:
         """Verifies if email is valid"""
         return self.__Menulogic.emailverification(email)
     
-    def addplayer(self, input: list[Player], team: Team):
-        """Adds player to team. Input is a list to generate the player and team is the team object"""
-        return self.__Teamlogic.updateTeam(input, 'addplayers',team)
+    def addplayers(self, players: list[Player], team: Team):
+        """Adds players to team. players is a list to generate the player and team is the team object"""
+        return self.__Teamlogic.updateTeam(players, 'addplayers', team)
 
     def validateTeam(self, team: Team):
         """Returns False if team has reached maximum players (5)"""
