@@ -1,9 +1,9 @@
-matchID,team_A,team_B,matchWinner,playerScore,matchPlayed
-M1,FURIA,Vitality,,{},False
-M2,Falcons,MOUZ,,{},False
-M3,The MongolZ,Spirit,,{},False
-M4,Natus Vincere,G2,,{},False
-M5,Aurora,paiN,,{},False
-M6,Astralis,FaZe,,{},False
-M7,3DMAX,Legacy,,{},False
-M8,Liquid,B8,Liquid,"{'Liquid': '12', 'B8': '3'}",True
+﻿matchID,team_A,team_B,matchWinner,playerScore,matchPlayed
+M1,FURIA,Vitality,,{},FALSE
+M2,Falcons,MOUZ,,{},FALSE
+M3,The MongolZ,Spirit,,{},FALSE
+M4,Natus Vincere,G2,,{},FALSE
+M5,Aurora,paiN,,{},FALSE
+M6,Astralis,FaZe,,{},FALSE
+M7,3DMAX,Legacy,,{},FALSE
+M8,Liquid,B8,Liquid,"{'Liquid': '12', 'B8': '3'}",TRUE
