@@ -1,15 +1,17 @@
 from Models.Team import Team
-from Models.Team import Team
+from Models.TeamCaptain import TeamCaptain
 from LogicLayer.logicAPI import LogicAPI
 from UiLayer.selectfrompage import SelectFromPage
-from datetime import datetime
+from datetime import datetime, date
 from Models.Team import Team
+from Models.Player import Player
 
 class MenuUI:
     def __init__(self, logic_api: LogicAPI):
         self.__logic_api = logic_api
 
 
+#----------------------------------- Generic option prompts -----------------------------------------
     def __prompt_options(self, valid_options: list[str]):
         valid_lower = [i.lower() for i in valid_options]
 
@@ -22,20 +24,13 @@ class MenuUI:
             print(f"Invalid input. Valid options are: {'. '.join(valid_lower)}")
 
 
+#----------------------------------- Set start and end date for tournament -----------------------------------------
     def set_start_end_date(self):
         while True:
             try:
-                startdate = datetime(
-                    int(input("Start date year: ")),
-                    int(input("Start date month: ")),
-                    int(input("Start date day: "))
-                    )
+                startdate = datetime.strptime(input("Tournament start date (YYYY-MM-DD): "), "%Y-%m-%d")
                 
-                enddate = datetime(
-                    int(input("End date year: ")),
-                    int(input("End date month: ")),
-                    int(input("End date day: "))
-                    )
+                enddate = datetime.strptime(input("Tournament end date (YYYY-MM-DD): "), "%Y-%m-%d")
                 
             except ValueError:
                 print("please enter valid numbers for year, month, day")
@@ -50,6 +45,48 @@ class MenuUI:
             return startdate, enddate
 
 
+#----------------------------------- Checks if player date of birth is valid -----------------------------------------
+    def check_player_age(self):
+        
+        minimum_age = 18
+
+        while True:
+                try:
+                    dob = datetime.strptime(input("Date of birth (YYYY-MM-DD): "), "%Y-%m-%d").date()
+                except ValueError:
+                    print("ERROR: Invalid input. Please enter a valid date")
+                    continue
+                
+                today = date.today()
+                age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+
+                if age < minimum_age:
+                    print(f"ERROR: You must be at lease {minimum_age} years old. please enter a valid age")
+                    continue
+
+                break
+
+
+#----------------------------------- Saves team, player and captain info --------------------------------------------
+    def save_player_and_team(self, player_list: list[Player], team: Team, captain_handle: str):
+        for player in player_list:
+            self.__logic_api.savePlayer(player)
+
+        self.__logic_api.saveTeam(team)
+
+        self.__logic_api.addplayers(player_list, team)
+
+        self.__logic_api.updatecaptain(captain_handle)
+
+        print()
+        print("-" * 30)
+        print("Team has successfully been created!\n")
+        print("Going back to captain menu...\n")
+        print("Press ENTER to continue")
+
+
+
+#----------------------------------- MAIN MENU -----------------------------------------
     def show_main_menu(self):
         """Prints out the main menu
         returns: "TOURNAMENTS", "TEAMS", "ORGANIZER", "TEAM CAPTAIN", "QUIT" """
@@ -79,68 +116,80 @@ q. Quit
         if choice == "3":
             return "ORGANIZER"
         if choice == "4":
-            captain_handle: str = input("Handle: ")
-            team = self.__logic_api.get_team_by_captain(captain_handle)
-            if team is None:
-                return ("CAPTAIN HAS NO TEAM", captain_handle)
-            else:
-                return ("CAPTAIN HAS TEAM", captain_handle)
+
+
+            while True:
+                captain_handle: str = input("Handle: ")
+                captain = self.__logic_api.getCaptain(captain_handle)
+
+                if captain is False:
+                    print("\nERROR: Captain is not registered into the system\n")
+                    print("1. Try again\n2. Cancel")
+                    choice = self.__prompt_options(["1", "2"])
+                    if choice == "1":
+                        continue
+                    return "BACK"
+
+                else:
+                    if captain.get('hasTeam').strip() == 'True':
+                        return ("CAPTAIN HAS TEAM", captain.get("captainHandle"))
+                    else:
+                        return ("CAPTAIN HAS NO TEAM", captain.get("captainHandle"))
+                    
         return "QUIT"
-       
-        
+
+
+#----------------------------------- TOURNAMENTS OPTIONS MENU (PUBLIC) -----------------------------------------       
     def show_tournaments_menu(self):
-        """Prints list of tournaments
-        returns: ("TOURNAMENT INFO",  tournament: object), "BACK", "QUIT"  """
+        """Prints tournaments options menu.
+        returns: "PRINT LIST OF TOURNAMENTS", "SEARCH FOR A TOURNAMENT", "BACK", "QUIT" """
         
-        tournaments = self.__logic_api.gettournaments()
-
-        tournament_names: list[str] = [t.name for t in tournaments]
-
-        viewer = SelectFromPage(tournament_names)
-
-        #loop to view tournaments 5 at a time
-        while True:
-
-#------LIST OF TOURNAMENTS INTERFACE---------------
-            print(f"""
+#========= TOURNAMENTS MENU INTERFACE ========
+        print("""
 ---------------------------
-RU's e-Sport Extravaganza
+ RU's e-sport Extravaganza 
 ---------------------------
-List of tournaments
-              
-{viewer.currentPage()}
-              
-ENTER. Next page
-1-5. View tournament details
+Tournaments menu
+
+1. Print list of tournaments
+2. Search for tournament
+
 b. Back
-q. Quit              
-""") 
-            choice = self.__prompt_options(["1", "2", "3", "4", "5", "", "b", "q"])
+q. Quit
+""")
+#=======================================
 
-            #select tournament by number
-            if choice.isdigit():
-                num = int(choice)
-                tournament_name = viewer.select_item_by_number(num)
+        choice = self.__prompt_options(["1", "2", "b", "q"])
+
+        if choice == "1":
+            return "PRINT LIST OF TOURNAMENTS"
+        if choice == "2":
+            tournament_input = input("Please enter the tournament name: ")
+            tournament = self.__logic_api.getTournamentbyName(tournament_input)
+            while tournament == None:
+                print("\nERROR: tournament name invalid.")
+                print("\nContinue?")
+                print("\ny. Yes (continue)")
+                print("n. No (cancel)\n")
+
+                choice = self.__prompt_options(["y", "n"])
+                if choice == "y":
+                    tournament_input = input("Please enter the tournament name: ")
+                    tournament = self.__logic_api.getTournamentbyName(tournament_input)
+                else: 
+                    return "CANCEL"
                 
-                # find tournament object
-                for t in tournaments:
-                    if t.name == tournament_name:
-                        return ("TOURNAMENT INFO", t)
-                continue
-            
-            #press ENTER to go to next page
-            if choice ==  "":
-                viewer.next_page()
-                continue
+            return ("GET TOURNAMENT", tournament)
 
-            if choice == "b":
-                return "BACK"
-            
-            return "QUIT"
+        if choice == "b":
+            return "BACK"
         
+        return "QUIT"
+    
 
+#----------------------------------- TEAMS OPTIONS MENU (PUBLIC) -----------------------------------------
     def show_teams_menu(self):
-        """Prints teams menu
+        """Prints teams options menu
         returns: "PRINT LIST OF TEAMS", "SEARCH FOR A TEAM", "BACK", "QUIT" """
 
 #========= TEAMS MENU INTERFACE ========
@@ -186,6 +235,7 @@ q. Quit
         return "QUIT"
 
 
+#----------------------------------- ORGANIZER MENU -----------------------------------------
     def show_organizer_menu(self):
         """Print organizer menu.
         returns: "CREATE TOURNAMENT", "ADD TEAMS TO TOURNAMENT, "GENERATE SCHEDULE", "UPDATE RESULTS", "BACK", "QUIT" """
@@ -201,12 +251,13 @@ Organizer Menu
 2. Add teams to tournament
 3. Generate schedule
 4. Update results
+5. Register a new team captain
 
 b. Back
 q. Quit""")
 #=========================================
         
-        choice = self.__prompt_options(["1", "2", "3", "4", "b", "q"])
+        choice = self.__prompt_options(["1", "2", "3", "4", "5", "b", "q"])
 
         if choice == "1":
             return "CREATE TOURNAMENT"
@@ -216,11 +267,44 @@ q. Quit""")
             return "GENERATE SCHEDULE"
         if choice == "4":
             return "UPDATE RESULTS"
+        if choice == "5":
+            while True:
+                captain_handle = input("Please enter captain handle here: ").strip()
+                
+                #Ef team captain er núþegar til þá ERROR
+                if self.__logic_api.getCaptain(captain_handle):
+                    print("\nERROR: Team captain already exists, please try again.\n")
+                    print("1. Try again\n2. Cancel\n")
+                    choice = self.__prompt_options(["1", "2"])
+                    if choice == "1":
+                        continue
+                    return "CANCEL"
+
+
+                #Annars býr til team captain
+                else:
+                    print()
+                    print("-" * 60)
+                    print(f"Team captain {captain_handle} can be registered.")
+                    print("\nconfirm?\n")
+                    print("1. Yes, confirm")
+                    print("2. No, cancel")
+
+                    choice = self.__prompt_options(["1", "2"])
+                    if choice == "1":
+                        self.__logic_api.registerCaptain(captain_handle)
+                        print("-" * 60)
+                        print(f"\nTeam captain: {captain_handle} has been registered")
+                        print("\nPress ENTER to Go back\n")
+                        choice = self.__prompt_options([""])
+                    return"CANCEL"
+                
         if choice == "b":
             return "BACK"
         return "QUIT"
 
-
+   
+#----------------------------------- CAPTAIN MENU (NO TEAM) -----------------------------------------
     def show_captain_no_team_menu(self, captain_handle: str):
         """Prints out captains menu if he has no team
         returns: "CREATE TEAM", "BACK", "QUIT" """
@@ -249,6 +333,7 @@ q. Quit""")
         return "QUIT"
 
 
+#----------------------------------- CAPTAIN MENU (HAS TEAM) -----------------------------------------
     def show_captain_has_team_menu(self, captain_handle: str):
         """Prints out captain menu if has team"""
 
@@ -277,6 +362,7 @@ q. Quit
         return "QUIT"
     
 
+#----------------------------------- TOURNAMENT CREATION MENU (ORGANIZER) -----------------------------------------
     def show_tournament_creation_menu(self):
         """Shows the tournament creation menu"""
 
@@ -337,6 +423,7 @@ q. Quit
         return "QUIT"
     
 
+#----------------------------------- TEAM CREATION MENU (CAPTAIN) -----------------------------------------
     def show_team_creation_menu(self, captain_handle: str):
         """Prints out team creation menu where team information is given.
         returns: "ADD PLAYERS TO TEAM" or "CANCEL" """
@@ -349,14 +436,149 @@ q. Quit
 Team creation menu
 Team captain: {captain_handle}
 """)
+
+        team_name = input("Team name: ").strip()
 #=======================================================
-        totalTeams = self.__logic_api.getTeams()
-        newTeam = self.__logic_api.createteam([])
-        newPlayer = self.__logic_api.createPlayer([])
-        self.__logic_api.savePlayer(newPlayer)
-        # TODO CREATE TEAM AND PLAYER MENU
+
+        #Use search for team to check duplicates
+        check_team_duplicate = self.__logic_api.searchforteam((team_name))
+
+        #Input repeats until team name is unique and nonempty
+        while check_team_duplicate != None or team_name == "":
+
+            if team_name == "":
+                print("\nPlease enter a valid name")
+                team_name = input("Team name: ").strip()
+                check_team_duplicate = self.__logic_api.searchforteam((team_name))
+
+            else:
+                print("\nERROR: Team name already exists, please try another name")
+                team_name = input("Team name: ").strip()
+                check_team_duplicate = self.__logic_api.searchforteam((team_name))
+
+        teamID = len(self.__logic_api.getTeams()) + 1
+        newteam = self.__logic_api.createteam([teamID, team_name])
+        newteam.captainHandle = captain_handle
+
+        print("""
+1. Add players to team
+2. Cancel
+""")
+        choice = self.__prompt_options(["1", "2"])
+        if choice == "1":
+            return ("PLAYER CREATION", newteam, newteam.captainHandle)
+        return "CANCEL"
 
 
+#----------------------------------- PLAYER CREATION MENU (CAPTAIN) -----------------------------------------
+    def show_player_creation_menu(self, team: Team, captain_handle: str):
+        """Displays the player creation menu interface"""
+        
+        #stores players before creating
+        player_list: list[Player] = []
+        player_count = 0
+        while player_count != 5:
+
+#==PLAYER CREATION MENU INTERFACE ====
+            print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Player creation menu
+                  
+Add player {player_count + 1}:
+""")
+#=================================
+            
+            #Fill in list for player. The first player is always team captain
+            if player_count == 0:
+                handle = captain_handle
+                print(f"player handle (captain): {handle}")
+            else:
+                #Checks if handle is already used
+                while True:
+                    handle = input("Player handle: ").strip()
+                    team_handles = [p.playerGamertag.lower() for p in player_list]
+                    handle_check = self.__logic_api.getPlayer_by_gamertag(handle)
+                    
+                    if handle_check is not None or handle.lower() in team_handles:
+                        print("\nERROR: player handle already exists. Please enter a new one\n")
+                        continue
+                
+                    break
+
+            name = input("Player name: ").strip()
+            dob = self.check_player_age()
+            address = input("Player address: ").strip()
+            phone_num = int(input("Player phone number: ").strip())
+            teamID = team.teamID
+            
+            check_player_email: tuple = self.__logic_api.emailVerification(input("Player Email: "))
+            while check_player_email[1] == False:
+                print(check_player_email[0])
+                check_player_email: tuple = self.__logic_api.emailVerification(input("Player Email: "))
+            playeremail = check_player_email[0]
+            print(("-Confirmed player email:"), playeremail)
+
+            link = input("Player link: ").strip()
+
+            #confirm player creation
+            print(f"""
+Create player {handle}?
+
+1. Yes
+2. Cancel                  
+""")
+            choice = self.__prompt_options(["1", "2"])
+            if choice == "1":
+                player = self.__logic_api.createPlayer([teamID, handle, name, phone_num, playeremail, address, link, dob])
+                player_list.append(player)
+                player_count += 1
+                print(f"Player {handle} has been created!")
+                print("-" * 45)
+            else:
+                return "CANCEL"
+            
+            if player_count < 3:
+                print("\nPress ENTER to go to next player (MIN = 3)")
+                choice = self.__prompt_options([""])
+                continue
+                
+            elif player_count != 5: 
+                print("""
+1. Add another player?
+2. Confirm creation
+3. Cancel
+""")
+                choice = self.__prompt_options(["1", "2", "3"])
+                if choice == "1":
+                    continue
+
+                if choice == "2":
+
+                    self.save_player_and_team(player_list, team, captain_handle)
+                    
+                    self.__prompt_options([""])
+                    return  "CONTINUE"
+                
+                return "CANCEL"
+        
+        print("""
+1. Confirm creation
+2. Cancel              
+""")
+        choice = self.__prompt_options(["1", "2"]) 
+        if choice == "1":
+            
+            self.save_player_and_team(player_list, team, captain_handle)
+
+            self.__prompt_options([""])
+            return "CONTINUE"
+        
+        return "CANCEL"
+
+
+#----------------------------------- VIEW ALL TEAMS MENU (PUBLIC) -----------------------------------------
     def show_view_teams_menu(self):
         """shows list of 5 teams at a time. allows to view team info.
         returns: "TEAM INFO", "BACK", "QUIT" """
@@ -408,8 +630,61 @@ q. Quit
                 return "BACK"
             
             return "QUIT"
+
+
+#----------------------------------- VIEW ALL TOURNAMENTS MENU (PUBLIC) -----------------------------------------    
+    def show_view_tournaments_menu(self):
+        """Prints list of tournaments
+        returns: ("TOURNAMENT INFO",  tournament: object), "BACK", "QUIT"  """
+        
+        tournaments = self.__logic_api.gettournaments()
+
+        tournament_names: list[str] = [t.name for t in tournaments]
+
+        viewer = SelectFromPage(tournament_names)
+
+        #loop to view tournaments 5 at a time
+        while True:
+
+#------LIST OF TOURNAMENTS INTERFACE---------------
+            print(f"""
+---------------------------
+RU's e-Sport Extravaganza
+---------------------------
+List of tournaments
+              
+{viewer.currentPage()}
+              
+ENTER. Next page
+1-5. View tournament details
+b. Back
+q. Quit              
+""") 
+            choice = self.__prompt_options(["1", "2", "3", "4", "5", "", "b", "q"])
+
+            #select tournament by number
+            if choice.isdigit():
+                num = int(choice)
+                tournament_name = viewer.select_item_by_number(num)
+                
+                # find tournament object
+                for t in tournaments:
+                    if t.name == tournament_name:
+                        return ("TOURNAMENT INFO", t)
+                continue
+            
+            #press ENTER to go to next page
+            if choice ==  "":
+                viewer.next_page()
+                continue
+
+            if choice == "b":
+                return "BACK"
+            
+            return "QUIT"
         
 
+#----------------------------------- TEAM INFO MENU (PUBLIC) -----------------------------------------
     def show_team_info(self, team: Team):
         """Shows team information for selected team
         returns: "BACK", "HOME", "QUIT" """
@@ -448,6 +723,7 @@ q. Quit
         return "QUIT"
 
 
+#----------------------------------- TOURNAMENT INFO MENU (PUBLIC) -----------------------------------------
     def show_tournament_info(self, tournament: object):
         """Shows tournament information for selected tournament
         returns: "VIEW SCHEDULE", "VIEW STANDINGS", "BACK", "HOME", "QUIT" """
@@ -488,4 +764,3 @@ q. Quit
         if choice == "h":
             return "HOME"
         return "QUIT"
-

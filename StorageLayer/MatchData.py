@@ -6,5 +6,5 @@ class MatchData:
     def load_matches(self):
         return self.__storagehandler.retrieveFile(self.FILE)
     def save_match(self, data):
-        self.__storagehandler.saveFile(self, data)
+        self.__storagehandler.saveFile(self.FILE, data)
         return

@@ -4,6 +4,7 @@ from StorageLayer.TeamData import TeamData
 from StorageLayer.CaptainData import CaptainData
 from StorageLayer.PlayerData import PlayerData
 from StorageLayer.MatchData import MatchData
+from StorageLayer.BracketData import BracketData
 from Models.Team import Team
 
 class DataAPI:
@@ -14,6 +15,7 @@ class DataAPI:
         self.__captainData=CaptainData(self.__storagehandler)
         self.__playerData=PlayerData(self.__storagehandler)
         self.__matchData=MatchData(self.__storagehandler)
+        self.__bracketData=BracketData(self.__storagehandler)
     def loadTeams(self):
         return self.__teamData.load_teams()
     
@@ -48,6 +50,10 @@ class DataAPI:
         self.__playerData.savePlayer(data)
         return
     
+    def saveCaptain(self, data):
+        self.__captainData.save_captain(data)
+        return
+    
     def loadMatches(self):
         return self.__matchData.load_matches()
     
@@ -56,6 +62,13 @@ class DataAPI:
         return
     def updateTeams(self, data):
         self.__teamData.update_team(data)
+
+    def loadBrackets(self):
+        return self.__bracketData.loadBrackets()
+      
+    def saveBracket(self, data):
+        self.__bracketData.saveBracket(data)
+        
     def updatePlayers(self, data):
         self.__playerData.updatePlayers(data)
         return
