@@ -49,14 +49,19 @@ class Tournamentmanager:
     
         
     def saveTournament(self,tournament: Tournament):
+        self.unpopulateTournament(tournament)
         self.__dataApi.saveTournament(tournament.createCSVDict())
         return
     
-    def updateTournament(self, tournament: Tournament, input: object, operation: str = None ):
-        tournaments = self.__dataApi.loadTournaments()
-        index = tournaments.index(tournament.createCSVDict())
-        rem_tournament=tournament.createCSVDict()
-        tournaments.remove(rem_tournament)
+    def updateTournament(self, tournament: Tournament, input: object = None, operation: str = None ):
+        if tournament.active==False:
+            return False
+        tournaments = self.getTournaments()
+        for t in tournaments:
+            if tournament.name == t.name:
+                index = tournaments.index(t)
+                break
+        tournaments.remove(t)
 
         if tournament.teams[0] == '': #Cleans up empty string that appears when list is first created
             tournament.teams.pop(0)
@@ -68,10 +73,15 @@ class Tournamentmanager:
         if operation == 'addteam':
             if self.checkDuplTeams(tournament, input) == False:
                 return False
-            tournament.teams.append(input.teamID)
-            tournament.teaminstances.append(input)
-        
-        tournaments.insert(index, tournament.createCSVDict())
+            tournament.teams.append(input)
+        if operation == 'updateall':
+            self.updateBracket(tournament.bracket)
+            for team in tournament.teams:
+                self.__teamlogic.updateTeam(None,None,team)
+
+        self.unpopulateTournament(tournament)
+        tournaments.insert(index, tournament)
+        tournaments=[t.createCSVDict() for t in tournaments]
         self.__dataApi.updateTournaments(tournaments)
 
     def addTeamtoTournament(self, tournament: Tournament, team: Team):
@@ -120,6 +130,11 @@ class Tournamentmanager:
             matchids=[match.matchID for match in bracket.rounds.get(round)]
             bracket.rounds[round] = matchids
         return bracket
+    
+    def updateBracket(self, bracket: Bracket):
+        for round in bracket.rounds.keys():
+            for match in bracket.rounds.get(round):
+                self.__matchlogic.updateMatch(match)
 
 
 #def populateTournament(self, tournament: Tournament):

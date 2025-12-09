@@ -75,7 +75,7 @@ class Teamlogic:
                 ret_list.append(player)
         return ret_list
     
-    def updateTeam(self, input = None, operation: str = None, team: Team = None):
+    def updateTeam(self, input = None, operation: str = None, team: Team = None, amount = None):
         teams: list[Team]=self.__dataApi.loadTeams()
         index=teams.index(team.createCSVDict())
         teams.remove(team.createCSVDict())

@@ -6,6 +6,7 @@ class TournamentData:
     def load_tournaments(self):
         return self.__storagehandler.retrieveFile(self.FILE)
     def save_tournament(self,data):
+        
         self.__storagehandler.saveFile(self.FILE,data)
         return
     def update_tournaments(self, data):
