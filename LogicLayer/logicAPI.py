@@ -121,8 +121,8 @@ class LogicAPI:
         self.__Teamlogic.updateTeam(None, option, team, amount)
         return
     
-    def generatebracket(self, teams):
-        return self.__bracketgenerator.generatebracket(teams)
+    def generatebracket(self, tournament):
+        return self.__bracketgenerator.generatebracket(tournament)
     
     def roundsplayed(self, teams):
         return self.__bracketgenerator.playingames(teams)
@@ -152,4 +152,8 @@ class LogicAPI:
     
     def confirmMatchWinner(self, match, scores):
         self.__matchlogic.confirmMatchWinner(match, scores)
+        
+    def populateBracket(self, bracket):
+        self.__Tournamentmanager.populateBracket(bracket)
+
 ###############testing area#############

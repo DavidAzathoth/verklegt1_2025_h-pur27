@@ -250,7 +250,14 @@ class UIMain:
 #============================= SCHEDULE GENERATION MENU LOOP =======================
             elif self.current_screen == "SCHEDULE GENERATION MENU":
                 options = self.__menu_ui.show_generate_schedule_menu(selected_tournament)
-                
+                if options == "GO TO ADD TEAMS TO TOURNAMENT":
+                    self.current_screen = "ADD TEAMS TO TOURNAMENT MENU"
+                elif options == "CANCEL":
+                    self.current_screen = "ORGANIZER MENU"
+                    self.selection_mode = None
+                elif options == "QUIT":
+                    break
+
 
 
 

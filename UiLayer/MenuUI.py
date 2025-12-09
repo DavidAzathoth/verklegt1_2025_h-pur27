@@ -6,6 +6,7 @@ from datetime import datetime, date
 from Models.Team import Team
 from Models.Player import Player
 from Models.Tournament import Tournament
+from Models.Bracket import Bracket
 import time
 import sys
 
@@ -872,18 +873,23 @@ q. Quit
 #----------------------------------- SCHEDULE GENERATION MENU (ORGANIZER)) -----------------------------------------
     def show_generate_schedule_menu(self, tournament: Tournament):
         """Displays the menu where the schedule is generated"""
-
+        
+        self.__logic_api.populateTournament(tournament)
         current_teams = len(tournament.teams)
         minimum_teams = 16
-        print(f"""
+
+        #Checking if enough teams
+        print("""
 ---------------------------
  RU's e-Sport Extravaganza
----------------------------
-Checking team count:
-              
-Current number of teams: {current_teams}
-Minimum teams required: {minimum_teams}
-""")    
+---------------------------""")    
+        self.slow_print("Checking team count...\n", 0.1)          
+        
+        self.slow_print(f"Current number of teams: {current_teams}\n")
+        
+        self.slow_print(f"Minimum teams required: {minimum_teams}\n")
+        
+        self.slow_print(f".....\n", 0.3)
         
         if current_teams < minimum_teams:
             #Error path: not enough teams
@@ -904,6 +910,8 @@ Please add more teams to this tournament
         else:
             #number of teams is enough
             print("""
+This tournament has sufficient teams!                  
+
 1. Generate schedule
 2. Cancel
 """)
@@ -915,10 +923,26 @@ Please add more teams to this tournament
  RU's e-Sport Extravaganza
 ---------------------------""")    
                 
-                generate = (f"Generating schedule...", f"Schedule has been generated!", f"This is the schedule for: {tournament}")
+                generate = (f"Generating schedule...\n", f"\nSchedule has been generated!\n", f"\nThis is the schedule for: {tournament.name}\n")
                 for s in generate:
                     self.slow_print(s)
+                
+                self.__logic_api.generatebracket(tournament)
+                
+                self.__logic_api.saveBracket(tournament.bracket)
 
+                bracket: Bracket = tournament.bracket
+
+                self.__logic_api.populateBracket(bracket)
+
+                for i, round in bracket.rounds.items():
+                    print(f"Round {i}:")
+                    for match in round:
+                        print(match)
+                    
+                
+                
+                return "QUIT"
 
 
 
