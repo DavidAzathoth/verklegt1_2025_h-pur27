@@ -1,22 +1,144 @@
 from StorageLayer.storageApi import DataAPI
+from LogicLayer.logicHandler import logicHandler
 from Models.Tournament import Tournament
+from Models.Team import Team
+from Models.Bracket import Bracket
+from Models.Match import Match
+from LogicLayer.TeamLogic import Teamlogic
+from LogicLayer.MatchLogic import MatchLogic
 class Tournamentmanager:
     def __init__(self, dataApi: DataAPI):
         self.__dataApi = dataApi
-        pass
+        self.__logichandler = logicHandler()
+        self.__tournamentmodel = Tournament
+        self.__bracketmodel = Bracket
+        self.__matchmodel = Match
+        self.__teamlogic = Teamlogic(self.__dataApi)
+        self.__matchlogic = MatchLogic(self.__dataApi)
+        
+        
 
     def createTournament(self, tournament: list):
-        Venue = tournament[0]
-        name = tournament[1]
-        startDate = tournament[2]
-        endDate = tournament[3]
-        contactEmail = tournament[4]
-        contactPhone = tournament[5]
-        tournament = Tournament(Venue, name, startDate, endDate, contactEmail, contactPhone)
-        self.__dataApi.saveTournaments(tournament.createCSVDict())
+        return self.__logichandler.createModel(self.__tournamentmodel,tournament)
+
+
+    def getTournaments(self):
+        raw_list = self.__dataApi.loadTournaments()
+        tournamentlist: list[Tournament] = self.__logichandler.loadmodels(self.__tournamentmodel, raw_list)
+        return tournamentlist
+    
+    def getTournamentbyName(self, name: str, tournamentlist: list[Tournament]):
+        for tournament in tournamentlist:
+            if name.lower().strip() == tournament.name.lower().strip():
+                return tournament
+            
+    def populateTournament(self, tournament: Tournament):
+        teams = self.__teamlogic.getTeams()
+        teamobjects=list(map(lambda team: self.__teamlogic.get_team_by_teamID(team, teams), (tournament.teams)))
+        bracket = self.getBracketByTournament(tournament)
+        tournament.bracket = bracket
+        tournament.teams = teamobjects
+
         return tournament
+    
+    def unpopulateTournament(self, tournament: Tournament):
+        teamids = [x.teamID for x in tournament.teams]
+        tournament.teams=teamids
+        return tournament
+    
+    
+        
+    def saveTournament(self,tournament: Tournament):
+        self.__dataApi.saveTournament(tournament.createCSVDict())
+        return
+    
+    def updateTournament(self, tournament: Tournament, input: object, operation: str = None ):
+        tournaments = self.__dataApi.loadTournaments()
+        index = tournaments.index(tournament.createCSVDict())
+        rem_tournament=tournament.createCSVDict()
+        tournaments.remove(rem_tournament)
+
+        if tournament.teams[0] == '': #Cleans up empty string that appears when list is first created
+            tournament.teams.pop(0)
+        if tournament.matchesList[0] == '':
+            tournament.matchesList.pop(0)
+        if tournament.matchHistory[0] == '':
+            tournament.matchHistory.pop(0)
+
+        if operation == 'addteam':
+            if self.checkDuplTeams(tournament, input) == False:
+                return False
+            tournament.teams.append(input.teamID)
+            tournament.teaminstances.append(input)
+        
+        tournaments.insert(index, tournament.createCSVDict())
+        self.__dataApi.updateTournaments(tournaments)
+
+    def addTeamtoTournament(self, tournament: Tournament, team: Team):
+        if self.checkDuplTeams(tournament, team):
+            tournament.teams.append(team)
+
+    def checkDuplTeams(self, tournament: Tournament, team: Team):
+        reg_team : Team
+        for reg_team in tournament.teams:
+            if reg_team.teamID == team.teamID:
+                return False
+        return True
+    
+    def getBrackets(self)->list[Bracket]:
+        raw_list = self.__dataApi.loadBrackets()
+        bracketlist: list[Bracket] = self.__logichandler.loadmodels(self.__bracketmodel, raw_list)
+        for bracket in bracketlist:
+            bracket.rounds=eval(bracket.rounds)
+        return bracketlist
+    
+    def getBracketByTournament(self,tournament: Tournament):
+        bracketlist = self.getBrackets()
+        bracket: Bracket
+        for bracket in bracketlist:
+            if bracket.tournamentname==tournament.name:
+                self.populateBracket(bracket)
+                return bracket
+        return
+            
+
+    def saveBracket(self, bracket: Bracket):
+        bracket=self.unpopulateBracket(bracket)
+        self.__dataApi.saveBracket(bracket.createCSVDict())
 
 
-    def getTournament(self):
-        return self.__dataApi.loadTournaments()
+    def populateBracket(self, bracket: Bracket):
+        rounds: dict[list]
+        for round in bracket.rounds.keys():
+            roundobjects = list(map(self.__matchlogic.getMatchbyID, bracket.rounds.get(round)))
+            bracket.rounds[round]=roundobjects
+        return bracket
+
+
+    def unpopulateBracket(self, bracket: Bracket):
+        for round in bracket.rounds.keys():
+            matchids=[match.matchID for match in bracket.rounds.get(round)]
+            bracket.rounds[round] = matchids
+        return bracket
+
+
+#def populateTournament(self, tournament: Tournament):
+#        teams = self.__teamlogic.getTeams()
+#        teamobjects=list(map(lambda team: self.__teamlogic.get_team_by_teamID(team, teams), (tournament.teams)))
+#        tournament.teams=teamobjects
+#        return tournament
+
+
+#    def calculaterounds(self, teams: list[Team]):
+#        oddrounds = 0
+#        totalrounds = 0
+#        divbytwo = len(teams)
+#        while divbytwo != 1:
+#            temp=divbytwo / 2
+#            if divbytwo / 2 != 0:
+#                oddrounds += 1
+#                divbytwo=divbytwo-1
+
+#            
+        
 
