@@ -8,9 +8,19 @@ from LogicLayer.PlayerLogic import Playerlogic
 #from Models.Player import Player
 from StorageLayer.storageApi import DataAPI
 #from Models.ViewTeamsMenu import ShowTeams
+from Models.Match import Match
 
-#da = DataAPI()
-#llapi=LogicAPI()
+da = DataAPI()
+llapi=LogicAPI()
+
+m1 = Match("M1", "TeamA", "TeamB")
+m2 = Match("M2", "TeamC", "TeamD")
+
+roundsplayed = {"1": [m1, m2]}
+
+winners = ["TeamA", "TeamC"]
+finished_round = 1
+llapi.updateBracket(roundsplayed, finished_round, winners)
 
 #inputlisti=['1','2','3',4,5,'6']
 #print(llapi.createteam(inputlisti).createCSVDict())
