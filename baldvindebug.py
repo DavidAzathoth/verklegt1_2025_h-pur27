@@ -17,9 +17,9 @@ from LogicLayer.menuLogic import MenuLogic
 from datetime import datetime
 
 """Main loop test"""
-# run = UIMain()
+run = UIMain()
 
-# run.mainloop()
+run.mainloop()
 
 
 """Test for Email verification"""
@@ -51,5 +51,45 @@ from datetime import datetime
 
 # print(dob.date())
 
-run = MenuUI()
-run.show_player_creation_menu()
+"""captain"""
+# Sheriff_Norris
+# Chuck Norris
+# 1940-03-10
+# 123 chucknorrisstreet
+# 123456789
+# gmail@chucknorris.com
+# https://www.instagram.com/chucknorris/?hl=en
+
+"""player1"""
+# Disciple1
+# Bob
+# 2002-12-12
+# 234 somewhere
+# 3459621
+# bob@gmail.com
+
+
+"""player2"""
+# Disciple2
+# Jim
+# 2001-11-11
+# 3452 whatever
+# 1897253
+# jim@gmail.com
+
+"""player3"""
+# Disciple3
+# Josh
+# 2000-12-12
+# 432 somestreet
+# 423895
+# josh@gmail.com
+
+"""player4"""
+# Disciple4
+# Gary
+# 2003-02-02
+# 246 street
+# 2175219
+# gary@gmail.com
+

@@ -23,11 +23,13 @@ class Playerlogic:
     def saveplayer(self, player: Player):
         self.__dataApi.savePlayer(player.createCSVDict())
         return
-    def getplayer_by_gamertag(self, tag):
+    
+    def getplayer_by_gamertag(self, tag: str):
         players: list[Player] = self.getplayers()
         for player in players:
-            if player.playerGamertag==tag:
+            if player.playerGamertag.lower().strip() == tag.lower().strip():
                 return player
+            
     def editplayer(self, gamertag: str, attribute: str, newValue: str):
         if attribute in self.PLAYERATTRIBUTES:
             players = self.getplayers()

@@ -67,6 +67,25 @@ class MenuUI:
                 break
 
 
+#----------------------------------- Saves team, player and captain info --------------------------------------------
+    def save_player_and_team(self, player_list: list[Player], team: Team, captain_handle: str):
+        for player in player_list:
+            self.__logic_api.savePlayer(player)
+
+        self.__logic_api.saveTeam(team)
+
+        self.__logic_api.addplayers(player_list, team)
+
+        self.__logic_api.updatecaptain(captain_handle)
+
+        print()
+        print("-" * 30)
+        print("Team has successfully been created!\n")
+        print("Going back to captain menu...\n")
+        print("Press ENTER to continue")
+
+
+
 #----------------------------------- MAIN MENU -----------------------------------------
     def show_main_menu(self):
         """Prints out the main menu
@@ -98,17 +117,18 @@ q. Quit
             return "ORGANIZER"
         if choice == "4":
 
-            print("\n1. Continue\n2. Cancel\n")
-            choice = self.__prompt_options(["1", "2"])
 
-            while choice != "2":
+            while True:
                 captain_handle: str = input("Handle: ")
                 captain = self.__logic_api.getCaptain(captain_handle)
 
                 if captain is False:
                     print("\nERROR: Captain is not registered into the system\n")
-                    print("1. Continue\n2. Cancel")
+                    print("1. Try again\n2. Cancel")
                     choice = self.__prompt_options(["1", "2"])
+                    if choice == "1":
+                        continue
+                    return "BACK"
 
                 else:
                     if captain.get('hasTeam').strip() == 'True':
@@ -116,7 +136,6 @@ q. Quit
                     else:
                         return ("CAPTAIN HAS NO TEAM", captain.get("captainHandle"))
                     
-            return "BACK"
         return "QUIT"
 
 
@@ -254,21 +273,27 @@ q. Quit""")
                 
                 #Ef team captain er núþegar til þá ERROR
                 if self.__logic_api.getCaptain(captain_handle):
-                    print("ERROR: Team captain already exists, please try again.")
-                    continue
-                #Annars býr til team captain
+                    print("\nERROR: Team captain already exists, please try again.\n")
+                    print("1. Try again\n2. Cancel\n")
+                    choice = self.__prompt_options(["1", "2"])
+                    if choice == "1":
+                        continue
+                    return "CANCEL"
 
+
+                #Annars býr til team captain
                 else:
                     print()
-                    print("-" * 50)
+                    print("-" * 60)
                     print(f"Team captain {captain_handle} can be registered.")
                     print("\nconfirm?\n")
-                    print("y. Yes, confirm")
-                    print("n. No, cancel")
+                    print("1. Yes, confirm")
+                    print("2. No, cancel")
 
-                    choice = self.__prompt_options(["y", "n"])
-                    if choice == "y":
+                    choice = self.__prompt_options(["1", "2"])
+                    if choice == "1":
                         self.__logic_api.registerCaptain(captain_handle)
+                        print("-" * 60)
                         print(f"\nTeam captain: {captain_handle} has been registered")
                         print("\nPress ENTER to Go back\n")
                         choice = self.__prompt_options([""])
@@ -418,7 +443,7 @@ Team captain: {captain_handle}
         #Use search for team to check duplicates
         check_team_duplicate = self.__logic_api.searchforteam((team_name))
 
-        #repeats until team name is unique and nonempty
+        #Input repeats until team name is unique and nonempty
         while check_team_duplicate != None or team_name == "":
 
             if team_name == "":
@@ -433,13 +458,15 @@ Team captain: {captain_handle}
 
         teamID = len(self.__logic_api.getTeams()) + 1
         newteam = self.__logic_api.createteam([teamID, team_name])
+        newteam.captainHandle = captain_handle
+
         print("""
 1. Add players to team
 2. Cancel
 """)
         choice = self.__prompt_options(["1", "2"])
         if choice == "1":
-            return ("PLAYER CREATION", newteam, captain_handle)
+            return ("PLAYER CREATION", newteam, newteam.captainHandle)
         return "CANCEL"
 
 
@@ -449,38 +476,49 @@ Team captain: {captain_handle}
         
         #stores players before creating
         player_list: list[Player] = []
-        player_count = 1
+        player_count = 0
         while player_count != 5:
 
-#============ PLAYER CREATION MENU INTERFACE =============
+#==PLAYER CREATION MENU INTERFACE ====
             print(f"""
 ---------------------------
  RU's e-Sport Extravaganza
 ---------------------------
 Player creation menu
                   
-Add player {player_count}
+Add player {player_count + 1}:
 """)
-#=========================================================
+#=================================
             
-            #Fill in list for player, first player is team captain
-            if player_count == 1:
+            #Fill in list for player. The first player is always team captain
+            if player_count == 0:
                 handle = captain_handle
-                print(f"player handle: {handle}")
+                print(f"player handle (captain): {handle}")
             else:
-                handle = input("Player handle: ").strip()
+                #Checks if handle is already used
+                while True:
+                    handle = input("Player handle: ").strip()
+                    team_handles = [p.playerGamertag.lower() for p in player_list]
+                    handle_check = self.__logic_api.getPlayer_by_gamertag(handle)
+                    
+                    if handle_check is not None or handle.lower() in team_handles:
+                        print("\nERROR: player handle already exists. Please enter a new one\n")
+                        continue
+                
+                    break
+
             name = input("Player name: ").strip()
             dob = self.check_player_age()
-            address = input("Player address: ")
+            address = input("Player address: ").strip()
             phone_num = int(input("Player phone number: ").strip())
-            teamID = len(self.__logic_api.getTeams()) + 1
+            teamID = team.teamID
             
             check_player_email: tuple = self.__logic_api.emailVerification(input("Player Email: "))
             while check_player_email[1] == False:
                 print(check_player_email[0])
                 check_player_email: tuple = self.__logic_api.emailVerification(input("Player Email: "))
             playeremail = check_player_email[0]
-            print(("Player Email: "), playeremail)
+            print(("-Confirmed player email:"), playeremail)
 
             link = input("Player link: ").strip()
 
@@ -496,13 +534,17 @@ Create player {handle}?
                 player = self.__logic_api.createPlayer([teamID, handle, name, phone_num, playeremail, address, link, dob])
                 player_list.append(player)
                 player_count += 1
+                print(f"Player {handle} has been created!")
+                print("-" * 45)
             else:
                 return "CANCEL"
             
             if player_count < 3:
+                print("\nPress ENTER to go to next player (MIN = 3)")
+                choice = self.__prompt_options([""])
                 continue
                 
-            else: 
+            elif player_count != 5: 
                 print("""
 1. Add another player?
 2. Confirm creation
@@ -511,10 +553,14 @@ Create player {handle}?
                 choice = self.__prompt_options(["1", "2", "3"])
                 if choice == "1":
                     continue
+
                 if choice == "2":
-                    for player in player_list:
-                        self.__logic_api.savePlayer(player)
-                        self.__logic_api.addplayer(player, team)
+
+                    self.save_player_and_team(player_list, team, captain_handle)
+                    
+                    self.__prompt_options([""])
+                    return  "CONTINUE"
+                
                 return "CANCEL"
         
         print("""
@@ -523,19 +569,13 @@ Create player {handle}?
 """)
         choice = self.__prompt_options(["1", "2"]) 
         if choice == "1":
-            return #TODO save information
+            
+            self.save_player_and_team(player_list, team, captain_handle)
+
+            self.__prompt_options([""])
+            return "CONTINUE"
+        
         return "CANCEL"
-            
-                
-
-            
-
-
-        totalTeams = self.__logic_api.getTeams()
-        newTeam = self.__logic_api.createteam([])
-        newPlayer = self.__logic_api.createPlayer([])
-        self.__logic_api.savePlayer(newPlayer)
-        # TODO CREATE TEAM AND PLAYER MENU
 
 
 #----------------------------------- VIEW ALL TEAMS MENU (PUBLIC) -----------------------------------------
