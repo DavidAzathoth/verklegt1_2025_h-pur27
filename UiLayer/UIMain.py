@@ -247,6 +247,12 @@ class UIMain:
                 elif options == "QUIT":
                     break
 
+#============================= SCHEDULE GENERATION MENU LOOP =======================
+            elif self.current_screen == "SCHEDULE GENERATION MENU":
+                options = self.__menu_ui.show_generate_schedule_menu(selected_tournament)
+                
+
+
 
 
 
