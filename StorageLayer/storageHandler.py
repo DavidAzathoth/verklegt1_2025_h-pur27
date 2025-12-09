@@ -1,5 +1,6 @@
 import csv
 from datetime import datetime
+
 class StorageHandler:
     def __init__(self):
         pass
@@ -45,6 +46,7 @@ class StorageHandler:
             csvwriter=csv.DictWriter(file,keys)
             csvwriter.writeheader()
             csvwriter.writerows(backup)
+            
         file.close()
 
     def editFile(self,file,data):

@@ -1,4 +1,4 @@
-﻿teamID,teamName,roster,wins,losses,captainHandle
+teamID,teamName,roster,wins,losses,captainHandle
 A1,FURIA,"FalleN,yuurih,YEKINDAR,KSCERATO,moloday,Testplayer",9,0,FalleN
 A2,Vitality,"apEX,ropz,zywOo,flameZ,mezii",0,0,apEX
 A3,Falcons,"NiKo,TeSeS,m0NESY,kyxsan,kyousuke",0,0,NiKo
@@ -32,5 +32,6 @@ A12,FURIA2,"FalleN,yuurih,YEKINDAR,KSCERATO,moloday",0,0,FalleN
 A12,FURIA2,"FalleN,yuurih,YEKINDAR,KSCERATO,moloday",0,0,FalleN
 32,Team Norris,"Sheriff_Norris,Disciple1,Disciple2",0,0,Sheriff_Norris
 33,Team Chuck,"chuck_norris,john,guy",0,0,chuck_norris
-34,Team 27,,0,0,david
-35,team27,"david,Baldvinn,Adamm",0,0,david
+34,team 27,,0,0,
+35,Team  27,,0,0,
+35,Team  27,,0,0,david
