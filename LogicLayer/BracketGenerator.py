@@ -5,7 +5,7 @@ from Models.Team import Team
 from Models.Tournament import Tournament
 import math
 import random
-
+from datetime import datetime, date
 class BracketGenerator:
     def __init__(self):
         self.__matchmodel=Match
@@ -29,17 +29,34 @@ class BracketGenerator:
     def generatebracket(self, tournament: Tournament):
         """Generate inital bracket for tournament, accounting for a non base 2 number of teams(16,32,64...)"""
         teams = tournament.teams
+        startdate = date(*(list(map(int,(reversed(tournament.startDate.split('/')))))))
+        enddate = date(*(list(map(int,(reversed(tournament.endDate.split('/')))))))
+
+        #Calculate days that the tournament will be held
+        days=(enddate-startdate).days
+
+        #Stringify dates
+        startdate=startdate.strftime("%d/%m/%Y")
+        enddate=enddate.strftime("%d/%m/%Y")
+
+
         existingmatches=self.__dataapi.loadMatches()
         existingmatchids=[x.get('matchID') for x in existingmatches]
         num=1
         gamedata=self.playingames(teams)
+        totalrounds2 = (len(tournament.teams)-1)
         roundsplayed: dict ={}
         totalrounds=gamedata[0]
         extrarounds=gamedata[1]
         tempextrarounds=0
         isodd=1
-        numberofteams=len(teams)
         teamnum=0
+
+        matchschedule={}
+        for day in range(1,days):
+            pass
+        while totalrounds2>1:
+            pass
 
         if extrarounds>0:
              teamsinround = (2**(totalrounds))/2
