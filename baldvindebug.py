@@ -16,7 +16,8 @@ from UiLayer.UIMain import UIMain
 from LogicLayer.menuLogic import MenuLogic
 from datetime import datetime
 llapi=LogicAPI()
-
+import time
+import sys
 
 """Main loop test"""
 run = UIMain()

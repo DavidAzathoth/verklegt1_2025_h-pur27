@@ -7,6 +7,7 @@ from Models.Team import Team
 from Models.Player import Player
 from Models.Tournament import Tournament
 import time
+import sys
 
 class MenuUI:
     def __init__(self, logic_api: LogicAPI):
@@ -86,6 +87,17 @@ class MenuUI:
         print("Team has successfully been created!\n")
         print("Going back to captain menu...\n")
         print("Press ENTER to continue")
+
+
+#----------------------------------- Slow print --------------------------------------------
+    def slow_print(self, text, delay = 0.05):
+        """Prints a string slowly instead of instantly"""
+
+        for char in text:
+            sys.stdout.write(char)
+            sys.stdout.flush()
+            time.sleep(delay)
+        print()
 
 
 
@@ -855,3 +867,61 @@ q. Quit
             
             return "QUIT"
         return answer
+
+
+#----------------------------------- SCHEDULE GENERATION MENU (ORGANIZER)) -----------------------------------------
+    def show_generate_schedule_menu(self, tournament: Tournament):
+        """Displays the menu where the schedule is generated"""
+
+        current_teams = len(tournament.teams)
+        minimum_teams = 16
+        print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Checking team count:
+              
+Current number of teams: {current_teams}
+Minimum teams required: {minimum_teams}
+""")    
+        
+        if current_teams < minimum_teams:
+            #Error path: not enough teams
+            print("""
+ERROR: Not enough teams to generate bracket
+                  
+Please add more teams to this tournament
+
+1. Go to "Add teams to tournament" menu
+2. Back to Organizer menu                  
+                  """)
+            
+            choice = self.__prompt_options(["1", "2"])
+            if choice == "1":
+                return ("GO TO ADD TEAMS TO TOURNAMENT", tournament)
+            return "CANCEL"
+        
+        else:
+            #number of teams is enough
+            print("""
+1. Generate schedule
+2. Cancel
+""")
+            choice = self.__prompt_options(["1", "2"])
+
+            if choice == "1":
+                print("""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------""")    
+                
+                generate = (f"Generating schedule...", f"Schedule has been generated!", f"This is the schedule for: {tournament}")
+                for s in generate:
+                    self.slow_print(s)
+
+
+
+
+            return "CANCEL"
+        
+        
