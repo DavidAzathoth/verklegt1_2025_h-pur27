@@ -47,7 +47,7 @@ class Teamlogic:
         return self.__logichandler.createModel(self.__teammodel,team)
     
     def saveTeam(self, team: Team):
-        self.__dataApi.saveTeam(team)
+        self.__dataApi.saveTeam(team.createCSVDict())
 
     
     def updateCaptain(self, captainHandle):
@@ -85,13 +85,14 @@ class Teamlogic:
             for player in input:
                 player: Player
                 team.roster.append(player.playerGamertag)
-                team.playerinstances.append(input)
+                team.playerinstances.append(player)
         elif operation=='updatewins':
             team.wins+=1
         elif operation=='updatelosses':
             team.losses+=1
         
         teams.insert(index, team.createCSVDict())
+
         self.__dataApi.updateTeams(teams)
             
         return team

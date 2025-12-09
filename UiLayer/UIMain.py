@@ -187,5 +187,7 @@ class UIMain:
 #============================= PLAYER CREATION MENU LOOP =======================
             elif self.current_screen == "CREATE PLAYER MENU":
                 options = self.__menu_ui.show_player_creation_menu(self.team, self.captain_handle)
-                if options == "CANCEL":
-                    self.current_screen = "CREATE TEAM MENU"
+                if options == "CONTINUE":
+                    self.current_screen = "CAPTAIN HAS TEAM MENU"
+                elif options == "CANCEL":
+                    self.current_screen = "CAPTAIN HAS NO TEAM MENU"

@@ -94,7 +94,7 @@ Byrjuðum að forrita og skipuleggja hver gerir hvað
 ## 03/12/25 Adam, Baldvin, Davíd, Gunnlaugur
 Í dag gerðum við 2 use cases.  Forritið getur búið til lið og tournament.  Unnum í UI, logic og data.
 - í dag
-- 1. Vinna í Main Menu UI
+  1. Vinna í Main Menu UI
   2. Gera einhver use cases
   3. Gera models
 - Á morgun
