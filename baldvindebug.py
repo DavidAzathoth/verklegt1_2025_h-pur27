@@ -15,12 +15,18 @@ from StorageLayer.storageApi import DataAPI
 from UiLayer.UIMain import UIMain
 from LogicLayer.menuLogic import MenuLogic
 from datetime import datetime
+llapi=LogicAPI()
+import time
+import sys
 
 """Main loop test"""
 run = UIMain()
 
 run.mainloop()
 
+# teams=llapi.getTeams()
+# for team in teams:
+#     print(team.createCSVDict())
 
 
 """Test for Email verification"""

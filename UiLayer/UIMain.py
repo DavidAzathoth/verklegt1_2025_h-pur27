@@ -239,6 +239,19 @@ class UIMain:
 #============================= ADD TEAMS TO TOURNAMENT MENU LOOP =======================
             elif self.current_screen == "ADD TEAMS TO TOURNAMENT MENU":
                 options = self.__menu_ui.show_add_teams_to_tournament_menu(self.selected_tournament)
+                if options == "BACK":
+                    self.current_screen = "LIST OF TOURNAMENTS"
+                elif options == "HOME":
+                    self.current_screen = "ORGANIZER MENU"
+                    self.selection_mode = None
+                elif options == "QUIT":
+                    break
+
+#============================= SCHEDULE GENERATION MENU LOOP =======================
+            elif self.current_screen == "SCHEDULE GENERATION MENU":
+                options = self.__menu_ui.show_generate_schedule_menu(selected_tournament)
+                
+
 
 
 

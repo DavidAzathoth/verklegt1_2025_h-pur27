@@ -6,6 +6,8 @@ from datetime import datetime, date
 from Models.Team import Team
 from Models.Player import Player
 from Models.Tournament import Tournament
+import time
+import sys
 
 class MenuUI:
     def __init__(self, logic_api: LogicAPI):
@@ -85,6 +87,17 @@ class MenuUI:
         print("Team has successfully been created!\n")
         print("Going back to captain menu...\n")
         print("Press ENTER to continue")
+
+
+#----------------------------------- Slow print --------------------------------------------
+    def slow_print(self, text, delay = 0.05):
+        """Prints a string slowly instead of instantly"""
+
+        for char in text:
+            sys.stdout.write(char)
+            sys.stdout.flush()
+            time.sleep(delay)
+        print()
 
 
 
@@ -742,7 +755,7 @@ q. Quit
 
 
 #----------------------------------- TOURNAMENT INFO MENU (PUBLIC) -----------------------------------------
-    def show_tournament_info(self, tournament: object):
+    def show_tournament_info(self, tournament: Tournament):
         """Shows tournament information for selected tournament
         returns: "VIEW SCHEDULE", "VIEW STANDINGS", "BACK", "HOME", "QUIT" """
 
@@ -784,24 +797,131 @@ q. Quit
         return "QUIT"
     
 
-#----------------------------------- ADD TEAMS TO TOURNAMENT MENU (PUBLIC) -----------------------------------------
+#----------------------------------- ADD TEAMS TO TOURNAMENT MENU (ORGANIZER)) -----------------------------------------
     def show_add_teams_to_tournament_menu(self, tournament: Tournament):
         """displays menu to add teams into specified tournament"""
 
+        self.__logic_api.populateTournament(tournament)
+
+
+        #print 5 items per page loop
+        while True:
+
+            print(f"""
+----------------------------------------
+ RU's e-Sport Extravaganza
+----------------------------------------
+Add teams to tournament: {tournament.name}
+
+Teams currently registered:
+""")
+            
+            registered_teams: list[Team] = tournament.teams
+            try:
+                for team in registered_teams:
+                    print("-", team.teamName)
+            except:
+                print("- No teams have been registered")
+
+            available_teams: list[Team] = self.__logic_api.availableteams(tournament)
+
+            team_names = [t.teamName.strip() for t in available_teams]
+
+            viewer = SelectFromPage(team_names)
+
+            print(f"""
+Available teams:
+                  
+{viewer.currentPage()}
+
+ENTER. Next page
+1-5. Add team
+b. Back
+h. Home (Organizer)
+q. Quit 
+""")
+
+            choice = self.__prompt_options(["1", "2", "3", "4", "5", "", "h", "b", "q"])
+
+            #select team by number
+            if choice.isdigit():
+                num = int(choice)
+                team_name = viewer.select_item_by_number(num)
+
+                # find team object
+                for t in available_teams:
+                    if t.teamName == team_name:
+                        self.__logic_api.addTeamtoTournament(t, tournament)
+                continue
+
+            if choice ==  "":
+                viewer.next_page()
+                continue
+
+            if choice == "b":
+                return "BACK"
+            
+            if choice == "h":
+                answer = "HOME"
+                break
+            
+            return "QUIT"
+        return answer
+
+
+#----------------------------------- SCHEDULE GENERATION MENU (ORGANIZER)) -----------------------------------------
+    def show_generate_schedule_menu(self, tournament: Tournament):
+        """Displays the menu where the schedule is generated"""
+
+        current_teams = len(tournament.teams)
+        minimum_teams = 16
         print(f"""
 ---------------------------
  RU's e-Sport Extravaganza
 ---------------------------
-Add teams to tournament: {tournament}
-
-Teams currently registered:
-""")
-        teams_list: list[Team] = tournament.teams
-        for team in teams_list:
-            print("-", team)
-
-        while True:
+Checking team count:
+              
+Current number of teams: {current_teams}
+Minimum teams required: {minimum_teams}
+""")    
+        
+        if current_teams < minimum_teams:
+            #Error path: not enough teams
             print("""
-Available teams:
-""")
+ERROR: Not enough teams to generate bracket
+                  
+Please add more teams to this tournament
 
+1. Go to "Add teams to tournament" menu
+2. Back to Organizer menu                  
+                  """)
+            
+            choice = self.__prompt_options(["1", "2"])
+            if choice == "1":
+                return ("GO TO ADD TEAMS TO TOURNAMENT", tournament)
+            return "CANCEL"
+        
+        else:
+            #number of teams is enough
+            print("""
+1. Generate schedule
+2. Cancel
+""")
+            choice = self.__prompt_options(["1", "2"])
+
+            if choice == "1":
+                print("""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------""")    
+                
+                generate = (f"Generating schedule...", f"Schedule has been generated!", f"This is the schedule for: {tournament}")
+                for s in generate:
+                    self.slow_print(s)
+
+
+
+
+            return "CANCEL"
+        
+        

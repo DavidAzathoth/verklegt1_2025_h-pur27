@@ -1,12 +1,13 @@
 import csv
 from datetime import datetime
+
 class StorageHandler:
     def __init__(self):
         pass
     def retrieveFile(self,file: str) -> list[type]:
         ret_list=[]
         try:
-            with open(file,'r', encoding='utf-8') as file:
+            with open(file,'r', encoding='utf-8-sig') as file:
                 csv_reader = csv.DictReader(file)
                 for row in csv_reader:
                     ret_list.append(row)
@@ -18,15 +19,16 @@ class StorageHandler:
 
     def saveFile(self,file,data):
         try:
-            with open(file,'r', encoding='utf-8') as fileT: #We need to open the file first to get fieldnames for the DictReader
+            with open(file,'r', encoding='utf-8-sig') as fileT: #We need to open the file first to get fieldnames for the DictReader
                 csvreader=csv.DictReader(fileT)
-                keys=csvreader.fieldnames
+                keys = csvreader.fieldnames
             fileT.close()
 
-            loaded=self.retrieveFile(file)
+            loaded = self.retrieveFile(file)
+
             self.createBackup(file,loaded,keys)
             loaded.append(data)
-            with open(file,'w',newline='', encoding='utf-8' ) as fileT:
+            with open(file,'w',newline='', encoding='utf-8-sig' ) as fileT:
                 csvwriter=csv.DictWriter(fileT, keys)
                 csvwriter.writeheader()
                 csvwriter.writerows(loaded)
@@ -41,22 +43,23 @@ class StorageHandler:
         suffix=file.removeprefix('StorageLayer/Data/')
         datatype=suffix.removesuffix('.csv')
         file='StorageLayer/Data/Backup/'+datatype+date+'.csv' 
-        with open(file,'w',newline='', encoding='utf-8')as file:
+        with open(file,'w',newline='', encoding='utf-8-sig')as file:
             csvwriter=csv.DictWriter(file,keys)
             csvwriter.writeheader()
             csvwriter.writerows(backup)
+            
         file.close()
 
     def editFile(self,file,data):
         try:
-            with open(file,'r', encoding='utf-8') as fileT:
+            with open(file,'r', encoding='utf-8-sig') as fileT:
                 csvreader=csv.DictReader(fileT)
                 keys=csvreader.fieldnames
             fileT.close()
 
             loaded=self.retrieveFile(file)
             self.createBackup(file,loaded,keys)
-            with open(file,'w',newline='', encoding='utf-8') as fileT:
+            with open(file,'w',newline='', encoding='utf-8-sig') as fileT:
                 csvwriter=csv.DictWriter(fileT, keys)
                 csvwriter.writeheader()
                 csvwriter.writerows(data)
