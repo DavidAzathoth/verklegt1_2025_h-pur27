@@ -5,6 +5,7 @@ from UiLayer.selectfrompage import SelectFromPage
 from datetime import datetime, date
 from Models.Team import Team
 from Models.Player import Player
+from Models.Tournament import Tournament
 
 class MenuUI:
     def __init__(self, logic_api: LogicAPI):
@@ -61,10 +62,11 @@ class MenuUI:
                 age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
 
                 if age < minimum_age:
-                    print(f"ERROR: You must be at lease {minimum_age} years old. please enter a valid age")
+                    print(f"ERROR: You must be at least {minimum_age} years old. please enter a valid age")
                     continue
 
                 break
+        return dob
 
 
 #----------------------------------- Saves team, player and captain info --------------------------------------------
@@ -477,6 +479,8 @@ Team captain: {captain_handle}
         #stores players before creating
         player_list: list[Player] = []
         player_count = 0
+
+        #Loops until player count == 5
         while player_count != 5:
 
 #==PLAYER CREATION MENU INTERFACE ====
@@ -507,12 +511,25 @@ Add player {player_count + 1}:
                 
                     break
 
+            #Real name
             name = input("Player name: ").strip()
+            #Date of birth
             dob = self.check_player_age()
+            #Home address
             address = input("Player address: ").strip()
-            phone_num = int(input("Player phone number: ").strip())
+
+            #Phone number loop
+            while True:
+                try:
+                    phone_num = int(input("Player phone number: ").strip())
+                    break
+                except ValueError:
+                    print("\nERROR: Please enter a valid phone number\n")
+
+            #TeamID        
             teamID = team.teamID
             
+            #Confirm player email
             check_player_email: tuple = self.__logic_api.emailVerification(input("Player Email: "))
             while check_player_email[1] == False:
                 print(check_player_email[0])
@@ -632,7 +649,7 @@ q. Quit
             return "QUIT"
 
 
-#----------------------------------- VIEW ALL TOURNAMENTS MENU (PUBLIC) -----------------------------------------    
+#----------------------------------- VIEW ALL TOURNAMENTS MENU (PUBLIC/ORGANIZER) -----------------------------------------    
     def show_view_tournaments_menu(self):
         """Prints list of tournaments
         returns: ("TOURNAMENT INFO",  tournament: object), "BACK", "QUIT"  """
@@ -646,7 +663,7 @@ q. Quit
         #loop to view tournaments 5 at a time
         while True:
 
-#------LIST OF TOURNAMENTS INTERFACE---------------
+#======LIST OF TOURNAMENTS INTERFACE======
             print(f"""
 ---------------------------
 RU's e-Sport Extravaganza
@@ -660,6 +677,7 @@ ENTER. Next page
 b. Back
 q. Quit              
 """) 
+#=========================================
             choice = self.__prompt_options(["1", "2", "3", "4", "5", "", "b", "q"])
 
             #select tournament by number
@@ -764,3 +782,26 @@ q. Quit
         if choice == "h":
             return "HOME"
         return "QUIT"
+    
+
+#----------------------------------- ADD TEAMS TO TOURNAMENT MENU (PUBLIC) -----------------------------------------
+    def show_add_teams_to_tournament_menu(self, tournament: Tournament):
+        """displays menu to add teams into specified tournament"""
+
+        print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Add teams to tournament: {tournament}
+
+Teams currently registered:
+""")
+        teams_list: list[Team] = tournament.teams
+        for team in teams_list:
+            print("-", team)
+
+        while True:
+            print("""
+Available teams:
+""")
+

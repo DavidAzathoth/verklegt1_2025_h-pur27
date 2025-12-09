@@ -96,6 +96,7 @@ class LogicAPI:
     def savePlayer(self, player: Player):
         """Store player to file"""
         self.__Playerlogic.saveplayer(player)
+    
     def getPlayer_teamID(self):
         """# Not implemented #"""
         teams = self.getTeams()
@@ -119,8 +120,10 @@ class LogicAPI:
         \noptions: 'updatewins', 'updatelosses'"""
         self.__Teamlogic.updateTeam(None, option, team, amount)
         return
+    
     def generatebracket(self, teams):
         return self.__bracketgenerator.generatebracket(teams)
+    
     def roundsplayed(self, teams):
         return self.__bracketgenerator.playingames(teams)
     
