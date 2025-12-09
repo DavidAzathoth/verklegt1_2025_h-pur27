@@ -98,6 +98,7 @@ class BracketGenerator:
 
     def updatebracket(self, roundsplayed : dict, finished_round : int, winners : list[str]):
         
+        existingmatches = self.__dataapi.loadMatches() or []
         existingids = [row.get('matchID') for row in existingmatches]
 
         for round_key in roundsplayed:
@@ -127,6 +128,8 @@ class BracketGenerator:
                 match = self.__matchmodel(matchid, team_A_name, team_B_name)
 
                 roundsplayed[next_round_key].append(match)
+
+                self.__dataapi.saveMatch(match.createCSVdict())
 
                 i += 2
                 
