@@ -105,6 +105,8 @@ class LogicAPI:
         teams = self.getTeams()
         players = self.getPlayers()
 
+    def editplayer(self, gamertag: str, attribute: str, newValue: str):
+        self.__Playerlogic.editplayer(gamertag, attribute, newValue)
 
     def emailVerification(self, email):
         """Verifies if email is valid"""
