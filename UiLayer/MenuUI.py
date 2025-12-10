@@ -140,7 +140,8 @@ q. Quit
                 if captain_dict is False:
                     print()
                     print("-" * 50)
-                    print("ERROR: Captain is not registered into the system\n")
+                    print("ERROR: Captain is not registered into the system")
+                    print("\nTry again?\n")
                     print("ENTER. Try again\nc. Cancel")
                     
                     choice = self.__prompt_options(["", "c"])
@@ -185,17 +186,18 @@ q. Quit
             return "PRINT LIST OF TOURNAMENTS"
         if choice == "2":
             tournament_input = input("Please enter the tournament name: ")
-            tournament = self.__logic_api.getTournamentbyName(tournament_input)
+            tournament = self.__logic_api.gettournamentbyname(tournament_input)
             while tournament == None:
+                print("-" * 33)
                 print("\nERROR: tournament name invalid.")
-                print("\nContinue?")
-                print("\ny. Yes (continue)")
-                print("n. No (cancel)\n")
+                print("\nTry again?")
+                print("\nENTER. Try again")
+                print("c. Cancel\n")
 
-                choice = self.__prompt_options(["y", "n"])
-                if choice == "y":
+                choice = self.__prompt_options(["", "c"])
+                if choice == "":
                     tournament_input = input("Please enter the tournament name: ")
-                    tournament = self.__logic_api.getTournamentbyName(tournament_input)
+                    tournament = self.__logic_api.gettournamentbyname(tournament_input)
                 else: 
                     return "CANCEL"
                 
@@ -839,9 +841,9 @@ q. Quit
         choice = self.__prompt_options(["1", "2", "b", "h", "q"])
 
         if choice == "1":
-            return #TODO
+            return "VIEW SCHEDULE"
         if choice == "2":
-            return #TODO
+            return "VIEW RESULTS"
         if choice == "b":
             return "BACK"
         if choice == "h":
@@ -988,8 +990,12 @@ This tournament has sufficient teams!
 
                 for i, round in bracket.rounds.items():
                     print(f"Round {i}:")
+                    print("-" * 70)
+                    print()
                     for match in round:
                         print(match)
+                    print()
+                    print("-" * 70)
                     
                 
                 
@@ -1082,3 +1088,39 @@ c. Cancel
                 return "CAPTAIN MENU"
             
             return "QUIT"
+
+
+#----------------------------------- TOURNAMENT SCHEDULE MENU (PUBLIC) -----------------------------------------
+    def show_tournament_schedule(self, tournament: Tournament):
+        """Displays the tournament schedule menu for public  view\n
+        Returns: "BACK", "HOME", "QUIT" """
+
+        print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+
+Tournament schedule for: {tournament.name}
+{print("-" * 70)}
+""")
+        
+        self.__logic_api.populateTournament(tournament)
+        
+        bracket: Bracket = tournament.bracket
+
+        for i, round in bracket.rounds.items():
+                    print(f"Round {i}:")
+                    print("-" * 70)
+                    print()
+                    for match in round:
+                        print(match)
+                    print()
+                    print("-" * 70)
+
+        choice = self.__prompt_options(["b", "h", "q"])
+        
+        if choice == "b":
+            return "BACK"
+        if choice == "h":
+            return "HOME"
+        return "QUIT"
