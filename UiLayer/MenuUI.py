@@ -1103,9 +1103,10 @@ c. Cancel
 Tournament schedule for: {tournament.name}
 {print("-" * 70)}
 """)
+        
+        self.__logic_api.populateTournament(tournament)
+        
         bracket: Bracket = tournament.bracket
-
-        self.__logic_api.populateBracket(bracket)
 
         for i, round in bracket.rounds.items():
                     print(f"Round {i}:")
