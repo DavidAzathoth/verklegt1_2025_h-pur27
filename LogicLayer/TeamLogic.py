@@ -37,6 +37,8 @@ class Teamlogic:
         return None
     
     def get_team_by_teamID(self, teamid: str, teamlist: list[Team]) -> Team | None:
+        if None in teamlist:
+            return None
         for team in teamlist:
             if team.teamID.lower().strip() == teamid.lower().strip():
                 return team

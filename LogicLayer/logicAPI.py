@@ -144,18 +144,28 @@ class LogicAPI:
     def saveTeam(self, team: Team):
         self.__Teamlogic.saveTeam(team)
     
-    def updateBracket(self, bracket):
-        return self.__bracketgenerator.updatebracket(bracket)
+    def updateBracket(self, tournament):
+        self.__bracketgenerator.updatebracket(tournament)
+        self.__Tournamentmanager.updateTournament(tournament,None ,'updateall')
+    
+    def updateOrMatches(self, tournament: Tournament, matchwinner: str):
+        self.__bracketgenerator.updateOrMatches(tournament, matchwinner)
+        return
 
 
     def returnMatchWinner(self, match, scores):
         return self.__matchlogic.returnMatchWinnerconfirmation(match, scores)
     
-    def confirmMatchWinner(self, match: Match, scores):
+    def confirmMatchWinner(self, match: Match, scores)-> tuple[str,str]:
         """Input scores is a list [1,2] score 1(index 0) is team_A score and score 2(index 1) is team_B score"""
-        self.__matchlogic.confirmMatchWinner(match, scores)
+        matchloser, matchwinner = self.__matchlogic.confirmMatchWinner(match, scores)
+        return matchloser, matchwinner
         
     def populateBracket(self, bracket):
         self.__Tournamentmanager.populateBracket(bracket)
 
+    def removeTeamfromTournament(self, tournament: Tournament, teamname: str):
+        """Removes team from tournament, input teamname. Meant to be used after updating matches with confirmMatchWinner in logic api"""
+        self.__Tournamentmanager.removeTeamfromTournament(tournament, teamname)
+        return
 ###############testing area#############

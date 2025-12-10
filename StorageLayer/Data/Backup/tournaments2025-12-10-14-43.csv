@@ -1,0 +1,17 @@
+﻿venue,name,startDate,endDate,contactEmail,contactPhone,matchesList,matchHistory,teams,active
+HA,HAhringurinn,01/12/2025,17/12/2025,orgmaster@email.is,+354 123 1234,,,"A1,A3,A6,A7,B1,B3,B4,B6",True
+Ha,ha,ha,ha,ha,ha,,,,True
+HA,HAringurinn,25,25,sdf,asdf,,,,True
+HA,HAringurinn,12/12/2025 00:00,15/12/2025 00:00,All good.,8989123,,,,True
+HA,HAringurinn,12/12/2025,15/12/2025,All good.,8912381,,,,True
+HA,HAringurin,12/12/2025,15/12/2025,@ symbol is missing.,12301951,,,,True
+HR,HRingurinn,12/12/2025,15/12/2025,baldvin@gmail.com,123155,,,,True
+sadf,sa f,12/12/2025,14/12/2025,   baldvin@gmail.com    ,1235,,,,True
+asdf,asdf,12/12/2025,15/12/2025,baldvin@gmail.com,1231525,,,,True
+asdgf,asdf,14/12/2025,18/12/2025,    BaldvinHrafn@GMAIL.com    ,12315,,,,True
+asdf,safd,12/12/2025,15/12/2025,baldvin@gmail.com,12314,,,,True
+asfafh,dng,12/12/2025,16/12/2025,baldv n@gmail.c om,12324356,,,,True
+sadf,asd,12/12/2025,15/12/2025,b a ldv in@ gm ail.com,1235121,,,,True
+sdaf,asdf,12/12/2025,15/12/2025,b a l   d v i n @ g m a i l   .   c o m,1234,,,,True
+asdfa,a sdva,12/12/2025,12/12/2025,baldvin@gmail.com,12354,,,,True
+qwer,qwer,11/11/2025,11/11/2025,baldvin@gmail.com,123551,,,,True
