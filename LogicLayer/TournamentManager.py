@@ -154,6 +154,13 @@ class Tournamentmanager:
         for round in bracket.rounds.keys():
             for match in bracket.rounds.get(round):
                 self.__matchlogic.updateMatch(match)
+    
+    def reloadTournament(self, tournament: Tournament):
+        self.unpopulateTournament(tournament)
+        if tournament.bracket is not None:
+            tournament.bracket = self.unpopulateBracket(tournament.bracket)
+        self.populateTournament(tournament)
+        return tournament
 
     
 

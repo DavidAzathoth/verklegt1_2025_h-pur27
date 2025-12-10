@@ -165,5 +165,7 @@ class LogicAPI:
 
     def getNamedRounds(self, bracket):
         return self.__bracketlogic.getnamedrounds(bracket)
-
+    
+    def reloadTournament(self, tournament: Tournament):
+        return self.__Tournamentmanager.reloadTournament
 ###############testing area#############
