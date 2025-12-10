@@ -35,13 +35,8 @@ class Playerlogic:
             players = self.getplayers()
             for p in players:
                 if p.playerGamertag == gamertag:
-                    if attribute == "teamID":
-                        p.teamID = newValue
-                    elif attribute == "playerGamertag":
-                        p.playerGamertag = newValue
-                    elif attribute == "fullname":
-                        p.fullname = newValue
-                    elif attribute == "phoneNumber":
+                    
+                    if attribute == "phoneNumber":
                         p.phoneNumber = newValue
                     elif attribute == "emailAddress":
                         p.emailAddress = newValue
@@ -49,9 +44,7 @@ class Playerlogic:
                         p.address = newValue
                     elif attribute == "link":
                         p.link = newValue
-                    elif attribute == "dateOfBirth":
-                        p.dateOfBirth = newValue
-
+                    
                     data = [pl.createCSVDict() for pl in players]
                     self.__dataApi.updatePlayers(data)
                     return True
