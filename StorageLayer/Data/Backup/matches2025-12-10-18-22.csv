@@ -1,0 +1,22 @@
+﻿matchID,team_A,team_B,matchWinner,playerScore,matchPlayed,matchDate,matchTime,server
+M1,FURIA,Vitality,Vitality,"{'FURIA': '3', 'Vitality': '10'}",True,01/12/2025,10:00,0
+M2,Falcons,MOUZ,Falcons,"{'Falcons': '8', 'MOUZ': '4'}",True,01/12/2025,15:00,0
+M3,The MongolZ,Spirit,Spirit,"{'The MongolZ': '3', 'Spirit': '10'}",True,02/12/2025,14:00,0
+M4,Natus Vincere,G2,Natus Vincere,"{'Natus Vincere': '5', 'G2': '3'}",True,03/12/2025,13:00,0
+M5,Aurora,paiN,Aurora,"{'Aurora': '9', 'paiN': '2'}",True,04/12/2025,12:00,0
+M6,Astralis,FaZe,FaZe,"{'Astralis': '1', 'FaZe': '5'}",True,05/12/2025,11:00,0
+M7,3DMAX,Legacy,Legacy,"{'3DMAX': '1', 'Legacy': '3'}",True,06/12/2025,10:00,0
+M8,Liquid,B8,B8,"{'Liquid': '4', 'B8': '9'}",True,06/12/2025,15:00,0
+M9,GamerLegion,Vitality,Vitality,"{'GamerLegion': '2', 'Vitality': '3'}",True,07/12/2025,14:00,0
+M10,HEROIC,Falcons,HEROIC,"{'HEROIC': '9', 'Falcons': '1'}",True,08/12/2025,13:00,0
+M11,Virtus.rpo,Spirit,Spirit,"{'Virtus.rpo': '4', 'Spirit': '9'}",True,09/12/2025,12:00,0
+M12,SAW,Natus Vincere,SAW,"{'SAW': '5', 'Natus Vincere': '4'}",True,10/12/2025,11:00,0
+M13,Passion UA,Aurora,Passion UA,"{'Passion UA': '3', 'Aurora': '1'}",True,11/12/2025,10:00,0
+M14,M80,FaZe,,{},False,11/12/2025,15:00,0
+M15,TBD,TBD,,{},False,12/12/2025,14:00,0
+M16,TBD,TBD,,{},False,13/12/2025,13:00,0
+M17,TBD,TBD,,{},False,14/12/2025,12:00,0
+M18,TBD,TBD,,{},False,15/12/2025,11:00,0
+M19,TBD,TBD,,{},False,16/12/2025,10:00,0
+M20,TBD,TBD,,{},False,16/12/2025,15:00,0
+M21,TBD,TBD,,{},False,17/12/2025,15:00,0
