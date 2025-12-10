@@ -1,0 +1,3 @@
+matchID,team_A,team_B,matchWinner,playerScore,matchPlayed
+M1,TeamA,TeamB,,{},False
+M2,TeamC,TeamD,,{},False

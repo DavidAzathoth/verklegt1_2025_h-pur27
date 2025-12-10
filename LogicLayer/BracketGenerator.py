@@ -166,10 +166,6 @@ class BracketGenerator:
         bracket=Bracket(tournament.name,roundsplayed)
         tournament.bracket=bracket
         return
-    
-    def updateBracket(self, bracket):
-        pass
-
 
     def generate_slots_full_range(self, start: date, end: date, servers: int,
                                   match_minutes=60, buffer_minutes=0,
@@ -232,114 +228,21 @@ class BracketGenerator:
             m.matchDate = d.strftime("%d/%m/%Y")
             m.matchTime = t.strftime("%H:%M")
             m.server = s
+    
+    
 
+    def updatebracket(self, bracket):
+        
+        all_matches: list[Match] = []
+        for round_key, match_list in bracket.rounds.items():
+            all_matches.extend(match_list)
+        
+        existing_rows = self.__dataapi.loadMatches()
+        rows_by_id = {row["matchID"]: row for row in existing_rows}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # def _generate_slots(self,start: date, end: date, servers: int,
-    #                     match_minutes=40, buffer_minutes=0,
-    #                     day_start=time(10,0), day_end=time(16,0),
-    #                     count: int | None = None):
-    #     L = match_minutes + buffer_minutes
-    #     start_min = day_start.hour*60 + day_start.minute
-    #     end_min   = day_end.hour*60 + day_end.minute
-    #     W = end_min - start_min
-
-    #     rows_per_day = W // L                 # 40min -> 9 rows/day (10:00..15:20)
-    #     slots_per_day = servers * rows_per_day
-    #     days = (end - start).days + 1         # inclusive
-    #     capacity = days * slots_per_day
-
-    #     if count is None:
-    #         count = capacity
-    #     if count > capacity:
-    #         raise ValueError(f"Not enough capacity: need {count}, have {capacity} slots.")
-
-    #     slots = []
-    #     for g in range(count):  # row-major: server changes fastest inside each time row
-    #         day_idx, r = divmod(g, slots_per_day)
-    #         server, row = divmod(r, rows_per_day)
-    #         mins = start_min + row * L
-    #         hh, mm = divmod(mins, 60)
-    #         d = start + timedelta(days=day_idx)
-    #         slots.append((d, time(hh, mm), server))
-    #     return slots, rows_per_day
-
-    # def schedule_generated_and_tbd(self,roundsplayed: dict, start: date, end: date, servers: int, team_count: int,
-    #                                match_minutes=40, buffer_minutes=0,
-    #                                day_start=time(10,0), day_end=time(16,0)):
-    #     total_games = team_count - 1
-    #     slots, _ = self._generate_slots(start, end, servers, match_minutes, buffer_minutes, day_start, day_end, count=total_games)
-
-    #     def align_to_next_row(i):
-    #         return ((i + servers - 1) // servers) * servers
-
-    #     # 1) Schedule the generated rounds in order, in blocks
-    #     used_until = 0
-    #     for r in sorted(roundsplayed.keys(), key=lambda x: int(x)):
-    #         matches = roundsplayed[r]
-    #         used_until = align_to_next_row(used_until)
-
-    #         for m in matches:
-    #             d, t, s = slots[used_until]
-    #             m.matchDate = d.strftime("%d/%m/%Y")
-    #             m.matchTime = t.strftime("%H:%M")
-    #             m.server = s
-    #             used_until += 1
-
-    #         used_until = align_to_next_row(used_until)
-
-    #     # 2) Reserve remaining as TBD, SPREAD OUT until the last slot
-    #     remaining = total_games - sum(len(v) for v in roundsplayed.values())
-    #     if remaining <= 0:
-    #         return []  # no TBD needed
-
-    #     start_g = used_until
-    #     end_g = total_games - 1  # force final to be last slot of the range
-
-    #     # If we already passed end_g (shouldn’t happen), just return none
-    #     if start_g > end_g:
-    #         return []
-
-    #     if remaining == 1:
-    #         indices = [end_g]
-    #     else:
-    #         span = end_g - start_g
-    #         indices = [start_g + (j * span) // (remaining - 1) for j in range(remaining)]
-
-    #     tbd_slots = [slots[g] for g in indices]
-    #     return tbd_slots
-
+        for m in all_matches:
+            rows_by_id[m.matchID] = m.createCSVDict()
+        
+        updated_rows = list(rows_by_id.values())
+        self.__dataapi.updateMatches(updated_rows)
+        return
