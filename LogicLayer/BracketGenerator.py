@@ -99,9 +99,9 @@ class BracketGenerator:
                 roundsplayed[f'{i}'].append(self.__matchmodel(matchid,team_A.teamName,team_B.teamName))
             p=0
             for k in range(0,int(tempextrarounds-teamsinround)):
-                team_A=f'{roundsplayed.get('1')[p].team_A} or {roundsplayed.get('1')[p].team_B}'
+                team_A=f'{roundsplayed.get("1")[p].team_A} or {roundsplayed.get("1")[p].team_B}'
                 p+=1
-                team_B=f'{roundsplayed.get('1')[p].team_A} or {roundsplayed.get('1')[p].team_B}'
+                team_B=f'{roundsplayed.get("1")[p].team_A} or {roundsplayed.get("1")[p].team_B}'
                 p+=1
                 while True:
                     matchid=f'M{len(existingmatches)+num}' #note: matchid can have duplicates in this configuration, consider changing it
@@ -120,7 +120,7 @@ class BracketGenerator:
                 '''If this returns pop from empty string error then the amount of teams is under 16 validate before generating bracket'''
                 team_A = teams[teamnum]
                 teamnum+=1
-                team_B=f'{roundsplayed.get('1')[t].team_A} or {roundsplayed.get('1')[t].team_B}'
+                team_B=f'{roundsplayed.get("1")[t].team_A} or {roundsplayed.get("1")[t].team_B}'
                 while True:
                         matchid=f'M{len(existingmatches)+num}' #note: matchid can have duplicates in this configuration, consider changing it
                         if matchid not in existingmatchids:

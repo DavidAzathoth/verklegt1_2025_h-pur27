@@ -42,8 +42,8 @@ class LogicAPI:
     def gettournaments(self):
         return self.__Tournamentmanager.getTournaments()
 
-    def gettournamentbyname(self, name: str):
-        tournaments: list[Tournament] = self.__Tournamentmanager.getTournaments()
+    def getTournamentbyName(self, name: str):
+        tournaments = self.__Tournamentmanager.getTournaments()
         return self.__Tournamentmanager.getTournamentbyName(name, tournaments)
 
     def populateTournament(self, tournament: Tournament):
