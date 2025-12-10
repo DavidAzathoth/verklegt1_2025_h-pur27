@@ -40,11 +40,14 @@ class MatchLogic:
         self.__dataApi.updateMatch(data)
 
     def returnMatchWinnerconfirmation(self, match: Match, scores: list):
+        """Returns winner from list, list is team_A score for index 0 and team_B score for index 1 [0,1].
+        Does not save to file or update any data."""
         if scores[0]>scores[1]:
             return match.team_A
         else:
             return match.team_B
     def confirmMatchWinner(self, match: Match, scores: list):
+        """Input scores is a list [1,2] score 1(index 0) is team_A score and score 2(index 1) is team_B score"""
         raw_dict={f'{match.team_A}':f'{scores[0]}',f'{match.team_B}':f'{scores[1]}'}
         if scores[0]>scores[1]:
             match.matchWinner = match.team_A
