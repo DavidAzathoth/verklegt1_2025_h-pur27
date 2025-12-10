@@ -161,7 +161,13 @@ class LogicAPI:
         return self.__matchlogic.returnMatchWinnerconfirmation(match, scores)
     
     def confirmMatchWinner(self, match: Match, scores)-> tuple[str,str]:
-        """Input scores is a list [1,2] score 1(index 0) is team_A score and score 2(index 1) is team_B score"""
+        """Input scores is a list [1,2] score 1(index 0) is team_A score and score 2(index 1) is team_B score
+        To update the bracket correctly use these commands in this order \n
+        matchloser, matchwinner = llapi.confirmMatchWinner(match, score) \n
+        llapi.removeTeamfromTournament(tournament, matchloser) \n
+        llapi.updateOrMatches(tournament,matchwinner) \n
+        llapi.updateBracket(tournament)
+        """
         matchloser, matchwinner = self.__matchlogic.confirmMatchWinner(match, scores)
         return matchloser, matchwinner
         

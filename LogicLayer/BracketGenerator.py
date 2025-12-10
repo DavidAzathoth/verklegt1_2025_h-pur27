@@ -27,7 +27,7 @@ class BracketGenerator:
         return rounds, extramatches
     
     def generatebracket(self, tournament: Tournament):
-        """Generate inital bracket for tournament, accounting for a non base 2 number of teams(16,32,64...)"""
+        """Generate inital bracket for tournament, accounting for a non base 2 number of teams(16,32,64...) Returns False if the tournament already has a bracket"""
         if type(tournament.bracket) == Bracket:
             return False
         tournament.playingteams = tournament.teams[:]
