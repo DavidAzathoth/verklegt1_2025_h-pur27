@@ -7,6 +7,7 @@ from LogicLayer.MatchLogic import MatchLogic
 from Models.Tournament import Tournament
 from Models.Team import Team
 from Models.Player import Player
+from Models.Match import Match
 from LogicLayer.PlayerLogic import Playerlogic
 
 class LogicAPI:
@@ -142,15 +143,16 @@ class LogicAPI:
 
     def saveTeam(self, team: Team):
         self.__Teamlogic.saveTeam(team)
-
+    
     def updateBracket(self, bracket):
-        """Updates all edited matches inside a tournament, Perhaps automate this by updating tournament directly"""
-        self.__Tournamentmanager.updateBracket(bracket)
+        return self.__bracketgenerator.updatebracket(bracket)
+
 
     def returnMatchWinner(self, match, scores):
         return self.__matchlogic.returnMatchWinnerconfirmation(match, scores)
     
-    def confirmMatchWinner(self, match, scores):
+    def confirmMatchWinner(self, match: Match, scores):
+        """Input scores is a list [1,2] score 1(index 0) is team_A score and score 2(index 1) is team_B score"""
         self.__matchlogic.confirmMatchWinner(match, scores)
         
     def populateBracket(self, bracket):

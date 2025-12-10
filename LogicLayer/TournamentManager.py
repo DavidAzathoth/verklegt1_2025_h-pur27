@@ -155,6 +155,7 @@ class Tournamentmanager:
             for match in bracket.rounds.get(round):
                 self.__matchlogic.updateMatch(match)
 
+    
 
 #def populateTournament(self, tournament: Tournament):
 #        teams = self.__teamlogic.getTeams()

@@ -8,9 +8,32 @@ from LogicLayer.PlayerLogic import Playerlogic
 #from Models.Player import Player
 from StorageLayer.storageApi import DataAPI
 #from Models.ViewTeamsMenu import ShowTeams
+from Models.Match import Match
+from Models.Bracket import Bracket
 
-#da = DataAPI()
-#llapi=LogicAPI()
+da = DataAPI()
+llapi=LogicAPI()
+
+m1 = Match("M1", "TeamA", "TeamB")
+m2 = Match("M2", "TeamC", "TeamD")
+
+da.updateMatches([m1.createCSVDict(), m2.createCSVDict()])
+rounds = {"1": [m1, m2]}
+bracket = Bracket("TestTournament", rounds)
+
+m1.matchWinner = "TeamA"
+m1.matchPlayed = True
+
+m2.matchWinner = "TeamD"
+m2.matchPlayed = True
+
+llapi.updateBracket(bracket)
+
+after = da.loadMatches()
+print('Matches')
+for row in after:
+    print(row)
+
 
 #inputlisti=['1','2','3',4,5,'6']
 #print(llapi.createteam(inputlisti).createCSVDict())
