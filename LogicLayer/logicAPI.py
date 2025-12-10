@@ -9,6 +9,7 @@ from Models.Team import Team
 from Models.Player import Player
 from Models.Match import Match
 from LogicLayer.PlayerLogic import Playerlogic
+from LogicLayer.BracketLogic import BracketLogic
 
 class LogicAPI:
     def __init__(self):
@@ -19,6 +20,7 @@ class LogicAPI:
         self.__Playerlogic = Playerlogic(__dataAPI)
         self.__bracketgenerator = BracketGenerator()
         self.__matchlogic = MatchLogic(__dataAPI)
+        self.__bracketlogic = BracketLogic()
         return
 
     def createteam(self, input: list):
@@ -157,5 +159,8 @@ class LogicAPI:
         
     def populateBracket(self, bracket):
         self.__Tournamentmanager.populateBracket(bracket)
+
+    def getNamedRounds(self, bracket):
+        return self.__bracketlogic.getnamedrounds(bracket)
 
 ###############testing area#############
