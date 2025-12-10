@@ -9,6 +9,7 @@ from Models.Team import Team
 from Models.Player import Player
 from Models.Match import Match
 from LogicLayer.PlayerLogic import Playerlogic
+from LogicLayer.BracketLogic import BracketLogic
 
 class LogicAPI:
     def __init__(self):
@@ -19,6 +20,7 @@ class LogicAPI:
         self.__Playerlogic = Playerlogic(__dataAPI)
         self.__bracketgenerator = BracketGenerator()
         self.__matchlogic = MatchLogic(__dataAPI)
+        self.__bracketlogic = BracketLogic()
         return
 
     def createteam(self, input: list):
@@ -103,6 +105,8 @@ class LogicAPI:
         teams = self.getTeams()
         players = self.getPlayers()
 
+    def editplayer(self, gamertag: str, attribute: str, newValue: str):
+        self.__Playerlogic.editplayer(gamertag, attribute, newValue)
 
     def emailVerification(self, email):
         """Verifies if email is valid"""
@@ -168,4 +172,7 @@ class LogicAPI:
         """Removes team from tournament, input teamname. Meant to be used after updating matches with confirmMatchWinner in logic api"""
         self.__Tournamentmanager.removeTeamfromTournament(tournament, teamname)
         return
+    def getNamedRounds(self, bracket):
+        return self.__bracketlogic.getnamedrounds(bracket)
+
 ###############testing area#############

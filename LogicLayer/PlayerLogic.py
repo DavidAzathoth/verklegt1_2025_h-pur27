@@ -1,12 +1,14 @@
 from StorageLayer.storageApi import DataAPI
 from LogicLayer.logicHandler import logicHandler
 from Models.Player import Player
+from LogicLayer.menuLogic import MenuLogic
 
 class Playerlogic:
     def __init__(self, dataApi: DataAPI):
         self.PLAYERATTRIBUTES = ['teamID','playerGamertag','fullname','phoneNumber','emailAddress','address','link']
         self.__logichandler = logicHandler()
         self.__dataApi = dataApi
+        self.__menulogic = MenuLogic(DataAPI)
         self.__playermodel = Player
         
 
@@ -17,7 +19,7 @@ class Playerlogic:
         
     def getplayers(self):
         raw_data = self.__dataApi.loadPlayers()
-        playerlist=self.__logichandler.loadmodels(self.__playermodel,raw_data)
+        playerlist: list [Player] = self.__logichandler.loadmodels(self.__playermodel,raw_data)
         return playerlist
     
     def saveplayer(self, player: Player):
@@ -35,23 +37,19 @@ class Playerlogic:
             players = self.getplayers()
             for p in players:
                 if p.playerGamertag == gamertag:
-                    if attribute == "teamID":
-                        p.teamID = newValue
-                    elif attribute == "playerGamertag":
-                        p.playerGamertag = newValue
-                    elif attribute == "fullname":
-                        p.fullname = newValue
-                    elif attribute == "phoneNumber":
+                    
+                    if attribute == "phoneNumber":
                         p.phoneNumber = newValue
                     elif attribute == "emailAddress":
-                        p.emailAddress = newValue
+                        check_player_email: tuple = self.__menulogic.emailverification(newValue)
+                        if check_player_email[1] == False:
+                            raise TypeError
+                        p.emailAddress = check_player_email[0]
                     elif attribute == "address":
                         p.address = newValue
                     elif attribute == "link":
                         p.link = newValue
-                    elif attribute == "dateOfBirth":
-                        p.dateOfBirth = newValue
-
+                    
                     data = [pl.createCSVDict() for pl in players]
                     self.__dataApi.updatePlayers(data)
                     return True
