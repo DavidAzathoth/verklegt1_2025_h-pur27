@@ -102,9 +102,8 @@ class BracketGenerator:
 
             for t in range(int(tempextrarounds)):
                 '''If this returns pop from empty string error then the amount of teams is under 16 validate before generating bracket'''
-                teamnum+=1
-                team_A=[teamnum]
-                team_B=f'{roundsplayed.get('1')[t].team_A} or {roundsplayed.get('1')[t].team_B}'
+                team_A=teams.pop(0)
+                team_B=f'{roundsplayed.get("1")[t].team_A} or {roundsplayed.get("1")[t].team_B}'
                 while True:
                         matchid=f'M{len(existingmatches)+num}' #note: matchid can have duplicates in this configuration, consider changing it
                         if matchid not in existingmatchids:
@@ -120,5 +119,22 @@ class BracketGenerator:
         bracket=Bracket(tournament.name,roundsplayed)
         tournament.bracket=bracket
         return
-    def updateBracket(self, bracket):
-        pass
+    
+    
+    
+
+    def updatebracket(self, bracket):
+        
+        all_matches: list[Match] = []
+        for round_key, match_list in bracket.rounds.items():
+            all_matches.extend(match_list)
+        
+        existing_rows = self.__dataapi.loadMatches()
+        rows_by_id = {row["matchID"]: row for row in existing_rows}
+
+        for m in all_matches:
+            rows_by_id[m.matchID] = m.createCSVDict()
+        
+        updated_rows = list(rows_by_id.values())
+        self.__dataapi.updateMatches(updated_rows)
+        return

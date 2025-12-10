@@ -142,10 +142,10 @@ class LogicAPI:
 
     def saveTeam(self, team: Team):
         self.__Teamlogic.saveTeam(team)
-
+    
     def updateBracket(self, bracket):
-        """Updates all edited matches inside a tournament, Perhaps automate this by updating tournament directly"""
-        self.__Tournamentmanager.updateBracket(bracket)
+        return self.__bracketgenerator.updatebracket(bracket)
+
 
     def returnMatchWinner(self, match, scores):
         return self.__matchlogic.returnMatchWinnerconfirmation(match, scores)
