@@ -8,6 +8,5 @@ class MatchData:
     def save_match(self, data):
         self.__storagehandler.saveFile(self.FILE, data)
         return
-    def update_matches(self, data):
+    def update_match(self, data):
         self.__storagehandler.editFile(self.FILE, data)
-        return

@@ -49,30 +49,41 @@ class Tournamentmanager:
     
         
     def saveTournament(self,tournament: Tournament):
+        self.unpopulateTournament(tournament)
         self.__dataApi.saveTournament(tournament.createCSVDict())
         return
     
-    def updateTournament(self, tournament: Tournament, input: object, operation: str = None ):
-        tournaments = self.__dataApi.loadTournaments()
-        index = tournaments.index(tournament.createCSVDict())
-        rem_tournament=tournament.createCSVDict()
-        tournaments.remove(rem_tournament)
-
-        if tournament.teams[0] == '': #Cleans up empty string that appears when list is first created
+    def updateTournament(self, tournament: Tournament, input: object = None, operation: str = None ):
+        if tournament.active==False:
+            return False
+        tournaments = self.getTournaments()
+        for t in tournaments:
+            if tournament.name == t.name:
+                index = tournaments.index(t)
+                break
+        tournaments.remove(t)
+        if '' in tournament.teams: #Cleans up empty string that appears when list is first created
             tournament.teams.pop(0)
-        if tournament.matchesList[0] == '':
+        if '' in tournament.matchesList:
             tournament.matchesList.pop(0)
-        if tournament.matchHistory[0] == '':
+        if '' in tournament.matchHistory:
             tournament.matchHistory.pop(0)
+
 
         if operation == 'addteam':
             if self.checkDuplTeams(tournament, input) == False:
                 return False
-            tournament.teams.append(input.teamID)
-            tournament.teaminstances.append(input)
-        
-        tournaments.insert(index, tournament.createCSVDict())
+            tournament.teams.append(input)
+        if operation == 'updateall':
+            self.updateBracket(tournament.bracket)
+            for team in tournament.teams:
+                self.__teamlogic.updateTeam(None,None,team)
+
+        self.unpopulateTournament(tournament)
+        tournaments.insert(index, tournament)
+        tournaments=[t.createCSVDict() for t in tournaments]
         self.__dataApi.updateTournaments(tournaments)
+        self.populateTournament(tournament)
 
     def addTeamtoTournament(self, tournament: Tournament, team: Team):
         if self.checkDuplTeams(tournament, team):
@@ -115,21 +126,22 @@ class Tournamentmanager:
         return bracket
     
 
-    def availableteams(self, tournament : Tournament):
-        all_teams = self.__teamlogic.getTeams()
+    def availableteams(self, tournament : Tournament) -> list[Team]:
+        all_teams: list[Team] = self.__teamlogic.getTeams()
+        tournament_teams: list[Team] = tournament.teams
+        if None in tournament_teams:
+            tournament_teams.pop(0)
         teamIDs = []
-        for tID in tournament.teams:
-            tID = tID.strip()
+        for team in tournament_teams:
+            tID = team.teamID.strip()
             if tID != "":
                 teamIDs.append(tID)
         available = []
         for team in all_teams:
-            if team.teamID not in teamIDs:
+            if team.teamID.strip() not in teamIDs:
                 available.append(team)    
         return available
-    
 
-    ###NOT IMPLEMENTED TODO
 
 
     def unpopulateBracket(self, bracket: Bracket):
@@ -137,6 +149,11 @@ class Tournamentmanager:
             matchids=[match.matchID for match in bracket.rounds.get(round)]
             bracket.rounds[round] = matchids
         return bracket
+    
+    def updateBracket(self, bracket: Bracket):
+        for round in bracket.rounds.keys():
+            for match in bracket.rounds.get(round):
+                self.__matchlogic.updateMatch(match)
 
 
 #def populateTournament(self, tournament: Tournament):

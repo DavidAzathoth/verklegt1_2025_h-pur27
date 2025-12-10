@@ -125,6 +125,18 @@ Byrjuðum að forrita og skipuleggja hver gerir hvað
   2. Gera ui virkni fyrir bracket og schedule generation
   3. Gera virkni sem vistar öllum upplýsingum á pökkuðum tournament(overwrite)
 ### Erum með hausverk vegna klasaritum
+## 09/12/25 Adam, Baldvin, Davíd
+í dag vorum við að vinna mikið með bracket.
+- Í dag
+  1. Byrja á update bracket og klára available teams (Adam)
+  2. Vinna mikið í bracket (Davíd)
+  3. Breyttum CSV í UTF8 (Davíd)
+  4. Vinna í UI (Baldvin)
+  - Á morgun
+  1. Halda áfram að gera bracket
+  2. Halda áfram með UI kröfur
+  3. Finna einhverjar A kröfur sem við eigum eftir
+### Logic fyrir bracket er að gefa okkur hausverk
 
 
 

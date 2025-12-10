@@ -44,7 +44,7 @@ class Teamlogic:
         
     
     def createteam(self, team: list) -> Team:
-        return self.__logichandler.createModel(self.__teammodel,team)
+        return self.__logichandler.createModel(self.__teammodel, team)
     
     def saveTeam(self, team: Team):
         self.__dataApi.saveTeam(team.createCSVDict())
@@ -75,15 +75,14 @@ class Teamlogic:
                 ret_list.append(player)
         return ret_list
     
-    def updateTeam(self, input = None, operation: str = None, team: Team = None):
+    def updateTeam(self, input = None, operation: str = None, team: Team = None, amount = None):
         teams: list[dict]=self.__dataApi.loadTeams()
 
-        index = None
         for i, t in enumerate(teams):
             if str(t["teamID"]) == str(team.teamID):
                 index = i
                 break
-            
+        
         teams.pop(index)
 
         if team.roster and team.roster[0] == '':  #Clean empty string from list
