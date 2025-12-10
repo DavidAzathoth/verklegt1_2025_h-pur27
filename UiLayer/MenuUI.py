@@ -133,24 +133,28 @@ q. Quit
             return "ORGANIZER"
         if choice == "4":
 
-
             while True:
-                captain_handle: str = input("Handle: ")
-                captain = self.__logic_api.getCaptain(captain_handle)
+                captain_handle_input: str = input("Handle: ")
+                captain_dict = self.__logic_api.getCaptain(captain_handle_input)
 
-                if captain is False:
-                    print("\nERROR: Captain is not registered into the system\n")
-                    print("1. Try again\n2. Cancel")
-                    choice = self.__prompt_options(["1", "2"])
-                    if choice == "1":
+                if captain_dict is False:
+                    print()
+                    print("-" * 50)
+                    print("ERROR: Captain is not registered into the system\n")
+                    print("ENTER. Try again\nc. Cancel")
+                    
+                    choice = self.__prompt_options(["", "c"])
+                    if choice == "":
                         continue
                     return "BACK"
 
                 else:
-                    if captain.get('hasTeam').strip() == 'True':
-                        return ("CAPTAIN HAS TEAM", captain.get("captainHandle"))
+                    if captain_dict.get('hasTeam').strip() == 'True':
+                        captain_handle = captain_dict.get("captainHandle")
+                        team = self.__logic_api.get_team_by_captain(captain_handle)
+                        return ("CAPTAIN HAS TEAM", captain_handle, team)
                     else:
-                        return ("CAPTAIN HAS NO TEAM", captain.get("captainHandle"))
+                        return ("CAPTAIN HAS NO TEAM", captain_handle)
                     
         return "QUIT"
 
@@ -205,7 +209,7 @@ q. Quit
 
 #----------------------------------- TEAMS OPTIONS MENU (PUBLIC) -----------------------------------------
     def show_teams_menu(self):
-        """Prints teams options menu
+        """Prints teams options menu.
         returns: "PRINT LIST OF TEAMS", "SEARCH FOR A TEAM", "BACK", "QUIT" """
 
 #========= TEAMS MENU INTERFACE ========
@@ -330,7 +334,7 @@ q. Quit""")
 ---------------------------
  RU's e-Sport Extravaganza
 ---------------------------
-{captain_handle} Menu
+{captain_handle}'s Menu
 
 You have no current team
 
@@ -350,7 +354,7 @@ q. Quit""")
 
 
 #----------------------------------- CAPTAIN MENU (HAS TEAM) -----------------------------------------
-    def show_captain_has_team_menu(self, captain_handle: str):
+    def show_captain_has_team_menu(self, captain_handle: str, team: Team):
         """Prints out captain menu if has team"""
 
 #========= CAPTAIN HAS TEAM MENU INTERFACE =========
@@ -358,7 +362,7 @@ q. Quit""")
 ---------------------------
  RU's e-Sport Extravaganza
 ---------------------------
-{captain_handle} Menu
+{captain_handle}'s Menu
 
 1. View my team/players
 2. Edit team information
@@ -370,7 +374,7 @@ q. Quit
         
         choice = self.__prompt_options(["1", "2", "b", "q"])
         if choice == "1":
-            return "VIEW MY TEAM/PLAYERS"
+            return ("VIEW MY TEAM/PLAYERS", team)
         if choice == "2":
             return "EDIT TEAM INFORMATION"
         if choice == "b":
@@ -490,7 +494,7 @@ Team captain: {captain_handle}
     def show_player_creation_menu(self, team: Team, captain_handle: str):
         """Displays the player creation menu interface"""
         
-        #stores players before creating
+        #stores players before saving to file
         player_list: list[Player] = []
         player_count = 0
 
@@ -647,10 +651,10 @@ q. Quit
                 team_name = viewer.select_item_by_number(number)
                 
                 #find team object
-                for t in teams:
-                    if t.teamName == team_name:
-                        return ("TEAM INFO", t)
-                continue
+                team = self.__logic_api.searchforteam(team_name)
+                
+                return ("TEAM INFO", team)
+                
             
             #press ENTER to go to next page
             if choice == "":
@@ -663,7 +667,7 @@ q. Quit
             return "QUIT"
 
 
-#----------------------------------- VIEW ALL TOURNAMENTS MENU (PUBLIC/ORGANIZER) -----------------------------------------    
+#----------------------------------- VIEW ALL TOURNAMENTS MENU (PUBLIC) -----------------------------------------    
     def show_view_tournaments_menu(self):
         """Prints list of tournaments
         returns: ("TOURNAMENT INFO",  tournament: object), "BACK", "QUIT"  """
@@ -716,13 +720,17 @@ q. Quit
             return "QUIT"
         
 
-#----------------------------------- TEAM INFO MENU (PUBLIC) -----------------------------------------
-    def show_team_info(self, team: Team):
-        """Shows team information for selected team
-        returns: "BACK", "HOME", "QUIT" """
+#----------------------------------- TEAM INFO MENU (PUBLIC/CAPTAIN) -----------------------------------------
+    def show_team_info(self, team: Team, mode: str):
+        """Shows team information for selected team.\n
+        Returns: "BACK", "HOME", "QUIT"\n
+        Modes: "SEARCH TEAM", "VIEW TEAMS", "CAPTAIN" """
+        
+        ##If viewing from public
+        if mode in ("SEARCH TEAM", "VIEW TEAMS"):
 
-#=============== View team info menu interface ===============
-        print(f"""
+#=============== View team info menu interface (public) ===============
+            print(f"""
 ---------------------------
  RU's e-Sport Extravaganza
 ---------------------------
@@ -731,10 +739,10 @@ View {team.teamName} information
 Name: {team.teamName}
 Captain: {team.captainHandle}
 Player handles:""")
-        for p in team.roster:
-            print(f"- {p}")
+            for p in team.roster:
+                print(f"- {p}")
         
-        print(f"""
+            print(f"""
 Wins: {team.wins}
 Losses: {team.losses}
 
@@ -744,15 +752,58 @@ q. Quit
 """)
 #=============================================================
 
-        choice = self.__prompt_options(["b", "h", "q"])
+            choice = self.__prompt_options(["b", "h", "q"])
 
-        if choice == "b":
-            return "BACK"
+            if choice == "b":
+                return "BACK"
+            
+            if choice == "h":
+                return "HOME"
+            
+            return "QUIT"
+
+        ##If viewing from captain menu
+        elif mode == "CAPTAIN":
+            viewer = SelectFromPage(team.roster)
+            while True:
+#========== View team info menu interface (Captain) ==========
+                print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+{team.captainHandle}'s team information
+
+Name: {team.teamName}
+Captain: {team.captainHandle}
+
+Player handles:
+{viewer.currentPage()}            
         
-        if choice == "h":
-            return "HOME"
-        
-        return "QUIT"
+Wins: {team.wins}
+Losses: {team.losses}
+
+1-5. View player
+b. Back
+q. Quit
+""")
+#=============================================================
+                choice = self.__prompt_options(["1", "2", "3", "4", "5", "b", "q"])
+
+                if choice.isdigit():
+                    num = int(choice)
+
+                    player_name = viewer.select_item_by_number(num)
+
+                    try:
+                        player = self.__logic_api.getPlayer_by_gamertag(player_name)
+                    except:
+                        continue
+
+                    return("PLAYER INFO", player)
+                
+                elif choice == "b":
+                    return "BACK"
+                return "QUIT"
 
 
 #----------------------------------- TOURNAMENT INFO MENU (PUBLIC) -----------------------------------------
@@ -948,4 +999,86 @@ This tournament has sufficient teams!
 
             return "CANCEL"
         
+
+#----------------------------------- PLAYER INFO MENU (CAPTAIN)) -----------------------------------------
+    def show_player_info_menu(self, player: Player):
+        """Displays options to edit specific player information.\n
+        Returns: "BACK", "CAPTAIN MENU", "QUIT" """
         
+        while True:
+            print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+                  
+{player.playerGamertag}'s personal information
+-----------------------------------------------
+
+Handle:        {player.playerGamertag}
+Name:          {player.fullname}
+Date of Birth: {player.dateOfBirth}
+Address:       {player.address}
+Phone number:  {player.phoneNumber}
+Email:         {player.emailAddress}
+Link:          {player.link}
+
+------------------------------------------------
+
+1. Edit player info
+
+b. Back
+h. Captain menu
+q. Quit
+
+""")
+            choice = self.__prompt_options(["1", "b", "h", "q"])
+
+            if choice == "1":
+                attributes = [["address", "phoneNumber", "emailAddress", "link"]]
+                viewer = SelectFromPage(attributes)
+
+                #Edit options for player
+                print(f"""
+------------------------------------------------
+Edit player information: {player.playerGamertag}
+------------------------------------------------
+1. Edit Address
+2. Edit Phone
+3. Edit Email
+4. Edit Link
+
+c. Cancel
+""")
+                
+                edit_choice = self.__prompt_options(["1", "2", "3", "4", "c"])
+
+                if edit_choice.isdigit():
+
+                    num = int(edit_choice)
+                    attribute = viewer.select_item_by_number(num)
+                    new_value = input("""Please enter new value or press "c" (Cancel): """.strip())
+                    if new_value.lower() == "c":
+                        continue
+                    while True:
+                        try:
+                            self.__logic_api.editplayer(player.playerGamertag, attribute, new_value)
+                            break
+                        except ValueError or TypeError:
+                            print(f"\nERROR: Please enter correct value for player {attribute}.\n")
+                    
+                    print(f"\n{attribute} has been updated!\n")
+                    print("Returning to player info menu\n")
+                    self.slow_print("....", 0.3)
+                    continue
+
+                #Cancel
+                continue
+
+            if choice == "b":
+                return "BACK"
+                
+            
+            if choice == "h":
+                return "CAPTAIN MENU"
+            
+            return "QUIT"

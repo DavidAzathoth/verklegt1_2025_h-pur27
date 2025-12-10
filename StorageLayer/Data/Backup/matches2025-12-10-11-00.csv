@@ -1,0 +1,44 @@
+﻿matchID,team_A,team_B,matchWinner,playerScore,matchPlayed,matchDate,matchTime,server
+M45,FURIA,Vitality,,{},False,01/12/2025,10:00,0
+M46,Falcons,MOUZ,,{},False,01/12/2025,14:00,0
+M47,The MongolZ,Spirit,,{},False,02/12/2025,13:00,0
+M48,Natus Vincere,G2,,{},False,03/12/2025,12:00,0
+M49,Aurora,paiN,,{},False,04/12/2025,11:00,0
+M50,Astralis,FaZe,,{},False,05/12/2025,10:00,0
+M51,3DMAX,Legacy,,{},False,05/12/2025,14:00,0
+M52,Liquid,B8,,{},False,06/12/2025,13:00,0
+M53,GamerLegion,HEROIC,,{},False,07/12/2025,12:00,0
+M54,Virtus.rpo,SAW,,{},False,08/12/2025,11:00,0
+M55,Passion UA,Falcons or MOUZ,,{},False,09/12/2025,10:00,0
+M56,M80,The MongolZ or Spirit,,{},False,09/12/2025,14:00,0
+M57,Lynn Vision,Natus Vincere or G2,,{},False,10/12/2025,13:00,0
+M58,FUT,Aurora or paiN,,{},False,11/12/2025,12:00,0
+M59,PARIVISION,Astralis or FaZe,,{},False,12/12/2025,11:00,0
+M60,Ninjas in Pyjamas,3DMAX or Legacy,,{},False,13/12/2025,10:00,0
+M61,TBD,TBD,,{},False,13/12/2025,14:00,0
+M62,TBD,TBD,,{},False,14/12/2025,13:00,0
+M63,TBD,TBD,,{},False,15/12/2025,12:00,0
+M64,TBD,TBD,,{},False,16/12/2025,11:00,0
+M65,TBD,TBD,,{},False,17/12/2025,10:00,0
+M66,TBD,TBD,,{},False,17/12/2025,15:00,0
+M23,FURIA,Vitality,,{},False,01/12/2025,10:00,0
+M24,Falcons,MOUZ,,{},False,01/12/2025,14:00,0
+M25,The MongolZ,Spirit,,{},False,02/12/2025,13:00,0
+M26,Natus Vincere,G2,,{},False,03/12/2025,12:00,0
+M27,Aurora,paiN,,{},False,04/12/2025,11:00,0
+M28,Astralis,FaZe,,{},False,05/12/2025,10:00,0
+M29,3DMAX,Legacy,,{},False,05/12/2025,14:00,0
+M30,Liquid,B8,,{},False,06/12/2025,13:00,0
+M31,GamerLegion,HEROIC,,{},False,07/12/2025,12:00,0
+M32,Virtus.rpo,SAW,,{},False,08/12/2025,11:00,0
+M33,Passion UA,The MongolZ or Spirit,,{},False,09/12/2025,10:00,0
+M34,M80,Natus Vincere or G2,,{},False,09/12/2025,14:00,0
+M35,Lynn Vision,Aurora or paiN,,{},False,10/12/2025,13:00,0
+M36,FUT,Astralis or FaZe,,{},False,11/12/2025,12:00,0
+M37,PARIVISION,3DMAX or Legacy,,{},False,12/12/2025,11:00,0
+M38,Ninjas in Pyjamas,Liquid or B8,,{},False,13/12/2025,10:00,0
+M39,TBD,TBD,,{},False,13/12/2025,14:00,0
+M40,TBD,TBD,,{},False,14/12/2025,13:00,0
+M41,TBD,TBD,,{},False,15/12/2025,12:00,0
+M42,TBD,TBD,,{},False,16/12/2025,11:00,0
+M43,TBD,TBD,,{},False,17/12/2025,10:00,0

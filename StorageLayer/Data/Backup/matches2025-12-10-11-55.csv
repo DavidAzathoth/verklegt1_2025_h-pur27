@@ -1,0 +1,15 @@
+﻿matchID,team_A,team_B,matchWinner,playerScore,matchPlayed,matchDate,matchTime,server
+M1,FURIA,Vitality,,{},False,01/12/2025,10:00,0
+M2,Falcons,MOUZ,,{},False,02/12/2025,11:00,0
+M3,The MongolZ,Spirit,,{},False,03/12/2025,12:00,0
+M4,Natus Vincere,G2,,{},False,04/12/2025,13:00,0
+M5,Aurora,paiN,,{},False,05/12/2025,14:00,0
+M6,Astralis,FaZe,,{},False,07/12/2025,10:00,0
+M7,3DMAX,Legacy,,{},False,08/12/2025,11:00,0
+M8,Liquid,B8,,{},False,09/12/2025,12:00,0
+M9,GamerLegion,FURIA or Vitality,,{},False,10/12/2025,13:00,0
+M10,TBD,TBD,,{},False,11/12/2025,14:00,0
+M11,TBD,TBD,,{},False,13/12/2025,10:00,0
+M12,TBD,TBD,,{},False,14/12/2025,11:00,0
+M13,TBD,TBD,,{},False,15/12/2025,12:00,0
+M14,TBD,TBD,,{},False,16/12/2025,13:00,0

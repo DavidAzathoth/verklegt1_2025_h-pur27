@@ -7,6 +7,7 @@ from LogicLayer.MatchLogic import MatchLogic
 from Models.Tournament import Tournament
 from Models.Team import Team
 from Models.Player import Player
+from Models.Match import Match
 from LogicLayer.PlayerLogic import Playerlogic
 from LogicLayer.BracketLogic import BracketLogic
 
@@ -104,6 +105,8 @@ class LogicAPI:
         teams = self.getTeams()
         players = self.getPlayers()
 
+    def editplayer(self, gamertag: str, attribute: str, newValue: str):
+        self.__Playerlogic.editplayer(gamertag, attribute, newValue)
 
     def emailVerification(self, email):
         """Verifies if email is valid"""
@@ -152,7 +155,8 @@ class LogicAPI:
     def returnMatchWinner(self, match, scores):
         return self.__matchlogic.returnMatchWinnerconfirmation(match, scores)
     
-    def confirmMatchWinner(self, match, scores):
+    def confirmMatchWinner(self, match: Match, scores):
+        """Input scores is a list [1,2] score 1(index 0) is team_A score and score 2(index 1) is team_B score"""
         self.__matchlogic.confirmMatchWinner(match, scores)
         
     def populateBracket(self, bracket):
