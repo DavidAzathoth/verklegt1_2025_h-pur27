@@ -5,14 +5,14 @@ from Models.Team import Team
 from Models.Tournament import Tournament
 import math
 import random
-from datetime import datetime, date
+from datetime import date, time, timedelta, datetime
 class BracketGenerator:
     def __init__(self):
         self.__matchmodel=Match
         self.__dataapi=DataAPI()
     
         pass
-
+    
     def playingames(self, teams):
         n=len(teams)
         rounds=0
@@ -33,11 +33,11 @@ class BracketGenerator:
         enddate = date(*(list(map(int,(reversed(tournament.endDate.split('/')))))))
 
         #Calculate days that the tournament will be held
-        days=(enddate-startdate).days
+        #days=(enddate-startdate).days
 
-        #Stringify dates
-        startdate=startdate.strftime("%d/%m/%Y")
-        enddate=enddate.strftime("%d/%m/%Y")
+        ##Stringify dates
+        #startdate=startdate.strftime("%d/%m/%Y")
+        #enddate=enddate.strftime("%d/%m/%Y")
 
 
         existingmatches=self.__dataapi.loadMatches()
@@ -53,13 +53,11 @@ class BracketGenerator:
         teamnum=0
 
         matchschedule={}
-        for day in range(1,days):
-            pass
-        while totalrounds2>1:
-            pass
+
 
         if extrarounds>0:
              teamsinround = (2**(totalrounds))/2
+             totalrounds+=1
              isodd=2
         else:
              teamsinround = (2**(totalrounds))/2
@@ -99,11 +97,30 @@ class BracketGenerator:
                     else:
                         num+=1
                 roundsplayed[f'{i}'].append(self.__matchmodel(matchid,team_A.teamName,team_B.teamName))
+            p=0
+            for k in range(0,int(tempextrarounds-teamsinround)):
+                team_A=f'{roundsplayed.get('1')[p].team_A} or {roundsplayed.get('1')[p].team_B}'
+                p+=1
+                team_B=f'{roundsplayed.get('1')[p].team_A} or {roundsplayed.get('1')[p].team_B}'
+                p+=1
+                while True:
+                    matchid=f'M{len(existingmatches)+num}' #note: matchid can have duplicates in this configuration, consider changing it
+                    if matchid not in existingmatchids:
+                        num+=1
+                        break
+                    else:
+                        num+=1
+                roundsplayed[f'{i}'].append(self.__matchmodel(matchid,team_A,team_B))
 
-            for t in range(int(tempextrarounds)):
+            if tempextrarounds>=8:
+                prelim = int(teamsinround-(tempextrarounds-teamsinround))
+            else:
+                prelim = int(tempextrarounds)
+            for t in range(p, prelim+p):
                 '''If this returns pop from empty string error then the amount of teams is under 16 validate before generating bracket'''
-                team_A=teams.pop(0)
-                team_B=f'{roundsplayed.get("1")[t].team_A} or {roundsplayed.get("1")[t].team_B}'
+                team_A = teams[teamnum]
+                teamnum+=1
+                team_B=f'{roundsplayed.get('1')[t].team_A} or {roundsplayed.get('1')[t].team_B}'
                 while True:
                         matchid=f'M{len(existingmatches)+num}' #note: matchid can have duplicates in this configuration, consider changing it
                         if matchid not in existingmatchids:
@@ -112,14 +129,105 @@ class BracketGenerator:
                         else:
                             num+=1
                 roundsplayed[f'{i}'].append(self.__matchmodel(matchid,team_A.teamName,team_B))
+        
+        for i in range(len(roundsplayed)+1,totalrounds+1):
+            teamsinround=teamsinround/2
+            roundsplayed[(f'{i}')]=[]
+            for z in range(int(teamsinround)):
+                while True:
+                    matchid=f'M{len(existingmatches)+num}' #note: matchid can have duplicates in this configuration, consider changing it
+                    if matchid not in existingmatchids:
+                        num+=1
+                        break
+                    else:
+                        num+=1
+                roundsplayed[f'{i}'].append(self.__matchmodel(matchid,'TBD','TBD'))
+
+
         #Save all matches before returning
+        slots = self.generate_slots_full_range(startdate,enddate,servers=1,match_minutes=60)
+
+        used = self.schedule_round_blocks(roundsplayed, slots, servers=1)
+
+        total_games = len(tournament.teams) - 1
+
+        generated = sum(len(v) for v in roundsplayed.values())
+        remaining = total_games - generated
+        self.schedule_spread_in_round_order(roundsplayed, slots)
+        #tbd_idxs = self.spread_indices(used, len(slots)-1,remaining)
+        #tbd_slots= [slots[i] for i in tbd_idxs]
+
+        
+
         for round in roundsplayed.keys():
             for match in roundsplayed.get(round):
                self.__dataapi.saveMatch(match.createCSVDict())
+
         bracket=Bracket(tournament.name,roundsplayed)
         tournament.bracket=bracket
         return
-    
+
+    def generate_slots_full_range(self, start: date, end: date, servers: int,
+                                  match_minutes=60, buffer_minutes=0,
+                                  day_start=time(10,0), day_end=time(16,0)):
+        L = match_minutes + buffer_minutes
+        start_min = day_start.hour*60 + day_start.minute
+        end_min   = day_end.hour*60 + day_end.minute
+        W = end_min - start_min
+
+        rows_per_day  = W // L               # 60min -> 6
+        slots_per_day = servers * rows_per_day
+        days = (end - start).days + 1        # inclusive
+        capacity = days * slots_per_day
+
+        slots = []
+        for g in range(capacity):
+            day_idx, r = divmod(g, slots_per_day)
+            server, row = divmod(r, rows_per_day)
+            mins = start_min + row * L
+            hh, mm = divmod(mins, 60)
+            d = start + timedelta(days=day_idx)
+            slots.append((d, time(hh, mm), server))
+        return slots
+
+    def schedule_round_blocks(self,roundsplayed: dict, slots, servers: int):
+        def align_to_next_row(i):
+            return ((i + servers - 1) // servers) * servers
+
+        used = 0
+        for r in sorted(roundsplayed.keys(), key=lambda x: int(x)):
+            used = align_to_next_row(used)
+            for m in roundsplayed[r]:
+                d, t, s = slots[used]
+                m.matchDate = d.strftime("%d/%m/%Y")
+                m.matchTime = t.strftime("%H:%M")
+                m.server = s
+                used += 1
+            used = align_to_next_row(used)
+        return used  # index of next free slot
+
+    def spread_indices(self, start_g: int, end_g: int, k: int):
+        if k <= 0: return []
+        if k == 1: return [end_g]
+        span = end_g - start_g
+        return [start_g + (j * span) // (k - 1) for j in range(k)]
+
+    def schedule_spread_in_round_order(self, roundsplayed: dict, slots):
+        # Flatten matches in round order
+        matches = []
+        for r in sorted(roundsplayed.keys(), key=lambda x: int(x)):
+            matches.extend(roundsplayed[r])
+
+        if len(matches) == 0:
+            return
+
+        idxs = self.spread_indices(0, len(slots) - 1, len(matches))
+
+        for m, idx in zip(matches, idxs):
+            d, t, s = slots[idx]
+            m.matchDate = d.strftime("%d/%m/%Y")
+            m.matchTime = t.strftime("%H:%M")
+            m.server = s
     
     
 
