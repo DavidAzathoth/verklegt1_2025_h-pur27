@@ -1,0 +1,22 @@
+﻿matchID,team_A,team_B,matchWinner,playerScore,matchPlayed,matchDate,matchTime,server
+M1,FURIA,Vitality,,{},False,01/12/2025,10:00,0
+M2,Falcons,MOUZ,,{},False,01/12/2025,15:00,0
+M3,The MongolZ,Spirit,,{},False,02/12/2025,14:00,0
+M4,Natus Vincere,G2,,{},False,03/12/2025,13:00,0
+M5,Aurora,paiN,,{},False,04/12/2025,12:00,0
+M6,Astralis,FaZe,FaZe,"{'Astralis': '1', 'FaZe': '4'}",True,05/12/2025,11:00,0
+M7,3DMAX,Legacy,,{},False,06/12/2025,10:00,0
+M8,Liquid,B8,,{},False,06/12/2025,15:00,0
+M9,GamerLegion,FURIA or Vitality,,{},False,07/12/2025,14:00,0
+M10,HEROIC,Falcons or MOUZ,,{},False,08/12/2025,13:00,0
+M11,Virtus.rpo,The MongolZ or Spirit,,{},False,09/12/2025,12:00,0
+M12,SAW,Natus Vincere or G2,,{},False,10/12/2025,11:00,0
+M13,Passion UA,Aurora or paiN,,{},False,11/12/2025,10:00,0
+M14,M80,Astralis or FaZe,,{},False,11/12/2025,15:00,0
+M15,TBD,TBD,,{},False,12/12/2025,14:00,0
+M16,TBD,TBD,,{},False,13/12/2025,13:00,0
+M17,TBD,TBD,,{},False,14/12/2025,12:00,0
+M18,TBD,TBD,,{},False,15/12/2025,11:00,0
+M19,TBD,TBD,,{},False,16/12/2025,10:00,0
+M20,TBD,TBD,,{},False,16/12/2025,15:00,0
+M21,TBD,TBD,,{},False,17/12/2025,15:00,0

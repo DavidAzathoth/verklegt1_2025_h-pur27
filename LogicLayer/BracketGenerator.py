@@ -27,8 +27,11 @@ class BracketGenerator:
         return rounds, extramatches
     
     def generatebracket(self, tournament: Tournament):
-        """Generate inital bracket for tournament, accounting for a non base 2 number of teams(16,32,64...)"""
-        teams = tournament.teams
+        """Generate inital bracket for tournament, accounting for a non base 2 number of teams(16,32,64...) Returns False if the tournament already has a bracket"""
+        if type(tournament.bracket) == Bracket:
+            return False
+        tournament.playingteams = tournament.teams[:]
+        teams=tournament.playingteams
         startdate = date(*(list(map(int,(reversed(tournament.startDate.split('/')))))))
         enddate = date(*(list(map(int,(reversed(tournament.endDate.split('/')))))))
 
@@ -143,7 +146,6 @@ class BracketGenerator:
                         num+=1
                 roundsplayed[f'{i}'].append(self.__matchmodel(matchid,'TBD','TBD'))
 
-
         #Save all matches before returning
         slots = self.generate_slots_full_range(startdate,enddate,servers=1,match_minutes=60)
 
@@ -165,6 +167,7 @@ class BracketGenerator:
 
         bracket=Bracket(tournament.name,roundsplayed)
         tournament.bracket=bracket
+        self.__
         return
 
     def generate_slots_full_range(self, start: date, end: date, servers: int,
@@ -231,18 +234,57 @@ class BracketGenerator:
     
     
 
-    def updatebracket(self, bracket):
+    #def updatebracket(self, bracket):
         
-        all_matches: list[Match] = []
-        for round_key, match_list in bracket.rounds.items():
-            all_matches.extend(match_list)
-        
-        existing_rows = self.__dataapi.loadMatches()
-        rows_by_id = {row["matchID"]: row for row in existing_rows}
+        #all_matches: list[Match] = []
+        #for round_key, match_list in bracket.rounds.items():
+        #    all_matches.extend(match_list)
+        #
+        #existing_rows = self.__dataapi.loadMatches()
+        #rows_by_id = {row["matchID"]: row for row in existing_rows}
+#
+        #for m in all_matches:
+        #    rows_by_id[m.matchID] = m.createCSVDict()
+        #
+        #updated_rows = list(rows_by_id.values())
+        #self.__dataapi.updateMatches(updated_rows)
+        #return
+    
+    def updateOrMatches(self, tournament: Tournament, winningteam: str):
+        bracket: Bracket = tournament.bracket
+        for round in bracket.rounds.keys():
+            for match in bracket.rounds.get(round):
+                team_Alist=match.team_A.split(' or ')
+                team_Blist=match.team_B.split(' or ')
+                if len(team_Alist)>1 or len(team_Blist)>1:
+                    if winningteam in team_Alist:
+                        match.team_A = winningteam
+                    elif winningteam in team_Blist:
+                        match.team_B = winningteam
 
-        for m in all_matches:
-            rows_by_id[m.matchID] = m.createCSVDict()
-        
-        updated_rows = list(rows_by_id.values())
-        self.__dataapi.updateMatches(updated_rows)
-        return
+    def getNextRound(self, bracket: Bracket):
+            for round in bracket.rounds.keys():
+                for match in bracket.rounds.get(round):
+                    if match.team_A == 'TBD':
+                        return round
+            return False
+
+    def addTeamsNextRound(self, tournament: Tournament):
+        bracket=tournament.bracket
+        i=0
+        match: Match
+        nextround=self.getNextRound(bracket)
+        for b in range(1,int(nextround)):
+            matchesplayed=[x.matchPlayed for x in bracket.rounds.get(f'{b}')]
+            if 'False' in matchesplayed:
+                   return
+        if nextround==False:
+            return False
+        for match in bracket.rounds.get(nextround):
+            match.team_A=tournament.playingteams[i].teamName
+            i+=1
+            match.team_B=tournament.playingteams[i].teamName
+            i+=1
+    def updatebracket(self, tournament: Tournament):
+        self.addTeamsNextRound(tournament)
+        #self.updateOrMatches(tournament, matchwinner)
