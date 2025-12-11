@@ -71,5 +71,8 @@ class StorageHandler:
     def cleanBackups(self):
         path = 'StorageLayer/Data/Backup'
         for entry in os.scandir(path):
-            os.remove(entry.path)
+            if entry.path == 'StorageLayer/Data/Backup\dontdelete.txt':
+                pass
+            else:
+                os.remove(entry.path)
             

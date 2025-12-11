@@ -73,8 +73,8 @@ class LogicAPI:
         self.__Tournamentmanager.updateTournament(tournament,None, 'updateall')
     
     def addTeamtoTournament(self, team: Team,tournament: Tournament):
-        """Adds team to tournament, both parameters must be an object. Returns false if the team is already in the tournament"""
-        self.__Tournamentmanager.updateTournament(tournament, team, 'addteam')
+        """Adds team to tournament, both parameters must be an object. Returns false if the team is already in the tournament or if the tournament has a bracket"""
+        return self.__Tournamentmanager.updateTournament(tournament, team, 'addteam')
     
     def updatecaptain(self, input):
         """Updates given captain in file"""
@@ -90,8 +90,9 @@ class LogicAPI:
     
     def searchforteam(self, input):
         """Return a team by name"""
-        teams=self.__Teamlogic.getTeams()
-        return self.__Teamlogic.get_team_by_teamname(input, teams)
+        teams = self.__Teamlogic.getTeams()
+        team=self.__Teamlogic.get_team_by_teamname(input, teams)
+        return team
     
     def createPlayer(self, input: list) -> Player:
         """Creates a player, does not automatically store in file"""
@@ -116,7 +117,7 @@ class LogicAPI:
 
     def editplayer(self, gamertag: str, attribute: str, newValue: str):
         """Edits a player's information"""
-        self.__Playerlogic.editplayer(gamertag, attribute, newValue)
+        return self.__Playerlogic.editplayer(gamertag, attribute, newValue)
 
     def emailVerification(self, email):
         """Verifies if email is valid"""
@@ -240,5 +241,7 @@ class LogicAPI:
     
     def cleanBackups(self):
         self.__dataAPI.cleanBackups()
+    def validateTournamentBracket(self, tournament: Tournament):
+        return self.__Tournamentmanager.validateTournamentBracket(tournament)
 
 ###############testing area#############

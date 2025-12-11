@@ -113,6 +113,7 @@ q. Quit
                         team = self.__logic_api.get_team_by_captain(captain_handle)
                         return ("CAPTAIN HAS TEAM", captain_handle, team)
                     else:
+                        captain_handle = captain_dict.get("captainHandle")
                         return ("CAPTAIN HAS NO TEAM", captain_handle)
                     
         return "QUIT"
@@ -901,7 +902,17 @@ q. Quit
                 # find team object
                 for t in available_teams:
                     if t.teamName == team_name:
-                        self.__logic_api.addTeamtoTournament(t, tournament)
+                        if self.__logic_api.addTeamtoTournament(t, tournament):
+                            pass
+                        else:
+                            print("""
+                                  
+#######################################################################
+ERROR: Tournament has a generated bracket, adding teams is not possible
+#######################################################################""")
+
+                            return "BACK"
+                            
                 continue
 
             if choice ==  "":
@@ -920,6 +931,7 @@ q. Quit
 #----------------------------------- SCHEDULE GENERATION MENU (ORGANIZER)) -----------------------------------------
     def show_generate_schedule_menu(self, tournament: Tournament):
         """Displays the menu where the schedule is generated"""
+    
         
         self.__logic_api.populateTournament(tournament)
         current_teams = len(tournament.teams)
@@ -1019,6 +1031,7 @@ q. Quit
         Returns: "BACK", "CAPTAIN MENU", "QUIT" """
         
         while True:
+            player = self.__logic_api.getPlayer_by_gamertag(player.playerGamertag)
             print(f"""
 ---------------------------
  RU's e-Sport Extravaganza
@@ -1067,18 +1080,27 @@ c. Cancel
 
                 if edit_choice.isdigit():
 
-                    num = int(edit_choice)
+                    num = int(edit_choice)                    
                     attribute = viewer.select_item_by_number(num)
                     new_value = input("""Please enter new value or press "c" (Cancel): """.strip())
                     if new_value.lower() == "c":
                         continue
                     while True:
                         try:
-                            self.__logic_api.editplayer(player.playerGamertag, attribute, new_value)
+                            edit_player = self.__logic_api.editplayer(player.playerGamertag, attribute, new_value)
+                            if attribute=='emailAddress':
+                                if edit_player[1] == False:
+                                    raise ValueError
                             break
                         except ValueError or TypeError:
                             print(f"\nERROR: Please enter correct value for player {attribute}.\n")
-                    
+                            if attribute=='emailAddress':
+                                print(edit_player[0])
+                            new_value = input("""Please enter new value or press "c" (Cancel): """.strip())
+                            if new_value.lower() == "c":
+                                break
+                    if new_value.lower() == "c":
+                        continue
                     print(f"\n{attribute} has been updated!\n")
                     print("Returning to player info menu\n")
                     self.slow_print("....", 0.3)
@@ -1227,7 +1249,9 @@ q. Quit
 #----------------------------------- VIEW TOURNAMENT RESULTS MENU (PUBLIC) -----------------------------------------
     def show_view_tournament_results_menu(self,tournament: Tournament):
         """Displays the tournament standings for selected tournament"""
-
+        if self.__logic_api.validateTournamentBracket(tournament) == False:
+            print('Tournament has no bracket!')
+            return "BACK"
         
         print(f"""
 ---------------------------

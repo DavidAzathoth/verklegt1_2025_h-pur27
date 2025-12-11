@@ -44,7 +44,7 @@ class Playerlogic:
                     elif attribute == "emailAddress":
                         check_player_email: tuple = self.__menulogic.emailverification(newValue)
                         if check_player_email[1] == False:
-                            raise TypeError
+                            return check_player_email
                         p.emailAddress = check_player_email[0]
                     elif attribute == "address":
                         p.address = newValue
