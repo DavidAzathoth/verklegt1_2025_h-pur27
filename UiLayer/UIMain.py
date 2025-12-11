@@ -279,7 +279,9 @@ class UIMain:
                 options = self.__menu_ui.show_generate_schedule_menu(self.selected_tournament)
                 if options == "ADD TEAMS TO TOURNAMENT":
                     self.current_screen = "ADD TEAMS TO TOURNAMENT MENU"
-                elif options == "CANCEL":
+                elif options == "BACK":
+                    self.current_screen = "LIST OF TOURNAMENTS"
+                elif options == "ORGANIZER":
                     self.current_screen = "ORGANIZER MENU"
                     self.selection_mode = None
                 elif options == "QUIT":

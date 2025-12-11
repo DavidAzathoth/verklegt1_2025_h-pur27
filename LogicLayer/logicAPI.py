@@ -183,16 +183,24 @@ class LogicAPI:
         """Returns a winner of a match based on the score"""
         return self.__matchlogic.returnMatchWinnerconfirmation(match, scores)
     
-    def confirmMatchWinner(self, match: Match, scores)-> tuple[str,str]:
+    def confirmMatchWinner(self, tournament: Tournament, match: Match, scores)-> tuple[str,str]:
         """Input scores is a list [1,2] score 1(index 0) is team_A score and score 2(index 1) is team_B score
         To update the bracket correctly use these commands in this order \n
-        matchloser, matchwinner = llapi.confirmMatchWinner(match, score) \n
-        llapi.removeTeamfromTournament(tournament, matchloser) \n
-        llapi.updateOrMatches(tournament,matchwinner) \n
-        llapi.updateBracket(tournament)
+        \n
+        1. matchloser, matchwinner = llapi.confirmMatchWinner(match, score) \n
+        2. llapi.removeTeamfromTournament(tournament, matchloser) \n
+        3. llapi.updateOrMatches(tournament,matchwinner) \n
+        4. llapi.updateBracket(tournament)
         """
         matchloser, matchwinner = self.__matchlogic.confirmMatchWinner(match, scores)
-        return matchloser, matchwinner
+        self.removeTeamfromTournament(tournament, matchloser)
+        self.updateOrMatches(tournament, matchwinner)
+        winnerteam = self.getTeambyName(matchwinner, tournament)
+        loserteam = self.getTeambyName(matchloser, tournament)
+        self.__Teamlogic.updateTeam(None,'updatewins',winnerteam)
+        self.__Teamlogic.updateTeam(None,'updatelosses',loserteam)
+        self.updateBracket(tournament)
+        return
         
     def populateBracket(self, bracket):
         """Replace match IDs in bracket with loaded match objects"""
@@ -206,6 +214,8 @@ class LogicAPI:
         return self.__bracketlogic.getnamedrounds(bracket)
     
     def reloadTournament(self, tournament: Tournament):
-        """Refresh all data in tournament"""
         return self.__Tournamentmanager.reloadTournament(tournament)
+    
+    def getTeambyName(self, teamname, tournament: Tournament):
+        return self.__Teamlogic.get_team_by_teamname(teamname, tournament)
 ###############testing area#############

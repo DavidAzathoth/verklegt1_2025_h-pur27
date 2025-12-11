@@ -1012,42 +1012,46 @@ This tournament has sufficient teams!
  RU's e-Sport Extravaganza
 ---------------------------""")    
                 
+                generate_bracket = self.__logic_api.generatebracket(tournament)
+                
+                if generate_bracket == False:
+                    
+                    self.slow_print("\nERROR: Bracket has already been generated for this tournament\n", 0.03)
+                    self.slow_print("Going back to List of tournaments\n", 0.03)
+                    return "BACK"
+                
+                
                 generate = (f"Generating schedule...\n", f"\nSchedule has been generated!\n", f"\nThis is the schedule for: {tournament.name}\n")
                 for s in generate:
                     self.slow_print(s)
                 
-                self.__logic_api.generatebracket(tournament)
-                
                 self.__logic_api.saveBracket(tournament.bracket)
 
                 bracket: Bracket = tournament.bracket
-                match: Match
+                
                 self.__logic_api.populateBracket(bracket)
 
                 self.print_schedule_table(tournament)
-                lenlist = []
-                for round in tournament.bracket.rounds.keys():
-                    for match in tournament.bracket.rounds.get(round):
-                        lenlist.append(len(match.team_A))
-                        lenlist.append(len(match.team_B))
-                max_team = max(lenlist)
-                max_str = len(match.printmatch(max_team))
-                for i, round in bracket.rounds.items():
-                    print(f"Round {i}:")
-                    print("-" * max_str)
-                    print()
-                    for match in round:
-                        print(match.printmatch(max_team))
-                    print()
-                    print("-" * max_str)
                     
-                
                 self.__logic_api.updateTournament(tournament)
+
+                
+                print("""
+b. Back
+h. ORGANIZER
+q. Quit
+""")
+                choice = self.__prompt_options(["b", "h", "q"])
+                
+                if choice == "b":
+                    return "BACK"
+                if choice == "h":
+                    return "ORGANIZER"
                 return "QUIT"
 
 
 
-            return "CANCEL"
+            return "BACK"
         
 
 #----------------------------------- PLAYER INFO MENU (CAPTAIN)) -----------------------------------------
@@ -1149,34 +1153,6 @@ Tournament schedule for: {tournament.name}
         
 
         self.print_schedule_table(tournament)
-        # bracket: Bracket = tournament.bracket
-        
-        # max_team = 0
-        # max_string = 0
-        # # Find the longest team name for spacing, and maximum line length of a match for dot lines
-        # for i, matches in bracket.rounds.items(): 
-        #     for match in matches:
-
-        #         current_team = max(len(match.team_A), len(match.team_B))
-        #         current_string = len(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")
-
-        #         if current_team > max_team:
-        #             max_team = current_team
-
-        #         if current_string > max_string:
-        #             max_string = current_string
-
-        # # Print schedule table loop
-        # for i, matches in bracket.rounds.items():
-            
-        #     print(f"Round {i}:")
-        #     print("-" * max_string)
-        #     print()
-                
-        #     for match in matches:
-        #         print(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")    
-        #     print()
-        #     print("-" * max_string)
 
         print("""
 b. Back
