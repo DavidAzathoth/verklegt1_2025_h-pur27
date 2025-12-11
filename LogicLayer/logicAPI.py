@@ -165,7 +165,7 @@ class LogicAPI:
     def returnMatchWinner(self, match, scores):
         return self.__matchlogic.returnMatchWinnerconfirmation(match, scores)
     
-    def confirmMatchWinner(self, match: Match, scores)-> tuple[str,str]:
+    def confirmMatchWinner(self, tournament: Tournament, match: Match, scores)-> tuple[str,str]:
         """Input scores is a list [1,2] score 1(index 0) is team_A score and score 2(index 1) is team_B score
         To update the bracket correctly use these commands in this order \n
         \n
@@ -175,7 +175,14 @@ class LogicAPI:
         4. llapi.updateBracket(tournament)
         """
         matchloser, matchwinner = self.__matchlogic.confirmMatchWinner(match, scores)
-        return matchloser, matchwinner
+        self.removeTeamfromTournament(tournament, matchloser)
+        self.updateOrMatches(tournament, matchwinner)
+        winnerteam = self.getTeambyName(matchwinner, tournament)
+        loserteam = self.getTeambyName(matchloser, tournament)
+        self.__Teamlogic.updateTeam(None,'updatewins',winnerteam)
+        self.__Teamlogic.updateTeam(None,'updatelosses',loserteam)
+        self.updateBracket(tournament)
+        return
         
     def populateBracket(self, bracket):
         self.__Tournamentmanager.populateBracket(bracket)
@@ -189,4 +196,7 @@ class LogicAPI:
     
     def reloadTournament(self, tournament: Tournament):
         return self.__Tournamentmanager.reloadTournament
+    
+    def getTeambyName(self, teamname, tournament: Tournament):
+        return self.__Teamlogic.get_team_by_teamname(teamname, tournament)
 ###############testing area#############
