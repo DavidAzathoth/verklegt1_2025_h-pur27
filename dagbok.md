@@ -158,8 +158,9 @@ Klárðuðum forritið og löguðum UML
 - Á morgun
   1. Gera video fyrir forritið
   2. Laga til skýrsluna
-  3. Fara yfir allt aftur
+  3. Fara yfir allt aftur og hreinsa kóðan
 ### Erum mjög sáttir við forritið og erum spenntir að skila því :)
+
 
 
 
