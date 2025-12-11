@@ -241,7 +241,6 @@ class BracketGenerator:
         #
         #existing_rows = self.__dataapi.loadMatches()
         #rows_by_id = {row["matchID"]: row for row in existing_rows}
-#
         #for m in all_matches:
         #    rows_by_id[m.matchID] = m.createCSVDict()
         #
