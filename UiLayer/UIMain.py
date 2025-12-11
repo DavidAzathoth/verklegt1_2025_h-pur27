@@ -232,16 +232,12 @@ class UIMain:
                 options: str = self.__menu_ui.show_tournament_info(self.selected_tournament)
 
                 if options == "VIEW SCHEDULE":
-                    
                     self.current_screen = "TOURNAMENT SCHEDULE MENU"
 
                 elif options == "VIEW RESULTS":
-                    #TODO implement standings
-                    print("NOT IMPLEMENTED YET!!!")
-                    break
+                    self.current_screen = "VIEW TOURNAMENT RESULTS MENU"
 
                 elif options == "BACK":
-
                     if self.selection_mode == "SEARCH TOURNAMENT":
                         self.current_screen = "TOURNAMENTS MENU"
 
@@ -325,9 +321,18 @@ class UIMain:
                 elif options == "QUIT":
                     break
 
-
-
-
+#============================= VIEW TOURNAMENT RESULTS MENU LOOP =======================
+            elif self.current_screen == "VIEW TOURNAMENT RESULTS MENU":
+                options = self.__menu_ui.show_view_tournament_results_menu(self.selected_tournament)
+                if options == "BACK":
+                    self.current_screen = "TOURNAMENT INFO MENU"
+                elif options == "HOME":
+                    self.current_screen = "MAIN MENU"
+                    self.selection_mode = None
+                elif options == "QUIT":
+                    break
+                
+        self.__logic_api.cleanBackups()
 
 
 

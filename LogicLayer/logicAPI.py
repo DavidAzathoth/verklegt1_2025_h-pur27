@@ -21,6 +21,7 @@ class LogicAPI:
         self.__bracketgenerator = BracketGenerator()
         self.__matchlogic = MatchLogic(__dataAPI)
         self.__bracketlogic = BracketLogic()
+        self.__dataAPI = DataAPI()
         return
 
     def createteam(self, input: list):
@@ -203,4 +204,10 @@ class LogicAPI:
     def getcompleteMatches(self, tournament: Tournament):
         """Returns all matches that have been played in the tournament"""
         return self.__Tournamentmanager.getcompleteMatches(tournament)
+
+    def returnRoundNames(self, tournament):
+        """Returns a list of round names tailored for given tournament."""
+        return self.__Tournamentmanager.returnRoundNames(tournament)
+    def cleanBackups(self):
+        self.__dataAPI.cleanBackups()
 ###############testing area#############

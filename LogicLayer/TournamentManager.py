@@ -209,7 +209,20 @@ class Tournamentmanager:
                 if match.matchPlayed == 'True' or match.matchPlayed == True:
                     complete_matches.append(match)
         return complete_matches
-    
+
+    def returnRoundNames(self, tournament: Tournament):
+        roundlist=['First rounds','Second rounds','Third rounds','Fourth rounds','Fifth rounds','Sixth rounds','Seventh rounds','Eight rounds','Ninth rounds','Tenth rounds']
+        finallist=['Quarter-finals','Semi-finals','Finals']
+        roundnames=[]
+        totalrounds=len(tournament.bracket.rounds)
+        for i in range(1,totalrounds-2):
+            roundnames.append(roundlist.pop(0))
+        roundnames+=finallist
+        return roundnames
+
+        
+
+
 
 #def populateTournament(self, tournament: Tournament):
 #        teams = self.__teamlogic.getTeams()
