@@ -1,56 +1,22 @@
 ﻿matchID,team_A,team_B,matchWinner,playerScore,matchPlayed,matchDate,matchTime,server
-M1,FURIA,Vitality,,{},False,01/12/2025,10:00,0
-M2,Falcons,MOUZ,,{},False,01/12/2025,15:00,0
-M3,The MongolZ,Spirit,,{},False,02/12/2025,14:00,0
-M4,Natus Vincere,G2,,{},False,03/12/2025,13:00,0
-M5,Aurora,paiN,,{},False,04/12/2025,12:00,0
-M6,Astralis,FaZe,,{},False,05/12/2025,11:00,0
-M7,3DMAX,Legacy,,{},False,06/12/2025,10:00,0
-M8,Liquid,B8,,{},False,06/12/2025,15:00,0
-M9,GamerLegion,FURIA or Vitality,,{},False,07/12/2025,14:00,0
-M10,HEROIC,Falcons or MOUZ,,{},False,08/12/2025,13:00,0
-M11,Virtus.rpo,The MongolZ or Spirit,,{},False,09/12/2025,12:00,0
-M12,SAW,Natus Vincere or G2,,{},False,10/12/2025,11:00,0
-M13,Passion UA,Aurora or paiN,,{},False,11/12/2025,10:00,0
-M14,M80,Astralis or FaZe,,{},False,11/12/2025,15:00,0
-M15,TBD,TBD,,{},False,12/12/2025,14:00,0
-M16,TBD,TBD,,{},False,13/12/2025,13:00,0
-M17,TBD,TBD,,{},False,14/12/2025,12:00,0
-M18,TBD,TBD,,{},False,15/12/2025,11:00,0
-M19,TBD,TBD,,{},False,16/12/2025,10:00,0
-M20,TBD,TBD,,{},False,16/12/2025,15:00,0
-M21,TBD,TBD,,{},False,17/12/2025,15:00,0
-M22,FURIA,Vitality,,{},False,11/12/2025,10:00,0
-M23,Falcons,MOUZ,,{},False,11/12/2025,11:00,0
-M24,The MongolZ,Spirit,,{},False,11/12/2025,12:00,0
-M25,Natus Vincere,G2,,{},False,11/12/2025,13:00,0
-M26,Aurora,paiN,,{},False,11/12/2025,14:00,0
-M27,Astralis,FaZe,,{},False,11/12/2025,15:00,0
-M28,3DMAX,Legacy,,{},False,12/12/2025,10:00,0
-M29,Liquid,B8,,{},False,12/12/2025,11:00,0
-M30,Team Chuck,FURIA or Vitality,,{},False,12/12/2025,12:00,0
-M31,Team Norris,Falcons or MOUZ,,{},False,12/12/2025,13:00,0
-M32,TBD,TBD,,{},False,12/12/2025,14:00,0
-M33,TBD,TBD,,{},False,12/12/2025,15:00,0
-M34,TBD,TBD,,{},False,13/12/2025,10:00,0
-M35,TBD,TBD,,{},False,13/12/2025,11:00,0
-M36,TBD,TBD,,{},False,13/12/2025,12:00,0
-M37,TBD,TBD,,{},False,13/12/2025,13:00,0
-M38,TBD,TBD,,{},False,13/12/2025,15:00,0
-M39,FURIA,Vitality,,{},False,11/12/2025,10:00,0
-M40,Falcons,MOUZ,,{},False,11/12/2025,11:00,0
-M41,The MongolZ,Spirit,,{},False,11/12/2025,12:00,0
-M42,Natus Vincere,G2,,{},False,11/12/2025,13:00,0
-M43,Aurora,paiN,,{},False,11/12/2025,14:00,0
-M44,Astralis,FaZe,,{},False,11/12/2025,15:00,0
-M45,3DMAX,Legacy,,{},False,12/12/2025,10:00,0
-M46,Liquid,B8,,{},False,12/12/2025,11:00,0
-M47,Team Chuck,FURIA or Vitality,,{},False,12/12/2025,12:00,0
-M48,Team Norris,Falcons or MOUZ,,{},False,12/12/2025,13:00,0
-M49,TBD,TBD,,{},False,12/12/2025,14:00,0
-M50,TBD,TBD,,{},False,12/12/2025,15:00,0
-M51,TBD,TBD,,{},False,13/12/2025,10:00,0
-M52,TBD,TBD,,{},False,13/12/2025,11:00,0
-M53,TBD,TBD,,{},False,13/12/2025,12:00,0
-M54,TBD,TBD,,{},False,13/12/2025,13:00,0
-M55,TBD,TBD,,{},False,13/12/2025,15:00,0
+M1,FURIA,Vitality,FURIA,"{'FURIA': '2', 'Vitality': '1'}",True,01/12/2025,10:00,0
+M2,Falcons,MOUZ,Falcons,"{'Fal+cons': '1', 'MOUZ': '0'}",True,01/12/2025,15:00,0
+M3,The MongolZ,Spirit,The MongolZ,"{'The MongolZ': '2', 'Spirit': '1'}",True,02/12/2025,14:00,0
+M4,Natus Vincere,G2,Natus Vincere,"{'Natus Vincere': '2', 'G2': '1'}",True,03/12/2025,13:00,0
+M5,Aurora,paiN,Aurora,"{'Aurora': '2', 'paiN': '1'}",True,04/12/2025,12:00,0
+M6,Astralis,FaZe,Astralis,"{'Astralis': '2', 'FaZe': '1'}",True,05/12/2025,11:00,0
+M7,3DMAX,Legacy,3DMAX,"{'3DMAX': '2', 'Legacy': '1'}",True,06/12/2025,10:00,0
+M8,Liquid,B8,B8,"{'Liquid': '1', 'B8': '2'}",True,06/12/2025,15:00,0
+M9,GamerLegion,FURIA,FURIA,"{'GamerLegion': '1', 'FURIA': '2'}",True,07/12/2025,14:00,0
+M10,HEROIC,Falcons,Falcons,"{'HEROIC': '1', 'Falcons': '2'}",True,08/12/2025,13:00,0
+M11,Virtus.rpo,The MongolZ,The MongolZ,"{'Virtus.rpo': '1', 'The MongolZ': '2'}",True,09/12/2025,12:00,0
+M12,SAW,Natus Vincere,Natus Vincere,"{'SAW': '1', 'Natus Vincere': '2'}",True,10/12/2025,11:00,0
+M13,Passion UA,Aurora,Aurora,"{'Passion UA': '1', 'Aurora': '2'}",True,11/12/2025,10:00,0
+M14,M80,Astralis,Astralis,"{'M80': '1', 'Astralis': '2'}",True,11/12/2025,15:00,0
+M15,FURIA,Falcons,Falcons,"{'FURIA': '1', 'Falcons': '2'}",True,12/12/2025,14:00,0
+M16,The MongolZ,Natus Vincere,Natus Vincere,"{'The MongolZ': '1', 'Natus Vincere': '2'}",True,13/12/2025,13:00,0
+M17,Aurora,Astralis,Astralis,"{'Aurora': '1', 'Astralis': '2'}",True,14/12/2025,12:00,0
+M18,3DMAX,B8,B8,"{'3DMAX': '1', 'B8': '2'}",True,15/12/2025,11:00,0
+M19,Falcons,Natus Vincere,Natus Vincere,"{'Falcons': '1', 'Natus Vincere': '2'}",True,16/12/2025,10:00,0
+M20,Astralis,B8,B8,"{'Astralis': '1', 'B8': '2'}",True,16/12/2025,15:00,0
+M21,Natus Vincere,B8,Natus Vincere,"{'Natus Vincere': '10', 'B8': '0'}",True,17/12/2025,15:00,0
