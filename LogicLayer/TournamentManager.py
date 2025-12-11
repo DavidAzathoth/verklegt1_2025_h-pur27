@@ -33,6 +33,10 @@ class Tournamentmanager:
                 return tournament
             
     def populateTournament(self, tournament: Tournament):
+        if type(tournament.teams) == list:
+            if len(tournament.teams) > 0:
+                if type(tournament.teams[0]) == Team:
+                    return False
         teams = self.__teamlogic.getTeams()
         teamobjects=list(map(lambda team: self.__teamlogic.get_team_by_teamID(team, teams), (tournament.teams)))
         bracket = self.getBracketByTournament(tournament)
@@ -49,10 +53,14 @@ class Tournamentmanager:
         return tournament
     
     def unpopulateTournament(self, tournament: Tournament):
-        teamids = [x.teamID for x in tournament.teams]
-        playingteamids = [x.teamID for x in tournament.playingteams]
-        tournament.playingteams = playingteamids
-        tournament.teams = teamids
+        if type(tournament.teams) == list:
+            if len(tournament.teams) > 0:
+                teamids = [x.teamID for x in tournament.teams]
+                tournament.teams = teamids
+        if type(tournament.playingteams) == list:
+            if len(tournament.playingteams) > 0:
+                playingteamids = [x.teamID for x in tournament.playingteams]
+                tournament.playingteams = playingteamids
         return tournament
     
     
