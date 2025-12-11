@@ -7,6 +7,7 @@ from Models.Team import Team
 from Models.Player import Player
 from Models.Tournament import Tournament
 from Models.Bracket import Bracket
+from Models.Match import Match
 import time
 import sys
 
@@ -186,7 +187,7 @@ q. Quit
             return "PRINT LIST OF TOURNAMENTS"
         if choice == "2":
             tournament_input = input("Please enter the tournament name: ")
-            tournament = self.__logic_api.gettournamentbyname(tournament_input)
+            tournament = self.__logic_api.getTournamentbyName(tournament_input)
             while tournament == None:
                 print("-" * 33)
                 print("\nERROR: tournament name invalid.")
@@ -197,7 +198,7 @@ q. Quit
                 choice = self.__prompt_options(["", "c"])
                 if choice == "":
                     tournament_input = input("Please enter the tournament name: ")
-                    tournament = self.__logic_api.gettournamentbyname(tournament_input)
+                    tournament = self.__logic_api.getTournamentbyName(tournament_input)
                 else: 
                     return "CANCEL"
                 
@@ -237,13 +238,15 @@ q. Quit
             team_input = input("Please enter the team name: ")
             team = self.__logic_api.searchforteam(team_input)
             while team == None:
-                print("\nERROR: team name invalid.")
-                print("\nContinue?")
-                print("\ny. Yes (continue)")
-                print("n. No (cancel)")
+                print()
+                print("-" * 28)
+                print("ERROR: team name invalid.")
+                print("\nTry again?")
+                print("\nENTER. Try again")
+                print("c. Cancel")
 
-                choice = self.__prompt_options(["y", "n"])
-                if choice == "y":
+                choice = self.__prompt_options(["", "c"])
+                if choice == "":
                     team_input = input("Please enter the team name: ")
                     team = self.__logic_api.searchforteam(team_input)
                 else: 
@@ -1101,22 +1104,42 @@ c. Cancel
 ---------------------------
 
 Tournament schedule for: {tournament.name}
-{print("-" * 70)}
 """)
         
-        self.__logic_api.populateTournament(tournament)
-        
         bracket: Bracket = tournament.bracket
+        
+        max_team = 0
+        max_string = 0
+        # Find the longest team name for spacing, and maximum line length of a match for dot lines
+        for i, matches in bracket.rounds.items(): 
+            for match in matches:
 
-        for i, round in bracket.rounds.items():
-                    print(f"Round {i}:")
-                    print("-" * 70)
-                    print()
-                    for match in round:
-                        print(match)
-                    print()
-                    print("-" * 70)
+                current_team = max(len(match.team_A), len(match.team_B))
+                current_string = len(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")
 
+                if current_team > max_team:
+                    max_team = current_team
+
+                if current_string > max_string:
+                    max_string = current_string
+
+        # Print schedule table loop
+        for i, matches in bracket.rounds.items():
+            
+            print(f"Round {i}:")
+            print("-" * max_string)
+            print()
+                
+            for match in matches:
+                print(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")    
+            print()
+            print("-" * max_string)
+
+        print("""
+b. Back
+h. Home
+q. Quit
+""")
         choice = self.__prompt_options(["b", "h", "q"])
         
         if choice == "b":
