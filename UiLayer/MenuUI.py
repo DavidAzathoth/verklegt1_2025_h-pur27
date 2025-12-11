@@ -49,7 +49,7 @@ class MenuUI:
 
 
 #----------------------------------- Slow print --------------------------------------------
-    def slow_print(self, text, delay = 0.05):
+    def slow_print(self, text, delay = 0.04):
         """Prints a string slowly instead of instantly"""
 
         for char in text:
@@ -668,10 +668,16 @@ q. Quit
 
 
 #----------------------------------- VIEW ALL TOURNAMENTS MENU -----------------------------------------    
-    def show_view_tournaments_menu(self):
+    def show_view_tournaments_menu(self, mode):
         """Prints list of tournaments
         returns: ("TOURNAMENT INFO",  tournament: object), "BACK", "QUIT"  """
         
+        # view what kind of mode the menu is in (public/organizer)
+        if mode == "VIEW TOURNAMENTS":
+            view_mode = "PUBLIC"
+        else:
+            view_mode = mode
+
         tournaments = self.__logic_api.gettournaments()
 
         tournament_names: list[str] = [t.name for t in tournaments]
@@ -687,11 +693,13 @@ q. Quit
 RU's e-Sport Extravaganza
 ---------------------------
 List of tournaments
+                  
+View mode: {view_mode.title()}
               
 {viewer.currentPage()}
               
 ENTER. Next page
-1-5. View tournament details
+1-5. Select tournament
 b. Back
 q. Quit              
 """) 
@@ -706,7 +714,7 @@ q. Quit
                 # find tournament object
                 for t in tournaments:
                     if t.name == tournament_name:
-                        return ("TOURNAMENT INFO", t)
+                        return ("TOURNAMENT", t)
                 continue
             
             #press ENTER to go to next page
@@ -942,13 +950,15 @@ ERROR: Tournament has a generated bracket, adding teams is not possible
 ---------------------------
  RU's e-Sport Extravaganza
 ---------------------------""")    
-        self.slow_print("Checking team count...\n", 0.1)          
+        self.slow_print("Checking team count\n")      
+
+        self.slow_print("....", 0.3)    
         
-        self.slow_print(f"Current number of teams: {current_teams}\n")
+        self.slow_print(f"\nCurrent number of teams: {current_teams}\n")
         
         self.slow_print(f"Minimum teams required: {minimum_teams}\n")
         
-        self.slow_print(f".....\n", 0.3)
+        self.slow_print(f"....\n", 0.3)
         
         if current_teams < minimum_teams:
             #Error path: not enough teams
@@ -986,8 +996,9 @@ This tournament has sufficient teams!
                 
                 if generate_bracket == False:
                     
-                    self.slow_print("\nERROR: Bracket has already been generated for this tournament\n", 0.03)
-                    self.slow_print("Going back to List of tournaments\n", 0.03)
+                    self.slow_print("\nERROR: Bracket has already been generated for this tournament\n")
+                    self.slow_print("Going back to List of tournaments\n")
+                    time.sleep(1)
                     return "BACK"
                 
                 
@@ -1188,9 +1199,13 @@ q. Quit
                 return "BACK"
             if choice == "h":
                 return "HOME"
+            if choice == "q":
+                return "QUIT"
             if choice.isdigit():
                 num = int(choice)
-                match: Match = viewer.select_item_by_number(num)
+                match: Match | None = viewer.select_item_by_number(num)
+                if match is None:
+                    continue
 
                 print(f"""
 ---------------------------
@@ -1202,26 +1217,26 @@ Teams: {match.team_A} vs {match.team_B}
 Date: {match.matchDate}, {match.matchTime}
 
 Scores:""")
-            print("-" * 40)
+                print("-" * 40)
 
             # Validate team score inputs
-            while True:
-                try:
-                    team_A_score = int(input(f"Enter score for {match.team_A}: ").strip())
-                    team_B_score = int(input(f"Enter score for {match.team_B}: ").strip())
-                    
-                    winner = self.__logic_api.returnMatchWinner(match, team_A_score, team_B_score)
-                    
-                    if not winner:
-                        print('\nERROR: Match cannot be a tie\n')
-                        continue
-                    break   
-                except ValueError:
-                    print()
-                    print("-" * 35)
-                    print("ERROR: Please enter a valid integer\n")
+                while True:
+                    try:
+                        team_A_score = int(input(f"Enter score for {match.team_A}: ").strip())
+                        team_B_score = int(input(f"Enter score for {match.team_B}: ").strip())
+                        
+                        winner = self.__logic_api.returnMatchWinner(match, team_A_score, team_B_score)
+                        
+                        if not winner:
+                            print('\nERROR: Match cannot be a tie\n')
+                            continue
+                        break   
+                    except ValueError:
+                        print()
+                        print("-" * 35)
+                        print("ERROR: Please enter a valid integer\n")
 
-                    print(f"""
+                print(f"""
 -------------------------------------------
 Confirm update for match {match.matchID}?
 
@@ -1234,7 +1249,7 @@ c. Cancel
 h. Organizer menu
 q. Quit
 """)
-                choice = self.__prompt_options(["1", "b", "h", "q"])
+                choice = self.__prompt_options(["1", "c", "h", "q"])
                 if choice == "1":
                     score = [team_A_score, team_B_score]
                     self.__logic_api.confirmMatchWinner(tournament, match, score)
@@ -1243,6 +1258,7 @@ q. Quit
                     continue
                 if choice == "h":
                     return "HOME"
+                return "QUIT"
             continue
 
 
@@ -1275,3 +1291,4 @@ q. Quit
             return "HOME"
         
         return "QUIT"
+    
