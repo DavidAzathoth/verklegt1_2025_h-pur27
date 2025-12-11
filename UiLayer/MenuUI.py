@@ -2,6 +2,7 @@ from Models.Team import Team
 from Models.TeamCaptain import TeamCaptain
 from LogicLayer.logicAPI import LogicAPI
 from UiLayer.selectfrompage import SelectFromPage
+from UiLayer.
 from datetime import datetime, date
 from Models.Team import Team
 from Models.Player import Player
@@ -177,54 +178,6 @@ class MenuUI:
             print()
             print("-" * max_string)
             print()
-
-
-#----------------------------------- Confirm match results from input --------------------------------------------
-    def confirm_match_results_input(self, match: Match, score_A, score_B):
-        print(f"""
----------------------------
- RU's e-Sport Extravaganza
----------------------------                      
-Update results for match: {match.matchID}
-
-Teams: {match.team_A} vs {match.team_B}
-Date: {match.matchDate}, {match.matchTime}
-
-Scores:""")
-        print("-" * 40)
-
-        # Validate team score inputs
-        while True:
-            try:
-                team_A_score = int(score_A)
-                team_B_score = int(score_B)
-                score = [team_A_score,team_B_score]
-                winner = self.__logic_api.returnMatchWinner(match, score)
-                if winner==False:
-                    print('\nERROR: Match cannot be a tie\n')
-                else:
-                    break   
-            except ValueError:
-                print()
-                print("-" * 35)
-                print("ERROR: Please enter a valid integer\n")
-
-        print(f"""
--------------------------------------------
-Confirm update for match {match.matchID}?
-
-Winner: {winner}
-
-
-1. Confirm
-c. Cancel
-
-h. Organizer menu
-q. Quit
-""")
-        return score
-    
-
 
 
 #----------------------------------- MAIN MENU -----------------------------------------
