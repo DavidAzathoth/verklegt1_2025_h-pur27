@@ -195,7 +195,7 @@ class LogicAPI:
         return self.__bracketlogic.getnamedrounds(bracket)
     
     def reloadTournament(self, tournament: Tournament):
-        return self.__Tournamentmanager.reloadTournament
+        return self.__Tournamentmanager.reloadTournament(tournament)
     
     def getTeambyName(self, teamname, tournament: Tournament):
         return self.__Teamlogic.get_team_by_teamname(teamname, tournament)
