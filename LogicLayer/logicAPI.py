@@ -177,9 +177,9 @@ class LogicAPI:
         return
 
 
-    def returnMatchWinner(self, match, scores):
+    def returnMatchWinner(self, match, team_A_score, Team_B_score):
         """Returns a winner of a match based on the score"""
-        return self.__matchlogic.returnMatchWinnerconfirmation(match, scores)
+        return self.__matchlogic.returnMatchWinner(match, team_A_score, Team_B_score)
     
     def confirmMatchWinner(self, tournament: Tournament, match: Match, scores)-> tuple[str,str]:
         """Input scores is a list [1,2] score 1(index 0) is team_A score and score 2(index 1) is team_B score
@@ -230,6 +230,15 @@ class LogicAPI:
     def returnRoundNames(self, tournament):
         """Returns a list of round names tailored for given tournament."""
         return self.__Tournamentmanager.returnRoundNames(tournament)
+    
+    def set_start_end_date(self, startdate, enddate):
+        """Validates start and enddate for tournament when creating tournament"""
+        return self.__Tournamentmanager.validate_start_end_date(startdate, enddate)
+    
+    def check_player_age(self, dob):
+        """Validates player age when creating player"""
+        return self.__Playerlogic.check_player_age(dob)
+    
     def cleanBackups(self):
         self.__dataAPI.cleanBackups()
     def validateTournamentBracket(self, tournament: Tournament):

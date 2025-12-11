@@ -3,7 +3,6 @@ class SelectFromPage:
         self.items=items
         self.endpage=5
         self.startpage=0
-        pass
     
     def currentPage(self):
         items_list: list=self.items[self.startpage:self.endpage]

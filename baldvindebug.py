@@ -25,13 +25,13 @@ llapi = LogicAPI()
 # print(llapi.geteligibleMatches(tournament))
 # tournament = llapi.reloadTournament(tournament)
 
-llapi.cleanBackups()
+# llapi.cleanBackups()
 
 """Main loop test"""
 
-#run = UIMain()
+run = UIMain()
 
-#run.mainloop()
+run.mainloop()
 
 # teams=llapi.getTeams()
 # for team in teams:

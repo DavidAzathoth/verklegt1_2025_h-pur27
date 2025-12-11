@@ -2,6 +2,7 @@ from Models.Team import Team
 from Models.TeamCaptain import TeamCaptain
 from LogicLayer.logicAPI import LogicAPI
 from UiLayer.selectfrompage import SelectFromPage
+from UiLayer.PrintMatches import PrintMatches
 from datetime import datetime, date
 from Models.Team import Team
 from Models.Player import Player
@@ -27,50 +28,6 @@ class MenuUI:
                 return choice
 
             print(f"Invalid input. Valid options are: {'. '.join(valid_lower)}")
-
-
-#----------------------------------- Set start and end date for tournament -----------------------------------------
-    def set_start_end_date(self):
-        while True:
-            try:
-                startdate = datetime.strptime(input("Tournament start date (YYYY-MM-DD): "), "%Y-%m-%d")
-                
-                enddate = datetime.strptime(input("Tournament end date (YYYY-MM-DD): "), "%Y-%m-%d")
-                
-            except ValueError:
-                print("please enter valid numbers for year, month, day")
-                continue
-
-            if enddate < startdate:
-                print("ERROR: End date must be after start date")
-                continue
-
-            print(f"Startdate: {startdate.date()} \nEnd date: {enddate.date()}")
-
-            return startdate, enddate
-
-
-#----------------------------------- Checks if player date of birth is valid -----------------------------------------
-    def check_player_age(self):
-        
-        minimum_age = 18
-
-        while True:
-                try:
-                    dob = datetime.strptime(input("Date of birth (YYYY-MM-DD): "), "%Y-%m-%d").date()
-                except ValueError:
-                    print("ERROR: Invalid input. Please enter a valid date")
-                    continue
-                
-                today = date.today()
-                age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
-
-                if age < minimum_age:
-                    print(f"ERROR: You must be at least {minimum_age} years old. please enter a valid age")
-                    continue
-
-                break
-        return dob
 
 
 #----------------------------------- Saves team, player and captain info --------------------------------------------
@@ -100,134 +57,6 @@ class MenuUI:
             sys.stdout.flush()
             time.sleep(delay)
         print()
-
-
-#----------------------------------- Print schedule table --------------------------------------------
-    def print_schedule_table(self, tournament: Tournament):
-        if self.__logic_api.validateTournamentBracket(tournament) == False:
-            print('Tournament has no bracket!')
-            return "BACK"
-        bracket: Bracket = tournament.bracket
-        
-        max_team = 0
-        max_string = 0
-        # Find the longest team name for spacing, and maximum line length of a match for dot lines
-        for i, matches in bracket.rounds.items(): 
-            for match in matches:
-                match: Match
-
-                current_team = max(len(match.team_A), len(match.team_B))
-                current_string = len(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")
-
-                if current_team > max_team:
-                    max_team = current_team
-
-                if current_string > max_string:
-                    max_string = current_string
-
-        # Print schedule table loop
-        for i, matches in bracket.rounds.items():
-            
-            print(f"Round {i}:")
-            print("-" * max_string)
-            print()
-                
-            for match in matches:
-                print(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")    
-            print()
-            print("-" * max_string)
-
-
-#----------------------------------- Print results table --------------------------------------------
-    def print_results_table(self, tournament: Tournament):
-
-        bracket: Bracket = tournament.bracket
-        
-        max_team = 0
-        max_string = 0
-
-        # Find the longest team name for spacing, and maximum line length of a match for dot lines
-        for i, matches in bracket.rounds.items(): 
-            for match in matches:
-                match: Match
-            
-                current_team = max(len(match.team_A), len(match.team_B))
-                current_string = len(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} (winner: {match.matchWinner})")
-
-                if current_team > max_team:
-                    max_team = current_team
-
-                if current_string > max_string:
-                    max_string = current_string
-
-        rounds = bracket.rounds.items()
-        total_rounds = len(rounds)
-
-        names = {total_rounds - 3: "Quarterfinals", total_rounds -2: "Semifinals", total_rounds -1: "Finals"}
-        
-        for index, (round_number, matches) in enumerate(rounds):
-            
-            if index in names:
-                round_name = names[index]
-            else:
-                round_name = f"Round {round_number}"
-
-            print(f"{round_name}: ")
-            print("-" * max_string)
-            print()
-
-            for match in matches:
-                print(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} (winner: {match.matchWinner})")    
-            print()
-            print("-" * max_string)
-            print()
-
-
-#----------------------------------- Confirm match results from input --------------------------------------------
-    def confirm_match_results_input(self, match: Match, score_A, score_B):
-        print(f"""
----------------------------
- RU's e-Sport Extravaganza
----------------------------                      
-Update results for match: {match.matchID}
-
-Teams: {match.team_A} vs {match.team_B}
-Date: {match.matchDate}, {match.matchTime}
-
-Scores:""")
-        print("-" * 40)
-
-        # Validate team score inputs
-        while True:
-            try:
-                team_A_score = int(score_A)
-                team_B_score = int(score_B)
-                score = [team_A_score,team_B_score]
-                winner = self.__logic_api.returnMatchWinner(match, score)
-                if winner==False:
-                    print('\nERROR: Match cannot be a tie\n')
-                else:
-                    break   
-            except ValueError:
-                print()
-                print("-" * 35)
-                print("ERROR: Please enter a valid integer\n")
-
-        print(f"""
--------------------------------------------
-Confirm update for match {match.matchID}?
-
-Winner: {winner}
-
-
-1. Confirm
-c. Cancel
-
-h. Organizer menu
-q. Quit
-""")
-        return score
-    
 
 
 
@@ -531,14 +360,39 @@ Please enter tournament details:
 """)  
         venue: str = input("Venue: ").strip()
         name: str = input("Name: ").strip()
-        startdate, enddate = self.set_start_end_date()
+        
+        #start, enddate for tournament
+        while True:
+            startdate_input = input("Tournament start date (YYYY-MM-DD): ")
+            enddate_input = enddate = input("Tournament end date (YYYY-MM-DD): ")
+            try:
+                result = self.__logic_api.set_start_end_date(startdate_input, enddate_input)
+                
+                if result is None:
+                    print("\nERROR: End date must be after start date\n")
+                    continue
+
+                startdate, enddate = result
+                break
+            
+            except ValueError:
+                print("\nERROR: please enter valid numbers for year-month-day\n")
+        
+        #ContactEmail
         check_contact_email: tuple = self.__logic_api.emailVerification(input("ContactEmail: "))
         while check_contact_email[1] == False:
             print(check_contact_email[0])
             check_contact_email: tuple = self.__logic_api.emailVerification(input("ContactEmail: "))
         contactemail = check_contact_email[0]
         print(("-Confirmed ContactEmail: "), contactemail)
-        contactphone = int(input("ContactPhone: ").strip())
+        
+        #Contactphone
+        while True:
+            try:
+                contactphone = int(input("ContactPhone: ").strip())
+                break
+            except ValueError:
+                        print("\nERROR: Please enter a valid phone number\n")
 
 #===========================================================
 
@@ -666,7 +520,19 @@ Add player {player_count + 1}:
             #Real name
             name = input("Player name: ").strip()
             #Date of birth
-            dob = self.check_player_age()
+            while True:
+                try:
+                    date_of_birth = input("Date of birth (YYYY-MM-DD): ")
+                    age_check = self.__logic_api.check_player_age(date_of_birth)
+                    if not age_check[0]:
+                        print(age_check[1])
+                        continue
+                    else:
+                        dob = age_check[1]
+                    break
+                except ValueError:
+                    print("\nERROR: Invalid input. Please enter a valid date\n")
+                    
             #Home address
             address = input("Player address: ").strip()
 
@@ -1135,7 +1001,8 @@ This tournament has sufficient teams!
                 
                 self.__logic_api.populateBracket(bracket)
 
-                self.print_schedule_table(tournament)
+                printer = PrintMatches(tournament) 
+                printer.print_schedule_table()
                     
                 self.__logic_api.updateTournament(tournament)
 
@@ -1265,8 +1132,8 @@ c. Cancel
 Tournament schedule for: {tournament.name}
 """)
         
-
-        self.print_schedule_table(tournament)
+        printer = PrintMatches(tournament)
+        printer.print_schedule_table()
 
         print("""
 b. Back
@@ -1282,7 +1149,7 @@ q. Quit
         return "QUIT"
     
 
-#----------------------------------- UPDATE TOURNAMENT MENU (ORGANIZER) -----------------------------------------
+#----------------------------------- UPDATE RESULTS MENU (ORGANIZER) -----------------------------------------
     def show_update_results_menu(self, tournament: Tournament):
         """Shows menu to update tournament information for organizer"""
 
@@ -1325,14 +1192,51 @@ q. Quit
                 num = int(choice)
                 match: Match = viewer.select_item_by_number(num)
 
-                team_A_score = input(f"Enter score for {match.team_A}: ").strip()
-                team_B_score = input(f"Enter score for {match.team_B}: ").strip()
+                print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------                      
+Update results for match: {match.matchID}
 
-                #Validates match results prints prompt to confirm, and returns the score
-                score = self.confirm_match_results_input(match, team_A_score, team_B_score)
+Teams: {match.team_A} vs {match.team_B}
+Date: {match.matchDate}, {match.matchTime}
 
+Scores:""")
+            print("-" * 40)
+
+            # Validate team score inputs
+            while True:
+                try:
+                    team_A_score = int(input(f"Enter score for {match.team_A}: ").strip())
+                    team_B_score = int(input(f"Enter score for {match.team_B}: ").strip())
+                    
+                    winner = self.__logic_api.returnMatchWinner(match, team_A_score, team_B_score)
+                    
+                    if not winner:
+                        print('\nERROR: Match cannot be a tie\n')
+                        continue
+                    break   
+                except ValueError:
+                    print()
+                    print("-" * 35)
+                    print("ERROR: Please enter a valid integer\n")
+
+                    print(f"""
+-------------------------------------------
+Confirm update for match {match.matchID}?
+
+Winner: {winner}
+
+
+1. Confirm
+c. Cancel
+
+h. Organizer menu
+q. Quit
+""")
                 choice = self.__prompt_options(["1", "b", "h", "q"])
                 if choice == "1":
+                    score = [team_A_score, team_B_score]
                     self.__logic_api.confirmMatchWinner(tournament, match, score)
                     tournament = self.__logic_api.reloadTournament(tournament)
                 if choice == "c":
@@ -1355,7 +1259,8 @@ q. Quit
 ---------------------------
 Full standings - {tournament.name}
 """)
-        self.print_results_table(tournament)
+        printer = PrintMatches(tournament)
+        printer.print_results_table()
 
         print("""
 b. Back
