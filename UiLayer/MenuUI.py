@@ -1249,7 +1249,7 @@ q. Quit
                 choice = self.__prompt_options(["1", "b", "h", "q"])
                 if choice == "1":
                     self.__logic_api.confirmMatchWinner(tournament, match, score)
-                    #tournament = self.__logic_api.reloadTournament(tournament)
+                    tournament = self.__logic_api.reloadTournament(tournament)
                 if choice == "c":
                     continue
                 if choice == "h":
