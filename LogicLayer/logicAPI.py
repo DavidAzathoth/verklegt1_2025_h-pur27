@@ -214,8 +214,10 @@ class LogicAPI:
         return self.__bracketlogic.getnamedrounds(bracket)
     
     def reloadTournament(self, tournament: Tournament):
+        """Reload tournament by refreshing all data from storage"""
         return self.__Tournamentmanager.reloadTournament(tournament)
     
     def getTeambyName(self, teamname, tournament: Tournament):
+        """Return team matching given teamname"""
         return self.__Teamlogic.get_team_by_teamname(teamname, tournament)
 ###############testing area#############
