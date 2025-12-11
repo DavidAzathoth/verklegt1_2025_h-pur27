@@ -22,6 +22,4 @@ class Match:
             'server': self.server
             }
         return ret_dic
-    def __str__(self):
-        ret_str = f'- Match {self.matchID:<{4}}: {self.team_A:>{14}} vs {self.team_B:<{14}} Date: fucking never'
-        return ret_str
+    

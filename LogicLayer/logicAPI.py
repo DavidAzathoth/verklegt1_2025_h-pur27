@@ -50,6 +50,8 @@ class LogicAPI:
         """Populates tournament with all objects and returns it, must give tournament name and already loaded list of tournament objects"""
         self.__Tournamentmanager.populateTournament(tournament)
         
+    def unpopulateTournament(self, tournament: Tournament):
+        self.__Tournamentmanager.unpopulateTournament(tournament)
 
     def createtournament(self, input):
         templist = ["HA", "HAringurinn", "20 12 2025", "24 12 2025", "blabla@gmail.com", "1234567"]
