@@ -182,12 +182,33 @@ class Tournamentmanager:
                 self.__matchlogic.updateMatch(match)
     
     def reloadTournament(self, tournament: Tournament):
-        self.unpopulateTournament(tournament)
-        if tournament.bracket is not None:
-            tournament.bracket = self.unpopulateBracket(tournament.bracket)
-        self.populateTournament(tournament)
-        return tournament
-
+        self.updateTournament(tournament,None,'updateall')
+        tournamentlist = self.getTournaments()
+        reloaded_tournament = self.getTournamentbyName(tournament.name,tournamentlist)
+        self.populateTournament(reloaded_tournament)
+        del(tournament)
+        return reloaded_tournament
+    
+    def geteligibleMatches(self, tournament: Tournament):
+        """Returns matches that can be updated"""
+        updateable_matches = []
+        match: Match
+        for round in tournament.bracket.rounds.keys():
+            for match in tournament.bracket.rounds.get(round):
+                if match.team_A == 'TBD' or match.team_B == 'TBD':
+                    break
+                if len(match.team_A.split(' or ')) < 2 and len(match.team_B.split(' or ')) < 2 and (match.matchPlayed=='False' or match.matchPlayed==False):
+                    updateable_matches.append(match)
+        return updateable_matches
+    
+    def getcompleteMatches(self, tournament: Tournament):
+        """Returns all completed matches in the tournament"""
+        complete_matches = []
+        for round in tournament.bracket.rounds.keys():
+            for match in tournament.bracket.rounds.get(round):
+                if match.matchPlayed == 'True' or match.matchPlayed == True:
+                    complete_matches.append(match)
+        return complete_matches
     
 
 #def populateTournament(self, tournament: Tournament):

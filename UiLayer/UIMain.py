@@ -268,7 +268,7 @@ class UIMain:
                 options = self.__menu_ui.show_add_teams_to_tournament_menu(self.selected_tournament)
                 if options == "BACK":
                     self.current_screen = "LIST OF TOURNAMENTS"
-                elif options == "HOME":
+                elif options == "ORGANIZER":
                     self.current_screen = "ORGANIZER MENU"
                     self.selection_mode = None
                 elif options == "QUIT":
@@ -298,7 +298,6 @@ class UIMain:
                 elif options == "QUIT":
                     break
 
-
 #============================= TOURNAMENT SCHEDULE MENU LOOP =======================
             elif self.current_screen == "TOURNAMENT SCHEDULE MENU":
                 options = self.__menu_ui.show_tournament_schedule(self.selected_tournament)
@@ -312,6 +311,21 @@ class UIMain:
                 
                 elif options == "QUIT":
                     break
+
+#============================= UPDATE TOURNAMENT MENU LOOP =======================
+            elif self.current_screen == "TOURNAMENT UPDATE MENU":
+                options = self.__menu_ui.show_update_results_menu(self.selected_tournament)
+                
+                if options == "BACK":
+                    self.current_screen = "LIST OF TOURNAMENTS"
+                elif options == "HOME":
+                    self.current_screen = "ORGANIZER MENU"
+                    self.selection_mode = None
+                    
+                elif options == "QUIT":
+                    break
+
+
 
 
 

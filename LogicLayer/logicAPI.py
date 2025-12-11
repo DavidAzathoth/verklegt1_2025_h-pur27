@@ -81,10 +81,6 @@ class LogicAPI:
     def registerCaptain(self, captainHandle):
         return self.__Teamlogic.registerCaptain(captainHandle)
     
-    #def getTournamentbyName(self, name: str):
-    #    tournamentlist = self.__Tournamentmanager.getTournaments()
-    #    return self.__Tournamentmanager.getTournamentbyName(name, tournamentlist)
-
     def searchforteam(self, input):
         teams=self.__Teamlogic.getTeams()
         return self.__Teamlogic.get_team_by_teamname(input, teams)
@@ -195,8 +191,16 @@ class LogicAPI:
         return self.__bracketlogic.getnamedrounds(bracket)
     
     def reloadTournament(self, tournament: Tournament):
-        return self.__Tournamentmanager.reloadTournament
+        return self.__Tournamentmanager.reloadTournament(tournament)
     
     def getTeambyName(self, teamname, tournament: Tournament):
         return self.__Teamlogic.get_team_by_teamname(teamname, tournament)
+    
+    def geteligibleMatches(self, tournament: Tournament):
+        """Returns matches that can be updated"""
+        return self.__Tournamentmanager.geteligibleMatches(tournament)
+    
+    def getcompleteMatches(self, tournament: Tournament):
+        """Returns all matches that have been played in the tournament"""
+        return self.__Tournamentmanager.getcompleteMatches(tournament)
 ###############testing area#############

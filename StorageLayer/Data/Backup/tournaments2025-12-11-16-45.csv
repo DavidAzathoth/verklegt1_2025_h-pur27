@@ -1,5 +1,5 @@
 ﻿venue,name,startDate,endDate,contactEmail,contactPhone,matchesList,matchHistory,teams,active,playingteams
-HA,HAhringurinn,01/12/2025,17/12/2025,orgmaster@email.is,+354 123 1234,,,"A1,A2,A3,A4,A5,A6,A7,A8,A9,B1,B2,B3,B4,B5,B6,B7,B8,B9,C1,C2,C3,C4",True,"A1,A3,A4,A5,A6,A7,A8,A9,B1,B2,B3,B4,B5,B6,B7,B8,B9,C1,C2,C3,C4"
+HA,HAhringurinn,01/12/2025,17/12/2025,orgmaster@email.is,+354 123 1234,,,"A1,A2,A3,A4,A5,A6,A7,A8,A9,B1,B2,B3,B4,B5,B6,B7,B8,B9,C1,C2,C3,C4",True,"A1,A2,A3,A4,A5,A6,A7,A8,A9,B1,B2,B3,B4,B5,B6,B7,B8,B9,C1,C2,C3,C4"
 Ha,ha,ha,ha,ha,ha,,,,True,
 HA,HAringurinn,25,25,sdf,asdf,,,,True,
 HA,HAringurinn,12/12/2025 00:00,15/12/2025 00:00,All good.,8989123,,,,True,

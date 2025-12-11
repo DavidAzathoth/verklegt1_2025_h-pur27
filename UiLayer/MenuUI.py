@@ -887,10 +887,6 @@ q. Quit
 #----------------------------------- ADD TEAMS TO TOURNAMENT MENU (ORGANIZER)) -----------------------------------------
     def show_add_teams_to_tournament_menu(self, tournament: Tournament):
         """displays menu to add teams into specified tournament"""
-        #self.__logic_api.updateTournament(tournament)
-        #tournament = self.__logic_api.getTournamentbyName(tournament.name)
-        self.__logic_api.populateTournament(tournament)
-
 
         #print 5 items per page loop
         while True:
@@ -927,7 +923,7 @@ Available teams:
 ENTER. Next page
 1-5. Add team
 b. Back
-h. Home (Organizer)
+h. Organizer menu
 q. Quit 
 """)
 
@@ -952,11 +948,10 @@ q. Quit
                 return "BACK"
             
             if choice == "h":
-                answer = "HOME"
-                break
+                return "ORGANIZER"
             
             return "QUIT"
-        return answer
+        
 
 
 #----------------------------------- SCHEDULE GENERATION MENU (ORGANIZER)) -----------------------------------------
@@ -1166,3 +1161,98 @@ q. Quit
         if choice == "h":
             return "HOME"
         return "QUIT"
+    
+
+#----------------------------------- UPDATE TOURNAMENT MENU (PUBLIC) -----------------------------------------
+    def show_update_results_menu(self, tournament: Tournament):
+        """Shows menu to update tournament information for organizer"""
+
+        while True:
+            
+            updatable_matches: list[Match] = self.__logic_api.geteligibleMatches(tournament)
+            
+            # Gets updated list of matches if viewer was initialized
+            try:
+                viewer.items = updatable_matches
+            except:
+                viewer = SelectFromPage(updatable_matches)
+
+            print(f"""
+----------------------------------------------------
+ RU's e-Sport Extravaganza
+----------------------------------------------------
+Select a match to update results for {tournament.name}
+
+Unfinished matches:
+-----------------------------------------
+{viewer.currentPage()}
+-----------------------------------------
+
+ENTER. Next page
+1-5. Select match
+b. Back
+h. Organizer menu
+q. Quit 
+""")    
+            choice = self.__prompt_options(["1", "2", "3", "4", "5", "", "b", "h", "q"])
+            if choice == "":
+                viewer.next_page()
+                continue
+            if choice == "b":
+                return "BACK"
+            if choice == "h":
+                return "HOME"
+            if choice.isdigit():
+                num = int(choice)
+                match: Match = viewer.select_item_by_number(num)
+
+                print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------                      
+Update results for match: {match.matchID}
+
+Teams: {match.team_A} vs {match.team_B}
+Date: {match.matchDate}, {match.matchTime}
+
+Scores:""")
+                print("-" * 40)
+                # Enter team scores
+                while True:
+                    try:
+                        team_A_score = int(input(f"Enter score for {match.team_A}: ").strip())
+                        team_B_score = int(input(f"Enter score for {match.team_B}: ").strip())
+                        score = [team_A_score,team_B_score]
+                        winner = self.__logic_api.returnMatchWinner(match, score)
+                        if winner==False:
+                            print('Match cannot be a tie')
+                        else:
+                            break   
+                    except ValueError:
+                        print()
+                        print("-" * 35)
+                        print("ERROR: Please enter a valid integer\n")
+            
+                print(f"""
+-------------------------------------------
+Confirm update for match {match.matchID}?
+
+Winner: {winner}
+
+
+1. Confirm
+c. Cancel
+
+h. Organizer menu
+q. Quit
+""")
+                choice = self.__prompt_options(["1", "b", "h", "q"])
+                if choice == "1":
+                    self.__logic_api.confirmMatchWinner(tournament, match, score)
+                    #tournament = self.__logic_api.reloadTournament(tournament)
+                if choice == "c":
+                    continue
+                if choice == "h":
+                    return "HOME"
+            
+        

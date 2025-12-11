@@ -42,6 +42,8 @@ class MatchLogic:
     def returnMatchWinnerconfirmation(self, match: Match, scores: list):
         """Returns winner from list, list is team_A score for index 0 and team_B score for index 1 [0,1].
         Does not save to file or update any data."""
+        if scores[0]==scores[1]:
+            return False
         if scores[0]>scores[1]:
             return match.team_A
         else:

@@ -1,5 +1,5 @@
 ﻿teamID,teamName,roster,wins,losses,captainHandle
-A1,FURIA,"FalleN,yuurih,YEKINDAR,KSCERATO,moloday,Testplayer",1,0,FalleN
+A1,FURIA,"FalleN,yuurih,YEKINDAR,KSCERATO,moloday,Testplayer",2,0,FalleN
 A2,Vitality,"apEX,ropz,zywOo,flameZ,mezii",0,1,apEX
 A3,Falcons,"NiKo,TeSeS,m0NESY,kyxsan,kyousuke",0,0,NiKo
 A4,MOUZ,"Brollan,torzsi,Spinx,jimpphat,xertioN",0,0,Brollan
@@ -15,7 +15,7 @@ B4,3DMAX,"bodyy,Maka,Lucky,Ex3rcice,Graviti",0,0,bodyy
 B5,Legacy,"dumau,latto,n1ssim,lux,saadzin",0,0,dumau
 B6,Liquid,"NAF,EliGE,NertZ,siuhy,ultimate",0,0,NAF
 B7,B8,"headtr1ck,alex666,npl,kensizor,esenthial",0,0,headtr1ck
-B8,GamerLegion,"REZ,ztr,Tauson,PR,hypex",0,0,REZ
+B8,GamerLegion,"REZ,ztr,Tauson,PR,hypex",0,1,REZ
 B9,HEROIC,"xfl0ud,nilo,Chr1zN,yxngsxr,Alkaren",0,0,xfl0ud
 C1,Virtus.rpo,"FL1T,Perfecto,fame,b1st,tO0RO",0,0,FL1T
 C2,SAW,"MUTiRiS,story,Ag1l,aragornN,krazy",0,0,MUTiRiS
