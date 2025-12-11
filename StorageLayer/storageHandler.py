@@ -71,6 +71,5 @@ class StorageHandler:
     def cleanBackups(self):
         path = 'StorageLayer/Data/Backup'
         for entry in os.scandir(path):
-            print(entry.path)
             os.remove(entry.path)
             

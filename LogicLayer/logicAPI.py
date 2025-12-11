@@ -176,9 +176,9 @@ class LogicAPI:
         return
 
 
-    def returnMatchWinner(self, match, scores):
+    def returnMatchWinner(self, match, team_A_score, Team_B_score):
         """Returns a winner of a match based on the score"""
-        return self.__matchlogic.returnMatchWinnerconfirmation(match, scores)
+        return self.__matchlogic.returnMatchWinner(match, team_A_score, Team_B_score)
     
     def confirmMatchWinner(self, tournament: Tournament, match: Match, scores)-> tuple[str,str]:
         """Input scores is a list [1,2] score 1(index 0) is team_A score and score 2(index 1) is team_B score

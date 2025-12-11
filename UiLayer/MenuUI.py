@@ -1256,7 +1256,7 @@ q. Quit
         return "QUIT"
     
 
-#----------------------------------- UPDATE TOURNAMENT MENU (ORGANIZER) -----------------------------------------
+#----------------------------------- UPDATE RESULTS MENU (ORGANIZER) -----------------------------------------
     def show_update_results_menu(self, tournament: Tournament):
         """Shows menu to update tournament information for organizer"""
 
@@ -1299,14 +1299,51 @@ q. Quit
                 num = int(choice)
                 match: Match = viewer.select_item_by_number(num)
 
-                team_A_score = input(f"Enter score for {match.team_A}: ").strip()
-                team_B_score = input(f"Enter score for {match.team_B}: ").strip()
+                print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------                      
+Update results for match: {match.matchID}
 
-                #Validates match results prints prompt to confirm, and returns the score
-                score = self.confirm_match_results_input(match, team_A_score, team_B_score)
+Teams: {match.team_A} vs {match.team_B}
+Date: {match.matchDate}, {match.matchTime}
 
+Scores:""")
+            print("-" * 40)
+
+            # Validate team score inputs
+            while True:
+                try:
+                    team_A_score = int(input(f"Enter score for {match.team_A}: ").strip())
+                    team_B_score = int(input(f"Enter score for {match.team_B}: ").strip())
+                    
+                    winner = self.__logic_api.returnMatchWinner(match, team_A_score, team_B_score)
+                    
+                    if not winner:
+                        print('\nERROR: Match cannot be a tie\n')
+                        continue
+                    break   
+                except ValueError:
+                    print()
+                    print("-" * 35)
+                    print("ERROR: Please enter a valid integer\n")
+
+                    print(f"""
+-------------------------------------------
+Confirm update for match {match.matchID}?
+
+Winner: {winner}
+
+
+1. Confirm
+c. Cancel
+
+h. Organizer menu
+q. Quit
+""")
                 choice = self.__prompt_options(["1", "b", "h", "q"])
                 if choice == "1":
+                    score = [team_A_score, team_B_score]
                     self.__logic_api.confirmMatchWinner(tournament, match, score)
                     tournament = self.__logic_api.reloadTournament(tournament)
                 if choice == "c":
