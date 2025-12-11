@@ -324,6 +324,7 @@ class UIMain:
 #============================= VIEW TOURNAMENT RESULTS MENU LOOP =======================
             elif self.current_screen == "VIEW TOURNAMENT RESULTS MENU":
                 options = self.__menu_ui.show_view_tournament_results_menu(self.selected_tournament)
+
                 if options == "BACK":
                     self.current_screen = "TOURNAMENT INFO MENU"
                 elif options == "HOME":
