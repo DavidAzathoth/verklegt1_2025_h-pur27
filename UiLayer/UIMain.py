@@ -66,9 +66,9 @@ class UIMain:
 
 #============================= LIST OF TOURNAMENTS MENU LOOP =======================
             elif self.current_screen == "LIST OF TOURNAMENTS":
-                options = self.__menu_ui.show_view_tournaments_menu()
+                options = self.__menu_ui.show_view_tournaments_menu(self.selection_mode)
                 
-                if isinstance(options, tuple) and options[0] == "TOURNAMENT INFO":
+                if isinstance(options, tuple) and options[0] == "TOURNAMENT":
                     self.selected_tournament = options[1]
                     self.__logic_api.populateTournament(self.selected_tournament)
                     
@@ -317,7 +317,6 @@ class UIMain:
                 elif options == "HOME":
                     self.current_screen = "ORGANIZER MENU"
                     self.selection_mode = None
-                    
                 elif options == "QUIT":
                     break
 
