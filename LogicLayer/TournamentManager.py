@@ -54,15 +54,18 @@ class Tournamentmanager:
     
     def unpopulateTournament(self, tournament: Tournament):
         if type(tournament.teams) == list:
-            if len(tournament.teams) > 0:
-                teamids = [x.teamID for x in tournament.teams]
-                tournament.teams = teamids
+            if '' not in tournament.teams:
+                if len(tournament.teams) > 0:
+                    teamids = [x.teamID for x in tournament.teams]
+                    tournament.teams = teamids
+
         if type(tournament.playingteams) == list:
-            if len(tournament.playingteams) > 0:
-                playingteamids = [x.teamID for x in tournament.playingteams]
-                tournament.playingteams = playingteamids
+            if '' not in tournament.playingteams:
+                if len(tournament.playingteams) > 0:
+                    playingteamids = [x.teamID for x in tournament.playingteams]
+                    tournament.playingteams = playingteamids
         return tournament
-    
+            
     
         
     def saveTournament(self,tournament: Tournament):
@@ -90,6 +93,8 @@ class Tournamentmanager:
         if operation == 'addteam':
             if self.checkDuplTeams(tournament, input) == False:
                 return False
+            if self.validateTournamentBracket(tournament) == True:
+                return False
             tournament.teams.append(input)
         if operation == 'updateall':
             if type(tournament.bracket) == Bracket:
@@ -102,6 +107,7 @@ class Tournamentmanager:
         tournaments=[t.createCSVDict() for t in tournaments]
         self.__dataApi.updateTournaments(tournaments)
         self.populateTournament(tournament)
+        return True
 
     def addTeamtoTournament(self, tournament: Tournament, team: Team):
         if self.checkDuplTeams(tournament, team):
@@ -219,6 +225,13 @@ class Tournamentmanager:
             roundnames.append(roundlist.pop(0))
         roundnames+=finallist
         return roundnames
+    def validateTournamentBracket(self, tournament: Tournament):
+        if type(tournament.bracket) is not Bracket:
+            return False
+        else:
+            return True
+        #if len(tournament.bracket) == 0 or tournament.bracket == '':
+        #    return False
 
         
 
