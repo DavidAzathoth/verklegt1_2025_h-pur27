@@ -51,8 +51,12 @@ class MatchLogic:
         raw_dict={f'{match.team_A}':f'{scores[0]}',f'{match.team_B}':f'{scores[1]}'}
         if scores[0]>scores[1]:
             match.matchWinner = match.team_A
+            matchloser = match.team_B
         else:
             match.matchWinner = match.team_B
+            matchloser = match.team_A
         match.Score=raw_dict
         match.matchPlayed=True
+        return matchloser, match.matchWinner
+        
         

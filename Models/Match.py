@@ -22,6 +22,6 @@ class Match:
             'server': self.server
             }
         return ret_dic
-    def __str__(self):
-        ret_str = f'- Match {self.matchID:<{4}}: {self.team_A:>{14}} vs {self.team_B:<{14}} Date: fucking never'
+    def printmatch(self, max_team):
+        ret_str = f"- Match {self.matchID:<4}: {self.team_A:<{max_team + 2}} vs  {self.team_B:<{max_team + 2}} Date: {self.matchDate},  {self.matchTime}"
         return ret_str

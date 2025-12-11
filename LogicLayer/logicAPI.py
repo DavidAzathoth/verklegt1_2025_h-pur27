@@ -36,8 +36,6 @@ class LogicAPI:
     def get_team_by_captain(self, captain_handle: str):
         return self.__Teamlogic.get_team_by_captain(captain_handle)
     
-    def temp(self):
-        return DataAPI.loadTeams()
     
     def gettournaments(self):
         return self.__Tournamentmanager.getTournaments()
@@ -50,10 +48,16 @@ class LogicAPI:
         """Populates tournament with all objects and returns it, must give tournament name and already loaded list of tournament objects"""
         self.__Tournamentmanager.populateTournament(tournament)
         
+    def unpopulateTournament(self, tournament: Tournament):
+        self.__Tournamentmanager.unpopulateTournament(tournament)
 
     def createtournament(self, input):
-        templist = ["HA", "HAringurinn", "20 12 2025", "24 12 2025", "blabla@gmail.com", "1234567"]
-        #TODO check tournament for duplicates
+        """Attempts to create a tournament, returns False if a tournamentn with the same name inputted already exists"""
+        name = input[1]
+        existing_tournaments = self.__Tournamentmanager.getTournaments()
+        for tournament in existing_tournaments:
+            if tournament.name == name:
+                return False
         return self.__Tournamentmanager.createTournament(input)
     
     def saveTournament(self, tournament: Tournament):
@@ -149,20 +153,36 @@ class LogicAPI:
     def saveTeam(self, team: Team):
         self.__Teamlogic.saveTeam(team)
     
-    def updateBracket(self, bracket):
-        return self.__bracketgenerator.updatebracket(bracket)
+    def updateBracket(self, tournament):
+        self.__bracketgenerator.updatebracket(tournament)
+        self.__Tournamentmanager.updateTournament(tournament,None ,'updateall')
+    
+    def updateOrMatches(self, tournament: Tournament, matchwinner: str):
+        self.__bracketgenerator.updateOrMatches(tournament, matchwinner)
+        return
 
 
     def returnMatchWinner(self, match, scores):
         return self.__matchlogic.returnMatchWinnerconfirmation(match, scores)
     
-    def confirmMatchWinner(self, match: Match, scores):
-        """Input scores is a list [1,2] score 1(index 0) is team_A score and score 2(index 1) is team_B score"""
-        self.__matchlogic.confirmMatchWinner(match, scores)
+    def confirmMatchWinner(self, match: Match, scores)-> tuple[str,str]:
+        """Input scores is a list [1,2] score 1(index 0) is team_A score and score 2(index 1) is team_B score
+        To update the bracket correctly use these commands in this order \n
+        matchloser, matchwinner = llapi.confirmMatchWinner(match, score) \n
+        llapi.removeTeamfromTournament(tournament, matchloser) \n
+        llapi.updateOrMatches(tournament,matchwinner) \n
+        llapi.updateBracket(tournament)
+        """
+        matchloser, matchwinner = self.__matchlogic.confirmMatchWinner(match, scores)
+        return matchloser, matchwinner
         
     def populateBracket(self, bracket):
         self.__Tournamentmanager.populateBracket(bracket)
 
+    def removeTeamfromTournament(self, tournament: Tournament, teamname: str):
+        """Removes team from tournament, input teamname. Meant to be used after updating matches with confirmMatchWinner in logic api"""
+        self.__Tournamentmanager.removeTeamfromTournament(tournament, teamname)
+        return
     def getNamedRounds(self, bracket):
         return self.__bracketlogic.getnamedrounds(bracket)
     

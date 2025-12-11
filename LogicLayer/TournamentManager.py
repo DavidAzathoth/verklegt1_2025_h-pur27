@@ -33,17 +33,34 @@ class Tournamentmanager:
                 return tournament
             
     def populateTournament(self, tournament: Tournament):
+        if type(tournament.teams) == list:
+            if len(tournament.teams) > 0:
+                if type(tournament.teams[0]) == Team:
+                    return False
         teams = self.__teamlogic.getTeams()
         teamobjects=list(map(lambda team: self.__teamlogic.get_team_by_teamID(team, teams), (tournament.teams)))
         bracket = self.getBracketByTournament(tournament)
         tournament.bracket = bracket
         tournament.teams = teamobjects
-
+        playingteams=list(map(lambda playingteam: self.__teamlogic.get_team_by_teamID(playingteam, teamobjects), (tournament.playingteams)))
+        tournament.playingteams = playingteams
+        if None in tournament.teams:
+            tournament.teams.remove(None)
+        if None in tournament.playingteams:
+            tournament.playingteams.remove(None)
+        if tournament.bracket == None:
+            tournament.bracket=''
         return tournament
     
     def unpopulateTournament(self, tournament: Tournament):
-        teamids = [x.teamID for x in tournament.teams]
-        tournament.teams=teamids
+        if type(tournament.teams) == list:
+            if len(tournament.teams) > 0:
+                teamids = [x.teamID for x in tournament.teams]
+                tournament.teams = teamids
+        if type(tournament.playingteams) == list:
+            if len(tournament.playingteams) > 0:
+                playingteamids = [x.teamID for x in tournament.playingteams]
+                tournament.playingteams = playingteamids
         return tournament
     
     
@@ -75,7 +92,8 @@ class Tournamentmanager:
                 return False
             tournament.teams.append(input)
         if operation == 'updateall':
-            self.updateBracket(tournament.bracket)
+            if type(tournament.bracket) == Bracket:
+                self.updateBracket(tournament.bracket)
             for team in tournament.teams:
                 self.__teamlogic.updateTeam(None,None,team)
 
@@ -88,6 +106,12 @@ class Tournamentmanager:
     def addTeamtoTournament(self, tournament: Tournament, team: Team):
         if self.checkDuplTeams(tournament, team):
             tournament.teams.append(team)
+
+    def removeTeamfromTournament(self, tournament: Tournament, teamname: str):
+        """Removes team from tournament, input teamname. Meant to be used after updating matches with confirmMatchWinner in logic api"""
+        for team in tournament.playingteams:
+            if team.teamName==teamname:
+                tournament.playingteams.remove(team)
 
     def checkDuplTeams(self, tournament: Tournament, team: Team):
         reg_team : Team
@@ -126,6 +150,7 @@ class Tournamentmanager:
         return bracket
     
 
+
     def availableteams(self, tournament : Tournament) -> list[Team]:
         all_teams: list[Team] = self.__teamlogic.getTeams()
         tournament_teams: list[Team] = tournament.teams
@@ -152,6 +177,7 @@ class Tournamentmanager:
     
     def updateBracket(self, bracket: Bracket):
         for round in bracket.rounds.keys():
+            match: Match
             for match in bracket.rounds.get(round):
                 self.__matchlogic.updateMatch(match)
     
