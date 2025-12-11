@@ -2,6 +2,7 @@ from StorageLayer.storageApi import DataAPI
 from LogicLayer.logicHandler import logicHandler
 from Models.Player import Player
 from LogicLayer.menuLogic import MenuLogic
+from datetime import datetime, date
 
 class Playerlogic:
     def __init__(self, dataApi: DataAPI):
@@ -54,3 +55,18 @@ class Playerlogic:
                     self.__dataApi.updatePlayers(data)
                     return True
         return False    
+    
+    def check_player_age(self, dob):
+        
+        minimum_age = 18
+        
+        dob = datetime.strptime(dob, "%Y-%m-%d").date()
+                
+        today = date.today()
+        age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+
+        if age < minimum_age:
+            ret_string = f"ERROR: You must be at least {minimum_age} years old. please enter a valid age"
+            return False, ret_string
+             
+        return True, dob

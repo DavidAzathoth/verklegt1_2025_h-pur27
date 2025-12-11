@@ -229,6 +229,16 @@ class LogicAPI:
     def returnRoundNames(self, tournament):
         """Returns a list of round names tailored for given tournament."""
         return self.__Tournamentmanager.returnRoundNames(tournament)
+    
+    def set_start_end_date(self, startdate, enddate):
+        """Validates start and enddate for tournament when creating tournament"""
+        return self.__Tournamentmanager.validate_start_end_date(startdate, enddate)
+    
+    def check_player_age(self, dob):
+        """Validates player age when creating player"""
+        return self.__Playerlogic.check_player_age(dob)
+    
     def cleanBackups(self):
         self.__dataAPI.cleanBackups()
+
 ###############testing area#############
