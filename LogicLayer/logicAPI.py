@@ -21,6 +21,7 @@ class LogicAPI:
         self.__bracketgenerator = BracketGenerator()
         self.__matchlogic = MatchLogic(__dataAPI)
         self.__bracketlogic = BracketLogic()
+        self.__dataAPI = DataAPI()
         return
 
     def createteam(self, input: list):
@@ -87,10 +88,6 @@ class LogicAPI:
         """Adds a new captain to the system"""
         return self.__Teamlogic.registerCaptain(captainHandle)
     
-    #def getTournamentbyName(self, name: str):
-    #    tournamentlist = self.__Tournamentmanager.getTournaments()
-    #    return self.__Tournamentmanager.getTournamentbyName(name, tournamentlist)
-
     def searchforteam(self, input):
         """Return a team by name"""
         teams=self.__Teamlogic.getTeams()
@@ -220,4 +217,18 @@ class LogicAPI:
     def getTeambyName(self, teamname, tournament: Tournament):
         """Return team matching given teamname"""
         return self.__Teamlogic.get_team_by_teamname(teamname, tournament)
+    
+    def geteligibleMatches(self, tournament: Tournament):
+        """Returns matches that can be updated"""
+        return self.__Tournamentmanager.geteligibleMatches(tournament)
+    
+    def getcompleteMatches(self, tournament: Tournament):
+        """Returns all matches that have been played in the tournament"""
+        return self.__Tournamentmanager.getcompleteMatches(tournament)
+
+    def returnRoundNames(self, tournament):
+        """Returns a list of round names tailored for given tournament."""
+        return self.__Tournamentmanager.returnRoundNames(tournament)
+    def cleanBackups(self):
+        self.__dataAPI.cleanBackups()
 ###############testing area#############

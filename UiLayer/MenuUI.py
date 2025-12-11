@@ -101,7 +101,8 @@ class MenuUI:
             time.sleep(delay)
         print()
 
-#----------------------------------- print schedule table --------------------------------------------
+
+#----------------------------------- Print schedule table --------------------------------------------
     def print_schedule_table(self, tournament: Tournament):
         bracket: Bracket = tournament.bracket
         
@@ -110,6 +111,7 @@ class MenuUI:
         # Find the longest team name for spacing, and maximum line length of a match for dot lines
         for i, matches in bracket.rounds.items(): 
             for match in matches:
+                match: Match
 
                 current_team = max(len(match.team_A), len(match.team_B))
                 current_string = len(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")
@@ -131,6 +133,98 @@ class MenuUI:
                 print(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")    
             print()
             print("-" * max_string)
+
+
+#----------------------------------- Print results table --------------------------------------------
+    def print_results_table(self, tournament: Tournament):
+        bracket: Bracket = tournament.bracket
+        
+        max_team = 0
+        max_string = 0
+
+        # Find the longest team name for spacing, and maximum line length of a match for dot lines
+        for i, matches in bracket.rounds.items(): 
+            for match in matches:
+                match: Match
+            
+                current_team = max(len(match.team_A), len(match.team_B))
+                current_string = len(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} (winner: {match.matchWinner})")
+
+                if current_team > max_team:
+                    max_team = current_team
+
+                if current_string > max_string:
+                    max_string = current_string
+
+        rounds = bracket.rounds.items()
+        total_rounds = len(rounds)
+
+        names = {total_rounds - 3: "Quarterfinals", total_rounds -2: "Semifinals", total_rounds -1: "Finals"}
+        
+        for index, (round_number, matches) in enumerate(rounds):
+            
+            if index in names:
+                round_name = names[index]
+            else:
+                round_name = f"Round {round_number}"
+
+            print(f"{round_name}: ")
+            print("-" * max_string)
+            print()
+
+            for match in matches:
+                print(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} (winner: {match.matchWinner})")    
+            print()
+            print("-" * max_string)
+            print()
+
+
+#----------------------------------- Confirm match results from input --------------------------------------------
+    def confirm_match_results_input(self, match: Match, score_A, score_B):
+        print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------                      
+Update results for match: {match.matchID}
+
+Teams: {match.team_A} vs {match.team_B}
+Date: {match.matchDate}, {match.matchTime}
+
+Scores:""")
+        print("-" * 40)
+
+        # Validate team score inputs
+        while True:
+            try:
+                team_A_score = int(score_A)
+                team_B_score = int(score_B)
+                score = [team_A_score,team_B_score]
+                winner = self.__logic_api.returnMatchWinner(match, score)
+                if winner==False:
+                    print('\nERROR: Match cannot be a tie\n')
+                else:
+                    break   
+            except ValueError:
+                print()
+                print("-" * 35)
+                print("ERROR: Please enter a valid integer\n")
+
+        print(f"""
+-------------------------------------------
+Confirm update for match {match.matchID}?
+
+Winner: {winner}
+
+
+1. Confirm
+c. Cancel
+
+h. Organizer menu
+q. Quit
+""")
+        return score
+    
+
 
 
 #----------------------------------- MAIN MENU -----------------------------------------
@@ -702,7 +796,7 @@ q. Quit
             return "QUIT"
 
 
-#----------------------------------- VIEW ALL TOURNAMENTS MENU (PUBLIC) -----------------------------------------    
+#----------------------------------- VIEW ALL TOURNAMENTS MENU -----------------------------------------    
     def show_view_tournaments_menu(self):
         """Prints list of tournaments
         returns: ("TOURNAMENT INFO",  tournament: object), "BACK", "QUIT"  """
@@ -887,10 +981,6 @@ q. Quit
 #----------------------------------- ADD TEAMS TO TOURNAMENT MENU (ORGANIZER)) -----------------------------------------
     def show_add_teams_to_tournament_menu(self, tournament: Tournament):
         """displays menu to add teams into specified tournament"""
-        #self.__logic_api.updateTournament(tournament)
-        #tournament = self.__logic_api.getTournamentbyName(tournament.name)
-        self.__logic_api.populateTournament(tournament)
-
 
         #print 5 items per page loop
         while True:
@@ -927,7 +1017,7 @@ Available teams:
 ENTER. Next page
 1-5. Add team
 b. Back
-h. Home (Organizer)
+h. Organizer menu
 q. Quit 
 """)
 
@@ -952,12 +1042,10 @@ q. Quit
                 return "BACK"
             
             if choice == "h":
-                answer = "HOME"
-                break
+                return "ORGANIZER"
             
             return "QUIT"
-        return answer
-
+        
 
 #----------------------------------- SCHEDULE GENERATION MENU (ORGANIZER)) -----------------------------------------
     def show_generate_schedule_menu(self, tournament: Tournament):
@@ -1165,4 +1253,92 @@ q. Quit
             return "BACK"
         if choice == "h":
             return "HOME"
+        return "QUIT"
+    
+
+#----------------------------------- UPDATE TOURNAMENT MENU (ORGANIZER) -----------------------------------------
+    def show_update_results_menu(self, tournament: Tournament):
+        """Shows menu to update tournament information for organizer"""
+
+        while True:
+            
+            updatable_matches: list[Match] = self.__logic_api.geteligibleMatches(tournament)
+            
+            # Gets updated list of matches if viewer was initialized
+            try:
+                viewer.items = updatable_matches
+            except:
+                viewer = SelectFromPage(updatable_matches)
+
+            print(f"""
+----------------------------------------------------
+ RU's e-Sport Extravaganza
+----------------------------------------------------
+Select a match to update results for {tournament.name}
+
+Unfinished matches:
+-----------------------------------------
+{viewer.currentPage()}
+-----------------------------------------
+
+ENTER. Next page
+1-5. Select match
+b. Back
+h. Organizer menu
+q. Quit 
+""")    
+            choice = self.__prompt_options(["1", "2", "3", "4", "5", "", "b", "h", "q"])
+            if choice == "":
+                viewer.next_page()
+                continue
+            if choice == "b":
+                return "BACK"
+            if choice == "h":
+                return "HOME"
+            if choice.isdigit():
+                num = int(choice)
+                match: Match = viewer.select_item_by_number(num)
+
+                team_A_score = input(f"Enter score for {match.team_A}: ").strip()
+                team_B_score = input(f"Enter score for {match.team_B}: ").strip()
+
+                #Validates match results prints prompt to confirm, and returns the score
+                score = self.confirm_match_results_input(match, team_A_score, team_B_score)
+
+                choice = self.__prompt_options(["1", "b", "h", "q"])
+                if choice == "1":
+                    self.__logic_api.confirmMatchWinner(tournament, match, score)
+                    tournament = self.__logic_api.reloadTournament(tournament)
+                if choice == "c":
+                    continue
+                if choice == "h":
+                    return "HOME"
+            continue
+
+
+#----------------------------------- VIEW TOURNAMENT RESULTS MENU (PUBLIC) -----------------------------------------
+    def show_view_tournament_results_menu(self,tournament: Tournament):
+        """Displays the tournament standings for selected tournament"""
+
+        
+        print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Full standings - {tournament.name}
+""")
+        self.print_results_table(tournament)
+
+        print("""
+b. Back
+h. Home
+q. Quit
+""")    
+        choice = self.__prompt_options(["b", "h", "q"])
+        if choice == "b":
+            return "BACK"
+        
+        if choice == "h":
+            return "HOME"
+        
         return "QUIT"
