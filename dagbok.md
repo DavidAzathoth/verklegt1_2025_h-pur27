@@ -132,11 +132,22 @@ Byrjuðum að forrita og skipuleggja hver gerir hvað
   2. Vinna mikið í bracket (Davíd)
   3. Breyttum CSV í UTF8 (Davíd)
   4. Vinna í UI (Baldvin)
-  - Á morgun
+- Á morgun
   1. Halda áfram að gera bracket
   2. Halda áfram með UI kröfur
   3. Finna einhverjar A kröfur sem við eigum eftir
 ### Logic fyrir bracket er að gefa okkur hausverk
+## 10/12/25
+Unnum mikið í bracket logic og UI.
+- í dag
+  1. reload tournament, bæta við "finals" og "semifinals", debugga (Adam)
+  2. Vinna í logic og klára bracket! (Davíd)
+  3. Halda áfram að gera UI (Baldvin)
+- Á morgun
+  1. Debugga
+  2. Reyna klára logic layerinn
+  3. Halda áfram með UI
+### Lokasprettur gengur vel og erum alveg að verða búnir með allt!
 
 
 

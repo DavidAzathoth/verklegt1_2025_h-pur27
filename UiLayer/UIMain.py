@@ -1,10 +1,11 @@
 from UiLayer.MenuUI import MenuUI
 from LogicLayer.logicAPI import LogicAPI
+from Models.Tournament import Tournament
 
 class UIMain:
     def __init__(self) -> None:
-        logic_api = LogicAPI()
-        self.__menu_ui =  MenuUI(logic_api)
+        self.__logic_api = LogicAPI()
+        self.__menu_ui =  MenuUI(self.__logic_api)
         self.current_screen = "MAIN MENU"
         self.selection_mode = None
         
@@ -49,8 +50,8 @@ class UIMain:
                     self.current_screen = "LIST OF TOURNAMENTS"
 
                 elif isinstance(options, tuple) and options[0] == "GET TOURNAMENT":
-                    selected_tournament = options[1]
-                    self.selected_tournament = selected_tournament
+                    self.selected_tournament: Tournament = options[1]
+                    self.__logic_api.populateTournament(self.selected_tournament)
                     self.current_screen = "TOURNAMENT INFO MENU"
                     self.selection_mode = "SEARCH TOURNAMENT"
 
@@ -68,8 +69,9 @@ class UIMain:
                 options = self.__menu_ui.show_view_tournaments_menu()
                 
                 if isinstance(options, tuple) and options[0] == "TOURNAMENT INFO":
-                    selected_tournament = options[1]
-                    self.selected_tournament = selected_tournament
+                    self.selected_tournament = options[1]
+                    self.__logic_api.populateTournament(self.selected_tournament)
+                    
 
                     if self.selection_mode == "VIEW TOURNAMENTS":
                         self.current_screen = "TOURNAMENT INFO MENU"
@@ -230,6 +232,7 @@ class UIMain:
                 options: str = self.__menu_ui.show_tournament_info(self.selected_tournament)
 
                 if options == "VIEW SCHEDULE":
+                    
                     self.current_screen = "TOURNAMENT SCHEDULE MENU"
 
                 elif options == "VIEW RESULTS":
@@ -273,8 +276,8 @@ class UIMain:
 
 #============================= SCHEDULE GENERATION MENU LOOP =======================
             elif self.current_screen == "SCHEDULE GENERATION MENU":
-                options = self.__menu_ui.show_generate_schedule_menu(selected_tournament)
-                if options == "GO TO ADD TEAMS TO TOURNAMENT":
+                options = self.__menu_ui.show_generate_schedule_menu(self.selected_tournament)
+                if options == "ADD TEAMS TO TOURNAMENT":
                     self.current_screen = "ADD TEAMS TO TOURNAMENT MENU"
                 elif options == "CANCEL":
                     self.current_screen = "ORGANIZER MENU"
@@ -299,10 +302,10 @@ class UIMain:
                 options = self.__menu_ui.show_tournament_schedule(self.selected_tournament)
                 
                 if options == "BACK":
-                    self.current_screen == "TOURNAMENT INFO MENU"
+                    self.current_screen = "TOURNAMENT INFO MENU"
                 
                 elif options == "HOME":
-                    self.current_screen == "MAIN MENU"
+                    self.current_screen = "MAIN MENU"
                     self.selection_mode = None
                 
                 elif options == "QUIT":

@@ -7,6 +7,7 @@ from Models.Team import Team
 from Models.Player import Player
 from Models.Tournament import Tournament
 from Models.Bracket import Bracket
+from Models.Match import Match
 import time
 import sys
 
@@ -100,6 +101,36 @@ class MenuUI:
             time.sleep(delay)
         print()
 
+#----------------------------------- print schedule table --------------------------------------------
+    def print_schedule_table(self, tournament: Tournament):
+        bracket: Bracket = tournament.bracket
+        
+        max_team = 0
+        max_string = 0
+        # Find the longest team name for spacing, and maximum line length of a match for dot lines
+        for i, matches in bracket.rounds.items(): 
+            for match in matches:
+
+                current_team = max(len(match.team_A), len(match.team_B))
+                current_string = len(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")
+
+                if current_team > max_team:
+                    max_team = current_team
+
+                if current_string > max_string:
+                    max_string = current_string
+
+        # Print schedule table loop
+        for i, matches in bracket.rounds.items():
+            
+            print(f"Round {i}:")
+            print("-" * max_string)
+            print()
+                
+            for match in matches:
+                print(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")    
+            print()
+            print("-" * max_string)
 
 
 #----------------------------------- MAIN MENU -----------------------------------------
@@ -186,7 +217,7 @@ q. Quit
             return "PRINT LIST OF TOURNAMENTS"
         if choice == "2":
             tournament_input = input("Please enter the tournament name: ")
-            tournament = self.__logic_api.gettournamentbyname(tournament_input)
+            tournament = self.__logic_api.getTournamentbyName(tournament_input)
             while tournament == None:
                 print("-" * 33)
                 print("\nERROR: tournament name invalid.")
@@ -197,7 +228,7 @@ q. Quit
                 choice = self.__prompt_options(["", "c"])
                 if choice == "":
                     tournament_input = input("Please enter the tournament name: ")
-                    tournament = self.__logic_api.gettournamentbyname(tournament_input)
+                    tournament = self.__logic_api.getTournamentbyName(tournament_input)
                 else: 
                     return "CANCEL"
                 
@@ -237,13 +268,15 @@ q. Quit
             team_input = input("Please enter the team name: ")
             team = self.__logic_api.searchforteam(team_input)
             while team == None:
-                print("\nERROR: team name invalid.")
-                print("\nContinue?")
-                print("\ny. Yes (continue)")
-                print("n. No (cancel)")
+                print()
+                print("-" * 28)
+                print("ERROR: team name invalid.")
+                print("\nTry again?")
+                print("\nENTER. Try again")
+                print("c. Cancel")
 
-                choice = self.__prompt_options(["y", "n"])
-                if choice == "y":
+                choice = self.__prompt_options(["", "c"])
+                if choice == "":
                     team_input = input("Please enter the team name: ")
                     team = self.__logic_api.searchforteam(team_input)
                 else: 
@@ -405,13 +438,13 @@ Please enter tournament details:
             print(check_contact_email[0])
             check_contact_email: tuple = self.__logic_api.emailVerification(input("ContactEmail: "))
         contactemail = check_contact_email[0]
-        print(("ContactEmail: "), contactemail)
+        print(("-Confirmed ContactEmail: "), contactemail)
         contactphone = int(input("ContactPhone: ").strip())
 
 #===========================================================
 
         # Asks to input informattion to create tournament
-        tournament = self.__logic_api.createtournament([venue, name, startdate.date(), enddate.date(), contactemail, contactphone ])
+        tournament: Tournament = self.__logic_api.createtournament([venue, name, startdate.date(), enddate.date(), contactemail, contactphone])
 
         #self.__logic_api.saveTournament(tournament) <--- saves tournament
         print("""
@@ -854,12 +887,14 @@ q. Quit
 #----------------------------------- ADD TEAMS TO TOURNAMENT MENU (ORGANIZER)) -----------------------------------------
     def show_add_teams_to_tournament_menu(self, tournament: Tournament):
         """displays menu to add teams into specified tournament"""
-
+        #self.__logic_api.updateTournament(tournament)
+        #tournament = self.__logic_api.getTournamentbyName(tournament.name)
         self.__logic_api.populateTournament(tournament)
 
 
         #print 5 items per page loop
         while True:
+            registered_teams: list[Team] = tournament.teams
 
             print(f"""
 ----------------------------------------
@@ -867,10 +902,9 @@ q. Quit
 ----------------------------------------
 Add teams to tournament: {tournament.name}
 
-Teams currently registered:
+Teams currently registered: {len(registered_teams)}
 """)
             
-            registered_teams: list[Team] = tournament.teams
             try:
                 for team in registered_teams:
                     print("-", team.teamName)
@@ -880,8 +914,10 @@ Teams currently registered:
             available_teams: list[Team] = self.__logic_api.availableteams(tournament)
 
             team_names = [t.teamName.strip() for t in available_teams]
-
-            viewer = SelectFromPage(team_names)
+            try:
+                viewer.items = team_names
+            except:
+                viewer = SelectFromPage(team_names)
 
             print(f"""
 Available teams:
@@ -957,7 +993,7 @@ Please add more teams to this tournament
             
             choice = self.__prompt_options(["1", "2"])
             if choice == "1":
-                return ("GO TO ADD TEAMS TO TOURNAMENT", tournament)
+                return "ADD TEAMS TO TOURNAMENT"
             return "CANCEL"
         
         else:
@@ -985,20 +1021,28 @@ This tournament has sufficient teams!
                 self.__logic_api.saveBracket(tournament.bracket)
 
                 bracket: Bracket = tournament.bracket
-
+                match: Match
                 self.__logic_api.populateBracket(bracket)
 
+                self.print_schedule_table(tournament)
+                lenlist = []
+                for round in tournament.bracket.rounds.keys():
+                    for match in tournament.bracket.rounds.get(round):
+                        lenlist.append(len(match.team_A))
+                        lenlist.append(len(match.team_B))
+                max_team = max(lenlist)
+                max_str = len(match.printmatch(max_team))
                 for i, round in bracket.rounds.items():
                     print(f"Round {i}:")
-                    print("-" * 70)
+                    print("-" * max_str)
                     print()
                     for match in round:
-                        print(match)
+                        print(match.printmatch(max_team))
                     print()
-                    print("-" * 70)
+                    print("-" * max_str)
                     
                 
-                
+                self.__logic_api.updateTournament(tournament)
                 return "QUIT"
 
 
@@ -1047,7 +1091,7 @@ q. Quit
                 print(f"""
 ------------------------------------------------
 Edit player information: {player.playerGamertag}
-------------------------------------------------
+-----------------------------------------------s-
 1. Edit Address
 2. Edit Phone
 3. Edit Email
@@ -1101,22 +1145,44 @@ c. Cancel
 ---------------------------
 
 Tournament schedule for: {tournament.name}
-{print("-" * 70)}
 """)
         
-        self.__logic_api.populateTournament(tournament)
+
+        self.print_schedule_table(tournament)
+        # bracket: Bracket = tournament.bracket
         
-        bracket: Bracket = tournament.bracket
+        # max_team = 0
+        # max_string = 0
+        # # Find the longest team name for spacing, and maximum line length of a match for dot lines
+        # for i, matches in bracket.rounds.items(): 
+        #     for match in matches:
 
-        for i, round in bracket.rounds.items():
-                    print(f"Round {i}:")
-                    print("-" * 70)
-                    print()
-                    for match in round:
-                        print(match)
-                    print()
-                    print("-" * 70)
+        #         current_team = max(len(match.team_A), len(match.team_B))
+        #         current_string = len(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")
 
+        #         if current_team > max_team:
+        #             max_team = current_team
+
+        #         if current_string > max_string:
+        #             max_string = current_string
+
+        # # Print schedule table loop
+        # for i, matches in bracket.rounds.items():
+            
+        #     print(f"Round {i}:")
+        #     print("-" * max_string)
+        #     print()
+                
+        #     for match in matches:
+        #         print(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")    
+        #     print()
+        #     print("-" * max_string)
+
+        print("""
+b. Back
+h. Home
+q. Quit
+""")
         choice = self.__prompt_options(["b", "h", "q"])
         
         if choice == "b":

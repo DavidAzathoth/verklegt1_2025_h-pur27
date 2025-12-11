@@ -36,8 +36,6 @@ class LogicAPI:
     def get_team_by_captain(self, captain_handle: str):
         return self.__Teamlogic.get_team_by_captain(captain_handle)
     
-    def temp(self):
-        return DataAPI.loadTeams()
     
     def gettournaments(self):
         return self.__Tournamentmanager.getTournaments()
@@ -50,10 +48,16 @@ class LogicAPI:
         """Populates tournament with all objects and returns it, must give tournament name and already loaded list of tournament objects"""
         self.__Tournamentmanager.populateTournament(tournament)
         
+    def unpopulateTournament(self, tournament: Tournament):
+        self.__Tournamentmanager.unpopulateTournament(tournament)
 
     def createtournament(self, input):
-        templist = ["HA", "HAringurinn", "20 12 2025", "24 12 2025", "blabla@gmail.com", "1234567"]
-        #TODO check tournament for duplicates
+        """Attempts to create a tournament, returns False if a tournamentn with the same name inputted already exists"""
+        name = input[1]
+        existing_tournaments = self.__Tournamentmanager.getTournaments()
+        for tournament in existing_tournaments:
+            if tournament.name == name:
+                return False
         return self.__Tournamentmanager.createTournament(input)
     
     def saveTournament(self, tournament: Tournament):
@@ -181,5 +185,7 @@ class LogicAPI:
         return
     def getNamedRounds(self, bracket):
         return self.__bracketlogic.getnamedrounds(bracket)
-
+    
+    def reloadTournament(self, tournament: Tournament):
+        return self.__Tournamentmanager.reloadTournament
 ###############testing area#############

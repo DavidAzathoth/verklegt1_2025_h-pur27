@@ -17,7 +17,6 @@ from LogicLayer.menuLogic import MenuLogic
 from datetime import datetime
 import time
 import sys
-
 """Main loop test"""
 run = UIMain()
 

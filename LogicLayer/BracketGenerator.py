@@ -32,8 +32,8 @@ class BracketGenerator:
             return False
         tournament.playingteams = tournament.teams[:]
         teams=tournament.playingteams
-        startdate = date(*(list(map(int,(reversed(tournament.startDate.split('/')))))))
-        enddate = date(*(list(map(int,(reversed(tournament.endDate.split('/')))))))
+        startdate = date(*(list(map(int,(tournament.startDate.split('-'))))))
+        enddate = date(*(list(map(int,(tournament.endDate.split('-'))))))
 
         #Calculate days that the tournament will be held
         #days=(enddate-startdate).days
@@ -167,7 +167,6 @@ class BracketGenerator:
 
         bracket=Bracket(tournament.name,roundsplayed)
         tournament.bracket=bracket
-        self.__
         return
 
     def generate_slots_full_range(self, start: date, end: date, servers: int,
