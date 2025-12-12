@@ -368,6 +368,10 @@ q. Quit
     def show_update_results_menu(self, tournament: Tournament):
         """Shows menu to update tournament information for organizer"""
 
+        if self.__logic_api.validateTournamentBracket(tournament) == False:
+            print('Tournament has no bracket!')
+            return "BACK"
+        
         while True:
             
             updatable_matches: list[Match] = self.__logic_api.geteligibleMatches(tournament)
