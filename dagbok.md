@@ -148,7 +148,7 @@ Unnum mikið í bracket logic og UI.
   2. Reyna klára logic layerinn
   3. Halda áfram með UI
 ### Lokasprettur gengur vel og erum alveg að verða búnir með allt!
-## 11/12/24
+## 11/12/25
 Klárðuðum forritið og löguðum UML
 - Í dag
   1. Klára UI (Baldvin)
@@ -169,6 +169,7 @@ Löguðum skýrsluna, gerðum video og löguðum smá forritið!
 - Á morgun
   1. Slaka á/vinna
 ### Erum mjög glaðir að vera búnir og erum sáttir með verkefnið :)
+
 
 
 
