@@ -329,14 +329,14 @@ q. Quit""")
 {captain_handle}'s Menu
 
 1. View my team/players
-2. Edit team information
+
 
 b. Back
 q. Quit
 """)
 #===================================================
         
-        choice = self.__prompt_options(["1", "2", "b", "q"])
+        choice = self.__prompt_options(["1", "b", "q"])
         if choice == "1":
             return ("VIEW MY TEAM/PLAYERS", team)
         if choice == "2":
@@ -1174,7 +1174,9 @@ c. Cancel
 
 Tournament schedule for: {tournament.name}
 """)
-        
+        if self.__logic_api.validateTournamentBracket(tournament) == False:
+            print('Tournament has no bracket!')
+            return "BACK"
         printer = PrintMatches(tournament)
         printer.print_schedule_table()
 
