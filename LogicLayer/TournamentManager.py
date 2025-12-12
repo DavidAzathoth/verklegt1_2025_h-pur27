@@ -33,6 +33,7 @@ class Tournamentmanager:
         for tournament in tournamentlist:
             if name.lower().strip() == tournament.name.lower().strip():
                 return tournament
+        return None
             
     def populateTournament(self, tournament: Tournament):
         if type(tournament.teams) == list:
