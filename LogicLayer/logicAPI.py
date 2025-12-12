@@ -9,7 +9,6 @@ from Models.Team import Team
 from Models.Player import Player
 from Models.Match import Match
 from LogicLayer.PlayerLogic import Playerlogic
-from LogicLayer.BracketLogic import BracketLogic
 
 class LogicAPI:
     def __init__(self):
