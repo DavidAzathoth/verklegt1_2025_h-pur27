@@ -3,7 +3,7 @@ from LogicLayer.logicHandler import logicHandler
 from Models.Player import Player
 from LogicLayer.menuLogic import MenuLogic
 from datetime import datetime, date
-
+from .menuLogic import InvalidEmailError
 
 class Playerlogic:
     def __init__(self, dataApi: DataAPI):
@@ -44,8 +44,8 @@ class Playerlogic:
                         p.phoneNumber = int(newValue)
                     elif attribute == "emailAddress":
                         email, valid = self.__menulogic.emailverification(newValue)
-                        if not valid:
-                            raise ValueError(email)
+                        if valid is InvalidEmailError:
+                            raise InvalidEmailError(email)
                         p.emailAddress = email
                     elif attribute == "address":
                         p.address = newValue

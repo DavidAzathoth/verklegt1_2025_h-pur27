@@ -9,6 +9,7 @@ from Models.Player import Player
 from Models.Tournament import Tournament
 from Models.Bracket import Bracket
 from Models.Match import Match
+from LogicLayer.menuLogic import InvalidEmailError
 import time
 import sys
 
@@ -359,7 +360,18 @@ Tournament creation menu
 Please enter tournament details:
 """)  
         venue: str = input("Venue: ").strip()
+
         name: str = input("Name: ").strip()
+        existing_tournament = self.__logic_api.getTournamentbyName(name)
+        
+        #Loops and prompts new name if name exists already
+        while isinstance(existing_tournament, Tournament):
+            print()
+            print("-" * 50)
+            print("ERROR: A tournament already exists with this name\n")
+            name: str = input("Name: ").strip()
+            existing_tournament = self.__logic_api.getTournamentbyName(name)            
+
         
         #start, enddate for tournament
         while True:
@@ -379,12 +391,19 @@ Please enter tournament details:
                 print("\nERROR: please enter valid numbers for year-month-day\n")
         
         #ContactEmail
-        check_contact_email: tuple = self.__logic_api.emailVerification(input("ContactEmail: "))
-        while check_contact_email[1] == False:
-            print(check_contact_email[0])
-            check_contact_email: tuple = self.__logic_api.emailVerification(input("ContactEmail: "))
-        contactemail = check_contact_email[0]
-        print(("-Confirmed ContactEmail: "), contactemail)
+        while True:
+            try:
+                contactemail, valid = self.__logic_api.emailVerification(input("ContactEmail: "))
+                if valid is InvalidEmailError:
+                    raise InvalidEmailError(contactemail)
+                print(("-Confirmed ContactEmail: "), contactemail)
+                break
+            
+            except InvalidEmailError as contactemail:
+                print()
+                print("-" * 60)
+                print(contactemail)
+                        
         
         #Contactphone
         while True:
@@ -392,7 +411,9 @@ Please enter tournament details:
                 contactphone = int(input("ContactPhone: ").strip())
                 break
             except ValueError:
-                        print("\nERROR: Please enter a valid phone number\n")
+                print()
+                print("-" * 40)
+                print("ERROR: Please enter a valid phone number\n")
 
 #===========================================================
 
@@ -542,18 +563,26 @@ Add player {player_count + 1}:
                     phone_num = int(input("Player phone number: ").strip())
                     break
                 except ValueError:
-                    print("\nERROR: Please enter a valid phone number\n")
+                    print()
+                    print("-" * 40)
+                    print("ERROR: Please enter a valid phone number\n")
 
             #TeamID        
             teamID = team.teamID
             
             #Confirm player email
-            check_player_email: tuple = self.__logic_api.emailVerification(input("Player Email: "))
-            while check_player_email[1] == False:
-                print(check_player_email[0])
-                check_player_email: tuple = self.__logic_api.emailVerification(input("Player Email: "))
-            playeremail = check_player_email[0]
-            print(("-Confirmed player email:"), playeremail)
+            while True:
+                try:
+                    playeremail, valid = self.__logic_api.emailVerification(input("PlayerEmail: "))
+                    if valid is InvalidEmailError:
+                        raise InvalidEmailError(playeremail)
+                    print(("-Confirmed PlayerEmail: "), playeremail)
+                    break
+                
+                except InvalidEmailError as playeremail:
+                    print()
+                    print("-" * 60)
+                    print(playeremail)
 
             link = input("Player link: ").strip()
 
@@ -1102,7 +1131,7 @@ c. Cancel
                             self.__logic_api.editplayer(player.playerGamertag, attribute, new_value)
                             break
                             
-                        except ValueError as email:
+                        except InvalidEmailError as email:
                             print()
                             print("-" * 60)
                             print(email)  
@@ -1111,9 +1140,6 @@ c. Cancel
                             print()
                             print("-" * 60)
                             print(f"ERROR: Please enter correct value for player {attribute}.\n")
-                            if attribute=='emailAddress':
-                                print()
-
                     
                     if new_value.lower() == "c":
                         continue

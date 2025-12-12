@@ -17,6 +17,7 @@ from LogicLayer.menuLogic import MenuLogic
 from datetime import datetime
 import time
 import sys
+
 llapi = LogicAPI()
 # tournament = llapi.getTournamentbyName('HAhringurinn')
 # llapi.populateTournament(tournament)
