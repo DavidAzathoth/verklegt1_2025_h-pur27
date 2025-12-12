@@ -208,8 +208,6 @@ class LogicAPI:
         """Removes team from tournament, input teamname. Meant to be used after updating matches with confirmMatchWinner in logic api"""
         self.__Tournamentmanager.removeTeamfromTournament(tournament, teamname)
         return
-    def getNamedRounds(self, bracket):
-        return self.__bracketlogic.getnamedrounds(bracket)
     
     def reloadTournament(self, tournament: Tournament):
         """Reload tournament by refreshing all data from storage"""
