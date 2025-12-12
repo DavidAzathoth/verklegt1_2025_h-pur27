@@ -1237,7 +1237,11 @@ q. Quit
                 return "QUIT"
             if choice.isdigit():
                 num = int(choice)
+
+                #returns the selected match
                 match: Match | None = viewer.select_item_by_number(num)
+                
+                #if can't find match
                 if match is None:
                     continue
 
