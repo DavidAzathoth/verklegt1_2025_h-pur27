@@ -1,4 +1,7 @@
 @echo off
+setlocal
+title RU's e-sport extravaganza
+mode con: cols=140 lines=52
 cd /d "%~dp0"
 
 where py >nul 2>nul
