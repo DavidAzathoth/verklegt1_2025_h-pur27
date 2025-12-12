@@ -35,13 +35,6 @@ class BracketGenerator:
         startdate = date(*(list(map(int,(tournament.startDate.split('-'))))))
         enddate = date(*(list(map(int,(tournament.endDate.split('-'))))))
 
-        #Calculate days that the tournament will be held
-        #days=(enddate-startdate).days
-
-        ##Stringify dates
-        #startdate=startdate.strftime("%d/%m/%Y")
-        #enddate=enddate.strftime("%d/%m/%Y")
-
 
         existingmatches=self.__dataapi.loadMatches()
         existingmatchids=[x.get('matchID') for x in existingmatches]
@@ -156,8 +149,7 @@ class BracketGenerator:
         generated = sum(len(v) for v in roundsplayed.values())
         remaining = total_games - generated
         self.schedule_spread_in_round_order(roundsplayed, slots)
-        #tbd_idxs = self.spread_indices(used, len(slots)-1,remaining)
-        #tbd_slots= [slots[i] for i in tbd_idxs]
+        
 
         
 
@@ -230,23 +222,7 @@ class BracketGenerator:
             m.matchDate = d.strftime("%d/%m/%Y")
             m.matchTime = t.strftime("%H:%M")
             m.server = s
-    
-    
 
-    #def updatebracket(self, bracket):
-        
-        #all_matches: list[Match] = []
-        #for round_key, match_list in bracket.rounds.items():
-        #    all_matches.extend(match_list)
-        #
-        #existing_rows = self.__dataapi.loadMatches()
-        #rows_by_id = {row["matchID"]: row for row in existing_rows}
-        #for m in all_matches:
-        #    rows_by_id[m.matchID] = m.createCSVDict()
-        #
-        #updated_rows = list(rows_by_id.values())
-        #self.__dataapi.updateMatches(updated_rows)
-        #return
     
     def updateOrMatches(self, tournament: Tournament, winningteam: str):
         bracket: Bracket = tournament.bracket
@@ -285,4 +261,3 @@ class BracketGenerator:
             i+=1
     def updatebracket(self, tournament: Tournament):
         self.addTeamsNextRound(tournament)
-        #self.updateOrMatches(tournament, matchwinner)

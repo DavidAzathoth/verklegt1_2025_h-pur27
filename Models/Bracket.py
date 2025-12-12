@@ -10,9 +10,3 @@ class Bracket:
         """Creates a dictionary to store in a csv file"""
         ret_dic={'tournamentname':self.tournamentname,'rounds':self.rounds}
         return ret_dic
-    def __str__(self):
-        ret_str = f"""
-
-
-"""
-

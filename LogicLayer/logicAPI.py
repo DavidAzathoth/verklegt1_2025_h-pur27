@@ -126,12 +126,6 @@ class LogicAPI:
         self.__Playerlogic.saveplayer(player)
     
 
-    def getPlayer_teamID(self):
-        """# Not implemented #"""
-        teams = self.getTeams()
-        players = self.getPlayers()
-
-
     def editplayer(self, gamertag: str, attribute: str, newValue: str):
         """Edits a player's information"""
         return self.__Playerlogic.editplayer(gamertag, attribute, newValue)
@@ -146,11 +140,6 @@ class LogicAPI:
         """Adds players to team. players is a list to generate the player and team is the team object"""
         return self.__Teamlogic.updateTeam(players, 'addplayers', team)
 
-    def validateTeam(self, team: Team):
-        """Returns False if team has reached maximum players (5)"""
-        if len(team.roster)==5:
-            return False
-        
 
     def updatescore(self, team: Team, option: str, amount: int = None):
         """Updates win or losses of team, options are updatewins and updatelosses
@@ -212,13 +201,8 @@ class LogicAPI:
     
 
     def confirmMatchWinner(self, tournament: Tournament, match: Match, scores)-> tuple[str,str]:
-        """Input scores is a list [1,2] score 1(index 0) is team_A score and score 2(index 1) is team_B score
-        To update the bracket correctly use these commands in this order \n
-        \n
-        1. matchloser, matchwinner = llapi.confirmMatchWinner(match, score) \n
-        2. llapi.removeTeamfromTournament(tournament, matchloser) \n
-        3. llapi.updateOrMatches(tournament,matchwinner) \n
-        4. llapi.updateBracket(tournament)
+        """Input scores is a list [1,2] score 1(index 0) is team_A score and score 2(index 1) is team_B score.
+        Updates score for the match inputted and saves the tournament and match data. 
         """
         matchloser, matchwinner = self.__matchlogic.confirmMatchWinner(match, scores)
         self.removeTeamfromTournament(tournament, matchloser)
@@ -260,11 +244,6 @@ class LogicAPI:
     def getcompleteMatches(self, tournament: Tournament):
         """Returns all matches that have been played in the tournament"""
         return self.__Tournamentmanager.getcompleteMatches(tournament)
-
-
-    def returnRoundNames(self, tournament):
-        """Returns a list of round names tailored for given tournament."""
-        return self.__Tournamentmanager.returnRoundNames(tournament)
     
 
     def set_start_end_date(self, startdate, enddate):
@@ -278,10 +257,12 @@ class LogicAPI:
     
 
     def cleanBackups(self):
+        """Clears the backup folder when program is exited safely."""
         self.__dataAPI.cleanBackups()
 
         
     def validateTournamentBracket(self, tournament: Tournament):
+        """Returns False if tournament has a bracket, otherwise True"""
         return self.__Tournamentmanager.validateTournamentBracket(tournament)
 
 ###############testing area#############

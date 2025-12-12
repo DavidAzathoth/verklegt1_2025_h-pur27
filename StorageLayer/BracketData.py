@@ -5,6 +5,8 @@ class BracketData:
         self.__storagehandler = storagehandler
 
     def loadBrackets(self):
+        """Loads brackets from file and returns a list of dictionaries"""
         return self.__storagehandler.retrieveFile(self.FILE)
     def saveBracket(self, bracket):
+        """Adds bracket to file"""
         self.__storagehandler.saveFile(self.FILE, bracket)
