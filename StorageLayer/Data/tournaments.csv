@@ -1,7 +1,4 @@
 ﻿venue,name,startDate,endDate,contactEmail,contactPhone,matchesList,matchHistory,teams,active,playingteams
 HA,HA cup final,2025-10-12,2025-10-25,john@gmail.com,9091234,,,"28,A1,A2,A3,A4,A5,A6,A7,A8,A9,B1,B2,B3,B4,B5,B6,B7,B8,B9,C1,C2,C3,C4",True,C1
-<<<<<<< HEAD
 HR,HRingurinn,2025-11-11,2025-11-12,contact@gmail.com,123134523,,,"A1,A2,A3,A4,A5,A6,A7,A8",True,
-=======
 HA,HA circuit,2025-10-13,2025-10-23,goblinslayer@gmail.com,6161666,,,"A1,A2,A3,A4",True,
->>>>>>> c63d2a7c90a039e4495994e872a97399890a92fb
