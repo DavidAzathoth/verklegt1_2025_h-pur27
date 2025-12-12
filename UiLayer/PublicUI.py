@@ -303,7 +303,7 @@ q. Quit
 
                     return("PLAYER INFO", player)
                 
-                elif choice == "b":
+                if choice == "b":
                     return "BACK"
                 return "QUIT"
 
