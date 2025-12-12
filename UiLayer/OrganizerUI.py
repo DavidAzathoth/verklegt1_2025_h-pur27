@@ -303,7 +303,7 @@ Please add more teams to this tournament
             choice = self.baseUI.prompt_options(["1", "2"])
             if choice == "1":
                 return "ADD TEAMS TO TOURNAMENT"
-            return "CANCEL"
+            return "ORGANIZER"
         
         else:
             #number of teams is enough
