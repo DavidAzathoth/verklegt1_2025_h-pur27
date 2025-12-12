@@ -20,7 +20,6 @@ t = tournaments[0]
 llapi.populateTournament(t)
 
 bracket = t.bracket
-names = llapi.getNamedRounds(bracket)
 print(names)
 
 
