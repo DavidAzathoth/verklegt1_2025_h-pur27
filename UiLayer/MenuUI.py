@@ -1003,7 +1003,10 @@ Please add more teams to this tournament
             choice = self.__prompt_options(["1", "2"])
             if choice == "1":
                 return "ADD TEAMS TO TOURNAMENT"
+            elif choice == "2":
+                return "ORGANIZER"
             return "CANCEL"
+        
         
         else:
             #number of teams is enough
