@@ -12,6 +12,7 @@ class BaseUI:
 
 
     def prompt_options(self, valid_options: list[str]):
+        """Basic prompt options"""
         valid_lower = [i.lower() for i in valid_options]
 
         while True:
@@ -25,6 +26,7 @@ class BaseUI:
 
 
     def save_player_and_team(self, player_list: list[Player], team: Team, captain_handle: str):
+        """Calls LLAPI to save team and players"""
         for player in player_list:
             self.__logic_api.savePlayer(player)
 

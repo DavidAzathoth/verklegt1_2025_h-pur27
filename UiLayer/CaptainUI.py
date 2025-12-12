@@ -11,10 +11,10 @@ class CaptainUI:
         self.baseUI = base_ui
 
 
-
+# CAPTAIN MENU WHEN HE HAS NO TEAM
     def show_captain_no_team_menu(self, captain_handle: str):
-        """Prints out captains menu if he has no team
-        returns: "CREATE TEAM", "BACK", "QUIT" """
+        """Prints out captains menu if he has no team\n
+        Returns: "CREATE TEAM", "BACK", "QUIT" """
 
 #========= CAPTAIN NO TEAM INTERFACE ===========     
         print(f"""
@@ -40,8 +40,10 @@ q. Quit""")
         return "QUIT"
 
 
+# CAPTAIN MENU WHEN HE HAS A TEAM
     def show_captain_has_team_menu(self, captain_handle: str, team: Team):
-        """Prints out captain menu if has team"""
+        """Prints out captain menu if has team.\n
+        Return: ("VEIW MY TEAM/PLAYERS", Team), "BACK", "QUIT",  """
 
 #========= CAPTAIN HAS TEAM MENU INTERFACE =========
         print(f"""
@@ -65,9 +67,10 @@ q. Quit
         return "QUIT"
 
 
+# TEAM CREATION MENU
     def show_team_creation_menu(self, captain_handle: str):
-        """Prints out team creation menu where team information is given.
-        returns: "ADD PLAYERS TO TEAM" or "CANCEL" """
+        """Prints out team creation menu where team information is given.\n
+        Returns: ("PLAYER CREATION", newteam, newteam.captainHandle), "CANCEL" """
 
 #============ TEAM CREATION MENU INTERFACE =============
         print(f"""
@@ -111,8 +114,10 @@ Team captain: {captain_handle}
         return "CANCEL"
 
 
+# PLAYER CREATION MENU
     def show_player_creation_menu(self, team: Team, captain_handle: str):
-        """Displays the player creation menu interface"""
+        """Displays the player creation menu interface\n
+        Returns: "CONTINUE", "CANCEL" """
         
         #stores players before saving to file
         player_list: list[Player] = []
@@ -253,6 +258,7 @@ Create player {handle}?
         return "CANCEL"
 
 
+# SPECIFIC PLAYER INFO MENU
     def show_player_info_menu(self, player: Player):
         """Displays options to edit specific player information.\n
         Returns: "BACK", "CAPTAIN MENU", "QUIT" """

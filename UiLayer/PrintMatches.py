@@ -7,7 +7,9 @@ class PrintMatches:
         self.tournament = tournament
 
 
+# RESULTS PRINT
     def print_results_table(self):
+        """Prints the result table for the tournament"""
         bracket: Bracket = self.tournament.bracket
 
         max_team = 0
@@ -50,7 +52,9 @@ class PrintMatches:
             print()
 
 
+# SCHEDULE PRINT
     def print_schedule_table(self):
+        """prints the schedule table for the tournament"""
         bracket: Bracket = self.tournament.bracket
         
         max_team = 0

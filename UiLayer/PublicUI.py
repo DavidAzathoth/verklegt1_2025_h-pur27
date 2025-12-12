@@ -12,6 +12,7 @@ class PublicUI:
         self.baseUI = base_ui
 
 
+# OPTIONS MENU FOR FINDING TOURNAMENT
     def show_tournaments_menu(self):
         """Prints view tournaments options menu.\n
         Returns: "PRINT LIST OF TOURNAMENTS", ("GET TOURNAMENT", Tournament), "CANCEL", "BACK", "QUIT" """
@@ -60,9 +61,10 @@ q. Quit
         return "QUIT"
 
 
+# OPTIONS MENU FOR FINDING TEAM
     def show_teams_menu(self):
         """Prints view teams options menu.\n
-        returns: "PRINT LIST OF TEAMS", ("GET TEAM", Team), "CANCEL", "BACK", "QUIT" """
+        Returns: "PRINT LIST OF TEAMS", ("GET TEAM", Team), "CANCEL", "BACK", "QUIT" """
 
 #========= TEAMS MENU INTERFACE ========
         print("""
@@ -109,6 +111,7 @@ q. Quit
         return "QUIT"
 
 
+# VIEW LIST OF TEAMS MENU
     def show_view_teams_menu(self):
         """Shows list of 5 teams at a time. allows to view team info.\n
         returns: "TEAM INFO", "BACK", "QUIT" """
@@ -162,10 +165,11 @@ q. Quit
             return "QUIT"
 
 
+# VIEW LIST OF TOURNAMENTS MENU
     def show_view_tournaments_menu(self, mode):
         """Prints list of tournaments.\n
-        modes: "VIEW TOURNAMENTS"(public), "ADD TEAMS"(organizer), "GENERATE"(organizer), "UPDATE"(organizer)\n
-        returns: ("TOURNAMENT",  tournament: object), "BACK", "QUIT"  """
+        Modes: "VIEW TOURNAMENTS"(public), "ADD TEAMS"(organizer), "GENERATE"(organizer), "UPDATE"(organizer)\n
+        Returns: ("TOURNAMENT",  tournament: object), "BACK", "QUIT"  """
         
         # view what kind of mode the menu is in (public/organizer)
         if mode == "VIEW TOURNAMENTS":
@@ -223,10 +227,11 @@ q. Quit
             return "QUIT"
 
 
+# TEAM INFO MENU
     def show_team_info(self, team: Team, mode: str):
         """Shows team information for selected team.\n
-        modes: "SEARCH TEAM"(public), "VIEW TEAMS"(public), "CAPTAIN"\n 
-        returns: "BACK", "HOME", "QUIT", ("PLAYER INFO", player) """
+        Modes: "SEARCH TEAM"(public), "VIEW TEAMS"(public), "CAPTAIN"\n 
+        Returns: "BACK", "HOME", "QUIT", ("PLAYER INFO", player) """
         
         ##If viewing from public
         if mode in ("SEARCH TEAM", "VIEW TEAMS"):
@@ -308,9 +313,10 @@ q. Quit
                 return "QUIT"
 
 
+# TOURNAMENT INFO MENU
     def show_tournament_info(self, tournament: Tournament):
-        """Shows tournament information for selected tournament
-        returns: "VIEW SCHEDULE", "VIEW STANDINGS", "BACK", "HOME", "QUIT" """
+        """Shows tournament information for selected tournament.\n
+        Returns: "VIEW SCHEDULE", "VIEW RESULTS", "BACK", "HOME", "QUIT" """
 
 #=============== View tournament info menu interface ===============
         print(f"""
@@ -350,8 +356,9 @@ q. Quit
         return "QUIT"
 
 
+# TOURNAMENT SCHEDULE MENU
     def show_tournament_schedule(self, tournament: Tournament):
-        """Displays the tournament schedule menu for public  view\n
+        """Displays the tournament schedule menu for public view\n
         Returns: "BACK", "HOME", "QUIT" """
         if self.__logic_api.validateTournamentBracket(tournament) == False:
             print('Tournament has no bracket!')
@@ -381,8 +388,11 @@ q. Quit
         return "QUIT"
 
 
+# TOURNAMENT RESULTS MENU
     def show_view_tournament_results_menu(self,tournament: Tournament):
-        """Displays the tournament standings for selected tournament"""
+        """Displays the tournament standings for selected tournament.\n
+        Returns: "BACK", "HOME", "QUIT" """
+
         if self.__logic_api.validateTournamentBracket(tournament) == False:
             print('Tournament has no bracket!')
             return "BACK"
