@@ -160,6 +160,15 @@ Klárðuðum forritið og löguðum UML
   2. Laga til skýrsluna
   3. Fara yfir allt aftur og hreinsa kóðan
 ### Erum mjög sáttir við forritið og erum spenntir að skila því :)
+## 12/12/25
+Löguðum skýrsluna, gerðum video og löguðum smá forritið!
+- Í dag
+  1. Laga usecases og state diagrams(Adam)
+  2. Laga forritið (Baldvin, Davíd)
+  3. Gera video (Davíd)
+- Á morgun
+  1. Slaka á/vinna
+### Erum mjög glaðir að vera búnir og erum sáttir með verkefnið :)
 
 
 

@@ -1,12 +1,74 @@
 ﻿teamID,playerGamertag,fullname,phoneNumber,emailAddress,address,link,dateOfBirth
-A1,FalleN,3,12345,fallen@hotmail.com,austurstræti,,8
-A1,yuurih,3,123,yuurih@gmail.com,6,,8
-A1,YEKINDAR,3,4,5,6,,8
-A1,KSCERATO,3,4,5,6,,8
-A1,moloday,3,4,5,6,,lol
-28,Sheriff_Norris,Chuck,442072349455,gmail@chucknorris.com,872 Navasota TX,https://www.facebook.com/share/1CxgXUzHaw/?mibextid=wwXIfr,1940-03-10
-28,Slappy,Jóhann Magnús,8913145,komogomo@gmail.com,Borgartún,facebook.com/user/komodomo,1999-09-11
-28,Hezu5,Jónas Guðmundsson,8514132,bobbijobbi@gmail.com,Faxatröð,Instagram.com/user/bobojobo,2002-05-23
-29,Kitty,borg,1234,dd@dd.dd,heima,l.is,2000-01-01
-29,dodo,gormur,22,q@q.is,dd,fb.com,2000-01-01
-29,momo,gudmundurlol,123,dd@dd.dd,hello,dd.dd,2000-01-01
+1,FalleN,Bobby,8657432,fallen@hotmail.com,austurstræti,twitter.com/fallen,1996-05-17
+1,yuurih,Johhny,8756234,yuurih@gmail.com,backstreet,twitter.com/yuurih,1989-08-05
+1,YEKINDAR,Smith,8762312,yekindar@gmail.com,lowstreet,twitter.com/yekindar,1998-04-23
+1,KSCERATO,Timmy,8594331,kscerato@gmail.com,awesomestreet,twitter.com/kscerato,1999-06-12
+1,moloday,James,8769512,moloday@gmail.com,domostreet,twitter.com/moloday,1987-02-23
+2,apEX,Alex Perrin,8123456,apex@gmail.com,oakstreet 12,https://steamcommunity.com/id/apEX_2a9KQ | https://twitter.com/apEX_2a9KQ,1993-03-21
+2,ropz,Robin Mets,8345671,ropz@gmail.com,pinestreet 7,https://steamcommunity.com/id/ropz_7Qm4t | https://twitter.com/ropz_7Qm4t,1999-12-02
+2,zywOo,Mathieu Herbaut,8654321,zywoo@gmail.com,maplestreet 4,https://steamcommunity.com/id/zywOo_p3V8x | https://twitter.com/zywOo_p3V8x,2000-11-09
+2,flameZ,Shahar Shapira,8765432,flamez@gmail.com,riverstreet 19,https://steamcommunity.com/id/flameZ_k8N2b | https://twitter.com/flameZ_k8N2b,2003-04-11
+2,mezii,William Merriman,8234567,mezii@gmail.com,highstreet 3,https://steamcommunity.com/id/mezii_W1c6R | https://twitter.com/mezii_W1c6R,1998-09-30
+3,NiKo,Nikola Kovac,8456123,niko@gmail.com,backstreet 22,https://steamcommunity.com/id/NiKo_m0J7q | https://twitter.com/NiKo_m0J7q,1997-02-16
+3,TeSeS,Rene Madsen,8567234,teses@gmail.com,lowstreet 8,https://steamcommunity.com/id/TeSeS_4nX9L | https://twitter.com/TeSeS_4nX9L,2000-08-27
+3,m0NESY,Ilya Osipov,8678345,m0nesy@gmail.com,foreststreet 5,https://steamcommunity.com/id/m0NESY_Z8p2D | https://twitter.com/m0NESY_Z8p2D,2005-05-01
+3,kyxsan,Damjan Stoilkovski,8789456,kyxsan@gmail.com,harborstreet 14,https://steamcommunity.com/id/kyxsan_v6H1s | https://twitter.com/kyxsan_v6H1s,2000-10-19
+3,kyousuke,Kai Yamamoto,8890567,kyousuke@gmail.com,sunsetstreet 9,https://steamcommunity.com/id/kyousuke_T3r5M | https://twitter.com/kyousuke_T3r5M,2004-01-08
+4,Brollan,Ludvig Brolin,8112233,brollan@gmail.com,kingstreet 1,https://steamcommunity.com/id/Brollan_9gK2w | https://twitter.com/Brollan_9gK2w,2002-06-12
+4,torzsi,Adam Torzsas,8223344,torzsi@gmail.com,queensstreet 11,https://steamcommunity.com/id/torzsi_J6n0P | https://twitter.com/torzsi_J6n0P,2001-05-09
+4,Spinx,Lotan Giladi,8334455,spinx@gmail.com,marketstreet 6,https://steamcommunity.com/id/Spinx_2Vt8a | https://twitter.com/Spinx_2Vt8a,2000-09-13
+4,jimpphat,Jim Salo,8445566,jimpphat@gmail.com,gardenstreet 17,https://steamcommunity.com/id/jimpphat_Q1e7B | https://twitter.com/jimpphat_Q1e7B,2006-02-03
+4,xertioN,Dorian Berman,8556677,xertion@gmail.com,bridgestreet 2,https://steamcommunity.com/id/xertioN_L4z9C | https://twitter.com/xertioN_L4z9C,2004-07-28
+5,bLitz,Ayush Batbold,8129345,blitz@gmail.com,steppe-street 4,https://steamcommunity.com/id/bLitz_5mR2u | https://twitter.com/bLitz_5mR2u,2001-01-15
+5,Techno,Bat-Erdene Ganbaatar,8238456,techno@gmail.com,skyline-street 9,https://steamcommunity.com/id/Techno_P7k3d | https://twitter.com/Techno_P7k3d,2002-04-06
+5,mzinho,Munkhzul Zorig,8347567,mzinho@gmail.com,eastroad 13,https://steamcommunity.com/id/mzinho_1cX8v | https://twitter.com/mzinho_1cX8v,2004-09-22
+5,910,Naranbaatar Enkhbayar,8456678,910@gmail.com,winterroad 7,https://steamcommunity.com/id/910_H3q6n | https://twitter.com/910_H3q6n,2005-12-10
+5,Senzu,Temuulen Bat,8565789,senzu@gmail.com,centralroad 3,https://steamcommunity.com/id/Senzu_8tL0y | https://twitter.com/Senzu_8tL0y,2003-08-19
+6,chopper,Leonid Vishnyakov,8172634,chopper@gmail.com,volgastreet 10,https://steamcommunity.com/id/chopper_R6b1Q | https://twitter.com/chopper_R6b1Q,1997-08-04
+6,sh1ro,Dmitry Sokolov,8283745,sh1ro@gmail.com,nevaroad 21,https://steamcommunity.com/id/sh1ro_0wN9f | https://twitter.com/sh1ro_0wN9f,2001-07-15
+6,tN1R,Timur Rakhimov,8394856,tn1r@gmail.com,uralsstreet 6,https://steamcommunity.com/id/tN1R_a8J2x | https://twitter.com/tN1R_a8J2x,2002-02-20
+6,donk,Danil Kryshkovets,8405967,donk@gmail.com,taigastreet 18,https://steamcommunity.com/id/donk_3Zp7K | https://twitter.com/donk_3Zp7K,2006-01-25
+6,zweih,Zakhar Ivanov,8516078,zweih@gmail.com,moscowstreet 2,https://steamcommunity.com/id/zweih_M2c5V | https://twitter.com/zweih_M2c5V,2003-11-03
+7,Aleksib,Aleksi Virolainen,8121112,aleksib@gmail.com,northstreet 5,https://steamcommunity.com/id/Aleksib_7hQ3s | https://twitter.com/Aleksib_7hQ3s,1997-03-30
+7,iM,Ion Marin,8232223,im@gmail.com,weststreet 16,https://steamcommunity.com/id/iM_2nT8p | https://twitter.com/iM_2nT8p,1999-07-01
+7,b1t,Valeriy Vakhovskiy,8343334,b1t@gmail.com,southstreet 8,https://steamcommunity.com/id/b1t_V5k1e | https://twitter.com/b1t_V5k1e,2003-01-05
+7,w0nderful,Ihor Zhdanov,8454445,w0nderful@gmail.com,lakeview 12,https://steamcommunity.com/id/w0nderful_9cR0u | https://twitter.com/w0nderful_9cR0u,2004-12-14
+7,makazze,Maksim Kazakov,8565556,makazze@gmail.com,centralstreet 20,https://steamcommunity.com/id/makazze_L8m2A | https://twitter.com/makazze_L8m2A,2006-06-09
+8,huNter-,Nemanja Kovac,8198765,hunter@gmail.com,stonebridge 4,https://steamcommunity.com/id/huNter_4pJ7x | https://twitter.com/huNter_4pJ7x,1996-01-03
+8,malbsMd,Mason Brooks,8209876,malbsmd@gmail.com,cliffroad 9,https://steamcommunity.com/id/malbsMd_T2v8N | https://twitter.com/malbsMd_T2v8N,2003-09-17
+8,SunPayus,Alvaro Garcia,8321987,sunpayus@gmail.com,coaststreet 15,https://steamcommunity.com/id/SunPayus_1qW6d | https://twitter.com/SunPayus_1qW6d,1998-11-26
+8,HeavyGod,Daniel Weiss,8432098,heavygod@gmail.com,emberstreet 2,https://steamcommunity.com/id/HeavyGod_k9C3m | https://twitter.com/HeavyGod_k9C3m,2004-05-07
+8,MATYS,Matyas Novak,8543109,matys@gmail.com,oldtown 6,https://steamcommunity.com/id/MATYS_6zB0r | https://twitter.com/MATYS_6zB0r,2005-02-13
+9,MAJ3R,Engin Kupeli,8123450,maj3r@gmail.com,bosporusroad 7,https://steamcommunity.com/id/MAJ3R_3nL8p | https://twitter.com/MAJ3R_3nL8p,1991-01-25
+9,XANTARES,Ismailcan Dortkardes,8234561,xantares@gmail.com,grandstreet 3,https://steamcommunity.com/id/XANTARES_Q7m1v | https://twitter.com/XANTARES_Q7m1v,1995-08-07
+9,woxic,Ozgur Eker,8345672,woxic@gmail.com,harborlane 12,https://steamcommunity.com/id/woxic_0tR9a | https://twitter.com/woxic_0tR9a,1998-09-02
+9,Wicadia,Can Yildiz,8456783,wicadia@gmail.com,midtown 19,https://steamcommunity.com/id/Wicadia_5pX2k | https://twitter.com/Wicadia_5pX2k,2005-10-28
+9,jottAAA,Joao Almeida,8567894,jottaaa@gmail.com,portstreet 5,https://steamcommunity.com/id/jottAAA_M1c6z | https://twitter.com/jottAAA_M1c6z,2001-04-16
+10,dgt,Diego Gonzales,8119001,dgt@gmail.com,avenue 4,https://steamcommunity.com/id/dgt_8vK2q | https://twitter.com/dgt_8vK2q,2001-06-11
+10,biguzera,Bruno Ferreira,8229002,biguzera@gmail.com,parkroad 10,https://steamcommunity.com/id/biguzera_R4n7L | https://twitter.com/biguzera_R4n7L,1998-12-22
+10,dav1deuS,David Silva,8339003,dav1deus@gmail.com,alley 7,https://steamcommunity.com/id/dav1deuS_1mT9b | https://twitter.com/dav1deuS_1mT9b,2000-03-08
+10,nqz,Nathan Queiroz,8449004,nqz@gmail.com,hillstreet 2,https://steamcommunity.com/id/nqz_P6c3w | https://twitter.com/nqz_P6c3w,2004-07-19
+10,snow,Pedro Santos,8559005,snow@gmail.com,riverwalk 14,https://steamcommunity.com/id/snow_2zQ8n | https://twitter.com/snow_2zQ8n,2002-01-30
+11,device,Nicolai Reedtz,8127001,device@gmail.com,daneboulevard 3,https://steamcommunity.com/id/device_7cM2t | https://twitter.com/device_7cM2t,1995-09-08
+11,Magisk,Emil Reif,8237002,magisk@gmail.com,citylane 11,https://steamcommunity.com/id/Magisk_0nR5p | https://twitter.com/Magisk_0nR5p,1998-03-05
+11,HooXi,Rasmus Nielsen,8347003,hooxi@gmail.com,bridgeview 6,https://steamcommunity.com/id/HooXi_L9v1a | https://twitter.com/HooXi_L9v1a,1995-05-17
+11,jabbi,Jakob Nygaard,8457004,jabbi@gmail.com,harborview 18,https://steamcommunity.com/id/jabbi_3tX6k | https://twitter.com/jabbi_3tX6k,2003-02-14
+11,Staehr,Victor Staehr,8567005,staehr@gmail.com,meadowroad 9,https://steamcommunity.com/id/Staehr_6pQ0m | https://twitter.com/Staehr_6pQ0m,2004-10-01
+12,karrigan,Finn Andersen,8138001,karrigan@gmail.com,captainsroad 1,https://steamcommunity.com/id/karrigan_9mJ2r | https://twitter.com/karrigan_9mJ2r,1990-04-14
+12,frozen,David Cernansky,8248002,frozen@gmail.com,icefield 7,https://steamcommunity.com/id/frozen_T3c8v | https://twitter.com/frozen_T3c8v,2002-07-18
+12,Twistzz,Russel Van Dulken,8358003,twistzz@gmail.com,turnpike 12,https://steamcommunity.com/id/Twistzz_1nL7p | https://twitter.com/Twistzz_1nL7p,1999-11-10
+12,broky,Helvijs Saukants,8468004,broky@gmail.com,latviastreet 4,https://steamcommunity.com/id/broky_5vR0a | https://twitter.com/broky_5vR0a,2001-02-07
+12,jcobbb,Jacob Barnes,8578005,jcobbb@gmail.com,sandstreet 16,https://steamcommunity.com/id/jcobbb_K2p9x | https://twitter.com/jcobbb_K2p9x,2003-09-29
+13,bodyy,Alexandre Pianaro,8149001,bodyy@gmail.com,quartier 5,https://steamcommunity.com/id/bodyy_4tM8q | https://twitter.com/bodyy_4tM8q,1996-01-08
+13,Maka,Mathieu Lenoir,8259002,maka@gmail.com,canalstreet 9,https://steamcommunity.com/id/Maka_R6n1v | https://twitter.com/Maka_R6n1v,2001-12-06
+13,Lucky,Lucas Chastang,8369003,lucky@gmail.com,churchroad 2,https://steamcommunity.com/id/Lucky_0pQ7k | https://twitter.com/Lucky_0pQ7k,1998-05-20
+13,Ex3rcice,Erik Fontaine,8479004,ex3rcice@gmail.com,stationlane 13,https://steamcommunity.com/id/Ex3rcice_9cT2m | https://twitter.com/Ex3rcice_9cT2m,2004-06-03
+13,Graviti,Gregory Vati,8589005,graviti@gmail.com,workshopstreet 8,https://steamcommunity.com/id/Graviti_L3v6a | https://twitter.com/Graviti_L3v6a,2003-08-24
+14,dumau,Eduardo Wolkmer,8156001,dumau@gmail.com,palmstreet 7,https://steamcommunity.com/id/dumau_7tX1p | https://twitter.com/dumau_7tX1p,2003-05-12
+14,latto,Lucas Toledo,8266002,latto@gmail.com,beachroad 15,https://steamcommunity.com/id/latto_2mQ8r | https://twitter.com/latto_2mQ8r,2002-11-21
+14,n1ssim,Bruno Nissim,8376003,n1ssim@gmail.com,greenway 4,https://steamcommunity.com/id/n1ssim_K5c0v | https://twitter.com/n1ssim_K5c0v,2003-01-27
+14,lux,Luiz Rocha,8486004,lux@gmail.com,oldroad 9,https://steamcommunity.com/id/lux_9pL2a | https://twitter.com/lux_9pL2a,2004-09-05
+14,saadzin,Saulo Dias,8596005,saadzin@gmail.com,centralave 2,https://steamcommunity.com/id/saadzin_1vR7m | https://twitter.com/saadzin_1vR7m,2005-07-14
+15,Sheriff_Norris,Chuck,442072349455,gmail@chucknorris.com,872 Navasota TX,https://www.facebook.com/share/1CxgXUzHaw/?mibextid=wwXIfr,1940-03-10
+15,Slappy,Jóhann Magnús,8913145,komogomo@gmail.com,Borgartún,facebook.com/user/komodomo,1999-09-11
+15,Hezu5,Jónas Guðmundsson,8514132,bobbijobbi@gmail.com,Faxatröð,Instagram.com/user/bobojobo,2002-05-23

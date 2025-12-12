@@ -353,7 +353,9 @@ q. Quit
     def show_tournament_schedule(self, tournament: Tournament):
         """Displays the tournament schedule menu for public  view\n
         Returns: "BACK", "HOME", "QUIT" """
-
+        if self.__logic_api.validateTournamentBracket(tournament) == False:
+            print('Tournament has no bracket!')
+            return "BACK"
         print(f"""
 ---------------------------
  RU's e-Sport Extravaganza
