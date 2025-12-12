@@ -1,11 +1,20 @@
 from UiLayer.MenuUI import MenuUI
+from UiLayer.BaseUI import BaseUI
+from UiLayer.OrganizerUI import OrganizerUI
+from UiLayer.CaptainUI import CaptainUI
+from UiLayer.PublicUI import PublicUI
 from LogicLayer.logicAPI import LogicAPI
 from Models.Tournament import Tournament
 
 class UIMain:
     def __init__(self) -> None:
         self.__logic_api = LogicAPI()
-        self.__menu_ui =  MenuUI(self.__logic_api)
+        self.__baseUI = BaseUI(self.__logic_api)
+        self.__menu_ui =  MenuUI(self.__logic_api, self.__baseUI)
+        self.__organizerUI = OrganizerUI(self.__logic_api, self.__baseUI)
+        self.__captainUI = CaptainUI(self.__logic_api, self.__baseUI)
+        self.__publicUI = PublicUI(self.__logic_api, self.__baseUI)
+
         self.current_screen = "MAIN MENU"
         self.selection_mode = None
         
@@ -43,7 +52,7 @@ class UIMain:
 
 #============================= TOURNAMENTS MENU LOOP =======================
             elif self.current_screen == "TOURNAMENTS MENU":
-                options = self.__menu_ui.show_tournaments_menu()
+                options = self.__publicUI.show_tournaments_menu()
 
                 if options == "PRINT LIST OF TOURNAMENTS":
                     self.selection_mode = "VIEW TOURNAMENTS"
@@ -66,7 +75,7 @@ class UIMain:
 
 #============================= LIST OF TOURNAMENTS MENU LOOP =======================
             elif self.current_screen == "LIST OF TOURNAMENTS":
-                options = self.__menu_ui.show_view_tournaments_menu(self.selection_mode)
+                options = self.__publicUI.show_view_tournaments_menu(self.selection_mode)
                 
                 if isinstance(options, tuple) and options[0] == "TOURNAMENT":
                     self.selected_tournament = options[1]
@@ -97,7 +106,7 @@ class UIMain:
 
 #============================= TEAMS MENU LOOP =======================
             elif self.current_screen == "TEAMS MENU OPTIONS":
-                options: str = self.__menu_ui.show_teams_menu()
+                options: str = self.__publicUI.show_teams_menu()
 
                 if options == "PRINT LIST OF TEAMS":
                     self.current_screen = "LIST OF TEAMS MENU"
@@ -117,7 +126,7 @@ class UIMain:
             
 #============================= ORGANIZER MENU LOOP =======================
             elif self.current_screen == "ORGANIZER MENU":
-                options: str = self.__menu_ui.show_organizer_menu()
+                options: str = self.__organizerUI.show_organizer_menu()
                 if options == "CREATE TOURNAMENT":
                     self.current_screen = "TOURNAMENT CREATION MENU"
 
@@ -142,7 +151,7 @@ class UIMain:
 
 #============================= CAPTAIN HAS NO TEAM MENU LOOP =======================
             elif self.current_screen == "CAPTAIN HAS NO TEAM MENU":
-                options: str = self.__menu_ui.show_captain_no_team_menu(self.captain_handle)
+                options: str = self.__captainUI.show_captain_no_team_menu(self.captain_handle)
                 if options == "CREATE TEAM":
                     self.current_screen = "CREATE TEAM MENU"
                 elif options == "BACK":
@@ -152,7 +161,7 @@ class UIMain:
 
 #============================= CAPTAIN HAS TEAM MENU LOOP =======================
             elif self.current_screen == "CAPTAIN HAS TEAM MENU":
-                options: str = self.__menu_ui.show_captain_has_team_menu(self.captain_handle, self.team)
+                options: str = self.__captainUI.show_captain_has_team_menu(self.captain_handle, self.team)
                 if isinstance(options, tuple) and options[0] == "VIEW MY TEAM/PLAYERS":
                     self.selection_mode = "CAPTAIN"
                     self.current_screen = "TEAM INFO MENU"
@@ -165,7 +174,7 @@ class UIMain:
 
 #============================= TOURNAMENT CREATION MENU LOOP =======================
             elif self.current_screen == "TOURNAMENT CREATION MENU":
-                options: str = self.__menu_ui.show_tournament_creation_menu()
+                options: str = self.__organizerUI.show_tournament_creation_menu()
                 if options == "BACK":
                     self.current_screen = "ORGANIZER MENU"
                 elif options == "HOME":
@@ -175,7 +184,7 @@ class UIMain:
 
 #============================= TEAM CREATION MENU LOOP =======================
             elif self.current_screen == "CREATE TEAM MENU":
-                options: str = self.__menu_ui.show_team_creation_menu(self.captain_handle)
+                options: str = self.__captainUI.show_team_creation_menu(self.captain_handle)
                 if isinstance(options, tuple) and options[0] == "PLAYER CREATION":
                     team = options[1]
                     self.team = team
@@ -186,7 +195,7 @@ class UIMain:
                 
 #============================= VIEW LIST OF TEAMS MENU LOOP =======================
             elif self.current_screen == "LIST OF TEAMS MENU":
-                options: str = self.__menu_ui.show_view_teams_menu()
+                options: str = self.__publicUI.show_view_teams_menu()
 
                 if isinstance(options, tuple) and options[0] == "TEAM INFO":
                     team = options[1]
@@ -201,7 +210,7 @@ class UIMain:
 
 #============================= VIEW TEAM INFO LOOP =======================
             elif self.current_screen == "TEAM INFO MENU":
-                options: str = self.__menu_ui.show_team_info(self.team, self.selection_mode)
+                options: str = self.__publicUI.show_team_info(self.team, self.selection_mode)
                 
                 #Only works for captain
                 if isinstance(options, tuple) and options[0] == "PLAYER INFO":
@@ -229,7 +238,7 @@ class UIMain:
 
 #============================= VIEW TOURNAMENT INFO LOOP =======================
             elif self.current_screen == "TOURNAMENT INFO MENU":
-                options: str = self.__menu_ui.show_tournament_info(self.selected_tournament)
+                options: str = self.__publicUI.show_tournament_info(self.selected_tournament)
 
                 if options == "VIEW SCHEDULE":
                     self.current_screen = "TOURNAMENT SCHEDULE MENU"
@@ -253,7 +262,7 @@ class UIMain:
 
 #============================= PLAYER CREATION MENU LOOP =======================
             elif self.current_screen == "CREATE PLAYER MENU":
-                options = self.__menu_ui.show_player_creation_menu(self.team, self.captain_handle)
+                options = self.__captainUI.show_player_creation_menu(self.team, self.captain_handle)
                 if options == "CONTINUE":
                     self.current_screen = "CAPTAIN HAS TEAM MENU"
                 elif options == "CANCEL":
@@ -261,7 +270,7 @@ class UIMain:
 
 #============================= ADD TEAMS TO TOURNAMENT MENU LOOP =======================
             elif self.current_screen == "ADD TEAMS TO TOURNAMENT MENU":
-                options = self.__menu_ui.show_add_teams_to_tournament_menu(self.selected_tournament)
+                options = self.__organizerUI.show_add_teams_to_tournament_menu(self.selected_tournament)
                 if options == "BACK":
                     self.current_screen = "LIST OF TOURNAMENTS"
                 elif options == "ORGANIZER":
@@ -272,7 +281,7 @@ class UIMain:
 
 #============================= SCHEDULE GENERATION MENU LOOP =======================
             elif self.current_screen == "SCHEDULE GENERATION MENU":
-                options = self.__menu_ui.show_generate_schedule_menu(self.selected_tournament)
+                options = self.__organizerUI.show_generate_schedule_menu(self.selected_tournament)
                 if options == "ADD TEAMS TO TOURNAMENT":
                     self.current_screen = "ADD TEAMS TO TOURNAMENT MENU"
                 elif options == "BACK":
@@ -285,7 +294,7 @@ class UIMain:
       
 #============================= PLAYER INFO MENU LOOP =======================
             elif self.current_screen == "PLAYER INFO":
-                options = self.__menu_ui.show_player_info_menu(self.player)
+                options = self.__captainUI.show_player_info_menu(self.player)
                 if options == "BACK":
                     self.current_screen = "TEAM INFO MENU"
                 elif options == "CAPTAIN MENU":
@@ -296,7 +305,7 @@ class UIMain:
 
 #============================= TOURNAMENT SCHEDULE MENU LOOP =======================
             elif self.current_screen == "TOURNAMENT SCHEDULE MENU":
-                options = self.__menu_ui.show_tournament_schedule(self.selected_tournament)
+                options = self.__publicUI.show_tournament_schedule(self.selected_tournament)
                 
                 if options == "BACK":
                     self.current_screen = "TOURNAMENT INFO MENU"
@@ -310,7 +319,7 @@ class UIMain:
 
 #============================= UPDATE TOURNAMENT MENU LOOP =======================
             elif self.current_screen == "TOURNAMENT UPDATE MENU":
-                options = self.__menu_ui.show_update_results_menu(self.selected_tournament)
+                options = self.__organizerUI.show_update_results_menu(self.selected_tournament)
                 
                 if options == "BACK":
                     self.current_screen = "LIST OF TOURNAMENTS"
@@ -322,7 +331,7 @@ class UIMain:
 
 #============================= VIEW TOURNAMENT RESULTS MENU LOOP =======================
             elif self.current_screen == "VIEW TOURNAMENT RESULTS MENU":
-                options = self.__menu_ui.show_view_tournament_results_menu(self.selected_tournament)
+                options = self.__publicUI.show_view_tournament_results_menu(self.selected_tournament)
 
                 if options == "BACK":
                     self.current_screen = "TOURNAMENT INFO MENU"
