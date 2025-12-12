@@ -235,7 +235,7 @@ class Tournamentmanager:
                 
         enddate = datetime.strptime(enddate, "%Y-%m-%d")
 
-        if enddate < startdate:
+        if enddate <= startdate:
             return None
 
         return startdate, enddate

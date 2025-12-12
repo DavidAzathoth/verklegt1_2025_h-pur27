@@ -61,7 +61,7 @@ class PrintMatches:
                 match: Match
 
                 current_team = max(len(match.team_A), len(match.team_B))
-                current_string = len(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")
+                current_string = len(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}, Server: {int(match.server)+1}")
 
                 if current_team > max_team:
                     max_team = current_team
@@ -77,6 +77,6 @@ class PrintMatches:
             print()
                 
             for match in matches:
-                print(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")    
+                print(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}, Server: {int(match.server)+1}")    
             print()
             print("-" * max_string)

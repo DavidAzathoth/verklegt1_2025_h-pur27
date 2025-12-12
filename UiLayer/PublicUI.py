@@ -15,7 +15,7 @@ class PublicUI:
     def show_tournaments_menu(self):
         """Prints view tournaments options menu.\n
         Returns: "PRINT LIST OF TOURNAMENTS", ("GET TOURNAMENT", Tournament), "CANCEL", "BACK", "QUIT" """
-        
+
 #========= TOURNAMENTS MENU INTERFACE ========
         print("""
 ---------------------------

@@ -191,6 +191,10 @@ q. Quit
     def show_add_teams_to_tournament_menu(self, tournament: Tournament):
         """displays menu to add teams into specified tournament"""
 
+        if self.__logic_api.validateTournamentBracket(tournament) == True:
+            print('You can not add teams to an already active tournament!')
+            return "BACK"
+        
         #print 5 items per page loop
         while True:
             registered_teams: list[Team] = tournament.teams
@@ -278,7 +282,7 @@ ERROR: Tournament has a generated bracket, adding teams is not possible
         print("""
 ---------------------------
  RU's e-Sport Extravaganza
----------------------------""")    
+---------------------------""")
         self.baseUI.slow_print("Checking team count\n")      
 
         self.baseUI.slow_print("....", 0.3)    
@@ -320,9 +324,15 @@ This tournament has sufficient teams!
 ---------------------------
  RU's e-Sport Extravaganza
 ---------------------------""")    
-                
-                generate_bracket = self.__logic_api.generatebracket(tournament)
-                
+                server = 1
+                while True:
+                    try:
+                        generate_bracket = self.__logic_api.generatebracket(tournament, server)
+                        break
+                    except IndexError:
+                    #Adds another server if tournament is too short
+                        server+=1
+
                 if generate_bracket == False:
                     
                     self.baseUI.slow_print("\nERROR: Bracket has already been generated for this tournament\n")

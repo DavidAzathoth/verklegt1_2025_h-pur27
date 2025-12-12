@@ -26,7 +26,7 @@ class BracketGenerator:
 
         return rounds, extramatches
     
-    def generatebracket(self, tournament: Tournament):
+    def generatebracket(self, tournament: Tournament, server):
         """Generate inital bracket for tournament, accounting for a non base 2 number of teams(16,32,64...) Returns False if the tournament already has a bracket"""
         if type(tournament.bracket) == Bracket:
             return False
@@ -147,9 +147,9 @@ class BracketGenerator:
                 roundsplayed[f'{i}'].append(self.__matchmodel(matchid,'TBD','TBD'))
 
         #Save all matches before returning
-        slots = self.generate_slots_full_range(startdate,enddate,servers=1,match_minutes=60)
+        slots = self.generate_slots_full_range(startdate,enddate,server,match_minutes=60)
 
-        used = self.schedule_round_blocks(roundsplayed, slots, servers=1)
+        used = self.schedule_round_blocks(roundsplayed, slots, server)
 
         total_games = len(tournament.teams) - 1
 

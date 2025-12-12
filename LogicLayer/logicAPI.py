@@ -159,9 +159,9 @@ class LogicAPI:
         return
     
     
-    def generatebracket(self, tournament):
+    def generatebracket(self, tournament, server):
         """Generate tournament bracket if it doesnt have one"""
-        return self.__bracketgenerator.generatebracket(tournament)
+        return self.__bracketgenerator.generatebracket(tournament, server)
     
     
     def roundsplayed(self, teams):
