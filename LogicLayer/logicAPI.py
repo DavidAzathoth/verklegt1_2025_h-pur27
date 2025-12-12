@@ -21,6 +21,7 @@ class LogicAPI:
         self.__bracketgenerator = BracketGenerator()
         self.__matchlogic = MatchLogic(__dataAPI)
         self.__bracketlogic = BracketLogic()
+        self.__dataAPI = DataAPI()
         return
 
     def createteam(self, input: list):
@@ -72,8 +73,8 @@ class LogicAPI:
         self.__Tournamentmanager.updateTournament(tournament,None, 'updateall')
     
     def addTeamtoTournament(self, team: Team,tournament: Tournament):
-        """Adds team to tournament, both parameters must be an object. Returns false if the team is already in the tournament"""
-        self.__Tournamentmanager.updateTournament(tournament, team, 'addteam')
+        """Adds team to tournament, both parameters must be an object. Returns false if the team is already in the tournament or if the tournament has a bracket"""
+        return self.__Tournamentmanager.updateTournament(tournament, team, 'addteam')
     
     def updatecaptain(self, input):
         """Updates given captain in file"""
@@ -87,14 +88,11 @@ class LogicAPI:
         """Adds a new captain to the system"""
         return self.__Teamlogic.registerCaptain(captainHandle)
     
-    #def getTournamentbyName(self, name: str):
-    #    tournamentlist = self.__Tournamentmanager.getTournaments()
-    #    return self.__Tournamentmanager.getTournamentbyName(name, tournamentlist)
-
     def searchforteam(self, input):
         """Return a team by name"""
-        teams=self.__Teamlogic.getTeams()
-        return self.__Teamlogic.get_team_by_teamname(input, teams)
+        teams = self.__Teamlogic.getTeams()
+        team=self.__Teamlogic.get_team_by_teamname(input, teams)
+        return team
     
     def createPlayer(self, input: list) -> Player:
         """Creates a player, does not automatically store in file"""
@@ -119,7 +117,7 @@ class LogicAPI:
 
     def editplayer(self, gamertag: str, attribute: str, newValue: str):
         """Edits a player's information"""
-        self.__Playerlogic.editplayer(gamertag, attribute, newValue)
+        return self.__Playerlogic.editplayer(gamertag, attribute, newValue)
 
     def emailVerification(self, email):
         """Verifies if email is valid"""
@@ -179,9 +177,9 @@ class LogicAPI:
         return
 
 
-    def returnMatchWinner(self, match, scores):
+    def returnMatchWinner(self, match, team_A_score, Team_B_score):
         """Returns a winner of a match based on the score"""
-        return self.__matchlogic.returnMatchWinnerconfirmation(match, scores)
+        return self.__matchlogic.returnMatchWinner(match, team_A_score, Team_B_score)
     
     def confirmMatchWinner(self, tournament: Tournament, match: Match, scores)-> tuple[str,str]:
         """Input scores is a list [1,2] score 1(index 0) is team_A score and score 2(index 1) is team_B score
@@ -220,4 +218,30 @@ class LogicAPI:
     def getTeambyName(self, teamname, tournament: Tournament):
         """Return team matching given teamname"""
         return self.__Teamlogic.get_team_by_teamname(teamname, tournament)
+    
+    def geteligibleMatches(self, tournament: Tournament):
+        """Returns matches that can be updated"""
+        return self.__Tournamentmanager.geteligibleMatches(tournament)
+    
+    def getcompleteMatches(self, tournament: Tournament):
+        """Returns all matches that have been played in the tournament"""
+        return self.__Tournamentmanager.getcompleteMatches(tournament)
+
+    def returnRoundNames(self, tournament):
+        """Returns a list of round names tailored for given tournament."""
+        return self.__Tournamentmanager.returnRoundNames(tournament)
+    
+    def set_start_end_date(self, startdate, enddate):
+        """Validates start and enddate for tournament when creating tournament"""
+        return self.__Tournamentmanager.validate_start_end_date(startdate, enddate)
+    
+    def check_player_age(self, dob):
+        """Validates player age when creating player"""
+        return self.__Playerlogic.check_player_age(dob)
+    
+    def cleanBackups(self):
+        self.__dataAPI.cleanBackups()
+    def validateTournamentBracket(self, tournament: Tournament):
+        return self.__Tournamentmanager.validateTournamentBracket(tournament)
+
 ###############testing area#############

@@ -76,3 +76,5 @@ class DataAPI:
     def updateMatch(self, data):
         self.__matchData.update_match(data)
         return
+    def cleanBackups(self):
+        self.__storagehandler.cleanBackups()

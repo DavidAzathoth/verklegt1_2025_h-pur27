@@ -1,6 +1,6 @@
 import csv
 from datetime import datetime
-
+import os
 class StorageHandler:
     def __init__(self):
         pass
@@ -68,4 +68,11 @@ class StorageHandler:
         except FileNotFoundError:
             return False
         return
-    
+    def cleanBackups(self):
+        path = 'StorageLayer/Data/Backup'
+        for entry in os.scandir(path):
+            if entry.path == 'StorageLayer/Data/Backup\dontdelete.txt':
+                pass
+            else:
+                os.remove(entry.path)
+            

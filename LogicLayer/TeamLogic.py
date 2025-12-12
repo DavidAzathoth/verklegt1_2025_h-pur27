@@ -31,7 +31,10 @@ class Teamlogic:
         return None
     
     def get_team_by_teamname(self, teamname: str, tournament) -> Team | None:
-        teamlist = tournament.teams
+        if type(tournament) == list:
+            teamlist = tournament
+        else:
+            teamlist = tournament.teams
         for team in teamlist:
             if team.teamName.lower().strip() == teamname.lower().strip():
                 return team

@@ -2,6 +2,7 @@ from Models.Team import Team
 from Models.TeamCaptain import TeamCaptain
 from LogicLayer.logicAPI import LogicAPI
 from UiLayer.selectfrompage import SelectFromPage
+from UiLayer.PrintMatches import PrintMatches
 from datetime import datetime, date
 from Models.Team import Team
 from Models.Player import Player
@@ -29,50 +30,6 @@ class MenuUI:
             print(f"Invalid input. Valid options are: {'. '.join(valid_lower)}")
 
 
-#----------------------------------- Set start and end date for tournament -----------------------------------------
-    def set_start_end_date(self):
-        while True:
-            try:
-                startdate = datetime.strptime(input("Tournament start date (YYYY-MM-DD): "), "%Y-%m-%d")
-                
-                enddate = datetime.strptime(input("Tournament end date (YYYY-MM-DD): "), "%Y-%m-%d")
-                
-            except ValueError:
-                print("please enter valid numbers for year, month, day")
-                continue
-
-            if enddate < startdate:
-                print("ERROR: End date must be after start date")
-                continue
-
-            print(f"Startdate: {startdate.date()} \nEnd date: {enddate.date()}")
-
-            return startdate, enddate
-
-
-#----------------------------------- Checks if player date of birth is valid -----------------------------------------
-    def check_player_age(self):
-        
-        minimum_age = 18
-
-        while True:
-                try:
-                    dob = datetime.strptime(input("Date of birth (YYYY-MM-DD): "), "%Y-%m-%d").date()
-                except ValueError:
-                    print("ERROR: Invalid input. Please enter a valid date")
-                    continue
-                
-                today = date.today()
-                age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
-
-                if age < minimum_age:
-                    print(f"ERROR: You must be at least {minimum_age} years old. please enter a valid age")
-                    continue
-
-                break
-        return dob
-
-
 #----------------------------------- Saves team, player and captain info --------------------------------------------
     def save_player_and_team(self, player_list: list[Player], team: Team, captain_handle: str):
         for player in player_list:
@@ -92,7 +49,7 @@ class MenuUI:
 
 
 #----------------------------------- Slow print --------------------------------------------
-    def slow_print(self, text, delay = 0.05):
+    def slow_print(self, text, delay = 0.04):
         """Prints a string slowly instead of instantly"""
 
         for char in text:
@@ -101,36 +58,6 @@ class MenuUI:
             time.sleep(delay)
         print()
 
-#----------------------------------- print schedule table --------------------------------------------
-    def print_schedule_table(self, tournament: Tournament):
-        bracket: Bracket = tournament.bracket
-        
-        max_team = 0
-        max_string = 0
-        # Find the longest team name for spacing, and maximum line length of a match for dot lines
-        for i, matches in bracket.rounds.items(): 
-            for match in matches:
-
-                current_team = max(len(match.team_A), len(match.team_B))
-                current_string = len(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")
-
-                if current_team > max_team:
-                    max_team = current_team
-
-                if current_string > max_string:
-                    max_string = current_string
-
-        # Print schedule table loop
-        for i, matches in bracket.rounds.items():
-            
-            print(f"Round {i}:")
-            print("-" * max_string)
-            print()
-                
-            for match in matches:
-                print(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")    
-            print()
-            print("-" * max_string)
 
 
 #----------------------------------- MAIN MENU -----------------------------------------
@@ -186,6 +113,7 @@ q. Quit
                         team = self.__logic_api.get_team_by_captain(captain_handle)
                         return ("CAPTAIN HAS TEAM", captain_handle, team)
                     else:
+                        captain_handle = captain_dict.get("captainHandle")
                         return ("CAPTAIN HAS NO TEAM", captain_handle)
                     
         return "QUIT"
@@ -432,14 +360,39 @@ Please enter tournament details:
 """)  
         venue: str = input("Venue: ").strip()
         name: str = input("Name: ").strip()
-        startdate, enddate = self.set_start_end_date()
+        
+        #start, enddate for tournament
+        while True:
+            startdate_input = input("Tournament start date (YYYY-MM-DD): ")
+            enddate_input = enddate = input("Tournament end date (YYYY-MM-DD): ")
+            try:
+                result = self.__logic_api.set_start_end_date(startdate_input, enddate_input)
+                
+                if result is None:
+                    print("\nERROR: End date must be after start date\n")
+                    continue
+
+                startdate, enddate = result
+                break
+            
+            except ValueError:
+                print("\nERROR: please enter valid numbers for year-month-day\n")
+        
+        #ContactEmail
         check_contact_email: tuple = self.__logic_api.emailVerification(input("ContactEmail: "))
         while check_contact_email[1] == False:
             print(check_contact_email[0])
             check_contact_email: tuple = self.__logic_api.emailVerification(input("ContactEmail: "))
         contactemail = check_contact_email[0]
         print(("-Confirmed ContactEmail: "), contactemail)
-        contactphone = int(input("ContactPhone: ").strip())
+        
+        #Contactphone
+        while True:
+            try:
+                contactphone = int(input("ContactPhone: ").strip())
+                break
+            except ValueError:
+                        print("\nERROR: Please enter a valid phone number\n")
 
 #===========================================================
 
@@ -567,7 +520,19 @@ Add player {player_count + 1}:
             #Real name
             name = input("Player name: ").strip()
             #Date of birth
-            dob = self.check_player_age()
+            while True:
+                try:
+                    date_of_birth = input("Date of birth (YYYY-MM-DD): ")
+                    age_check = self.__logic_api.check_player_age(date_of_birth)
+                    if not age_check[0]:
+                        print(age_check[1])
+                        continue
+                    else:
+                        dob = age_check[1]
+                    break
+                except ValueError:
+                    print("\nERROR: Invalid input. Please enter a valid date\n")
+                    
             #Home address
             address = input("Player address: ").strip()
 
@@ -702,11 +667,17 @@ q. Quit
             return "QUIT"
 
 
-#----------------------------------- VIEW ALL TOURNAMENTS MENU (PUBLIC) -----------------------------------------    
-    def show_view_tournaments_menu(self):
+#----------------------------------- VIEW ALL TOURNAMENTS MENU -----------------------------------------    
+    def show_view_tournaments_menu(self, mode):
         """Prints list of tournaments
         returns: ("TOURNAMENT INFO",  tournament: object), "BACK", "QUIT"  """
         
+        # view what kind of mode the menu is in (public/organizer)
+        if mode == "VIEW TOURNAMENTS":
+            view_mode = "PUBLIC"
+        else:
+            view_mode = mode
+
         tournaments = self.__logic_api.gettournaments()
 
         tournament_names: list[str] = [t.name for t in tournaments]
@@ -722,11 +693,13 @@ q. Quit
 RU's e-Sport Extravaganza
 ---------------------------
 List of tournaments
+                  
+View mode: {view_mode.title()}
               
 {viewer.currentPage()}
               
 ENTER. Next page
-1-5. View tournament details
+1-5. Select tournament
 b. Back
 q. Quit              
 """) 
@@ -741,7 +714,7 @@ q. Quit
                 # find tournament object
                 for t in tournaments:
                     if t.name == tournament_name:
-                        return ("TOURNAMENT INFO", t)
+                        return ("TOURNAMENT", t)
                 continue
             
             #press ENTER to go to next page
@@ -887,10 +860,6 @@ q. Quit
 #----------------------------------- ADD TEAMS TO TOURNAMENT MENU (ORGANIZER)) -----------------------------------------
     def show_add_teams_to_tournament_menu(self, tournament: Tournament):
         """displays menu to add teams into specified tournament"""
-        #self.__logic_api.updateTournament(tournament)
-        #tournament = self.__logic_api.getTournamentbyName(tournament.name)
-        self.__logic_api.populateTournament(tournament)
-
 
         #print 5 items per page loop
         while True:
@@ -927,7 +896,7 @@ Available teams:
 ENTER. Next page
 1-5. Add team
 b. Back
-h. Home (Organizer)
+h. Organizer menu
 q. Quit 
 """)
 
@@ -941,7 +910,17 @@ q. Quit
                 # find team object
                 for t in available_teams:
                     if t.teamName == team_name:
-                        self.__logic_api.addTeamtoTournament(t, tournament)
+                        if self.__logic_api.addTeamtoTournament(t, tournament):
+                            pass
+                        else:
+                            print("""
+                                  
+#######################################################################
+ERROR: Tournament has a generated bracket, adding teams is not possible
+#######################################################################""")
+
+                            return "BACK"
+                            
                 continue
 
             if choice ==  "":
@@ -952,16 +931,15 @@ q. Quit
                 return "BACK"
             
             if choice == "h":
-                answer = "HOME"
-                break
+                return "ORGANIZER"
             
             return "QUIT"
-        return answer
-
+        
 
 #----------------------------------- SCHEDULE GENERATION MENU (ORGANIZER)) -----------------------------------------
     def show_generate_schedule_menu(self, tournament: Tournament):
         """Displays the menu where the schedule is generated"""
+    
         
         self.__logic_api.populateTournament(tournament)
         current_teams = len(tournament.teams)
@@ -972,13 +950,15 @@ q. Quit
 ---------------------------
  RU's e-Sport Extravaganza
 ---------------------------""")    
-        self.slow_print("Checking team count...\n", 0.1)          
+        self.slow_print("Checking team count\n")      
+
+        self.slow_print("....", 0.3)    
         
-        self.slow_print(f"Current number of teams: {current_teams}\n")
+        self.slow_print(f"\nCurrent number of teams: {current_teams}\n")
         
         self.slow_print(f"Minimum teams required: {minimum_teams}\n")
         
-        self.slow_print(f".....\n", 0.3)
+        self.slow_print(f"....\n", 0.3)
         
         if current_teams < minimum_teams:
             #Error path: not enough teams
@@ -1016,8 +996,9 @@ This tournament has sufficient teams!
                 
                 if generate_bracket == False:
                     
-                    self.slow_print("\nERROR: Bracket has already been generated for this tournament\n", 0.03)
-                    self.slow_print("Going back to List of tournaments\n", 0.03)
+                    self.slow_print("\nERROR: Bracket has already been generated for this tournament\n")
+                    self.slow_print("Going back to List of tournaments\n")
+                    time.sleep(1)
                     return "BACK"
                 
                 
@@ -1031,7 +1012,8 @@ This tournament has sufficient teams!
                 
                 self.__logic_api.populateBracket(bracket)
 
-                self.print_schedule_table(tournament)
+                printer = PrintMatches(tournament) 
+                printer.print_schedule_table()
                     
                 self.__logic_api.updateTournament(tournament)
 
@@ -1060,6 +1042,7 @@ q. Quit
         Returns: "BACK", "CAPTAIN MENU", "QUIT" """
         
         while True:
+            player = self.__logic_api.getPlayer_by_gamertag(player.playerGamertag)
             print(f"""
 ---------------------------
  RU's e-Sport Extravaganza
@@ -1088,7 +1071,7 @@ q. Quit
             choice = self.__prompt_options(["1", "b", "h", "q"])
 
             if choice == "1":
-                attributes = [["address", "phoneNumber", "emailAddress", "link"]]
+                attributes = ["address", "phoneNumber", "emailAddress", "link"]
                 viewer = SelectFromPage(attributes)
 
                 #Edit options for player
@@ -1108,18 +1091,27 @@ c. Cancel
 
                 if edit_choice.isdigit():
 
-                    num = int(edit_choice)
+                    num = int(edit_choice)                    
                     attribute = viewer.select_item_by_number(num)
                     new_value = input("""Please enter new value or press "c" (Cancel): """.strip())
                     if new_value.lower() == "c":
                         continue
                     while True:
                         try:
-                            self.__logic_api.editplayer(player.playerGamertag, attribute, new_value)
+                            edit_player = self.__logic_api.editplayer(player.playerGamertag, attribute, new_value)
+                            if attribute=='emailAddress':
+                                if edit_player[1] == False:
+                                    raise ValueError
                             break
                         except ValueError or TypeError:
                             print(f"\nERROR: Please enter correct value for player {attribute}.\n")
-                    
+                            if attribute=='emailAddress':
+                                print(edit_player[0])
+                            new_value = input("""Please enter new value or press "c" (Cancel): """.strip())
+                            if new_value.lower() == "c":
+                                break
+                    if new_value.lower() == "c":
+                        continue
                     print(f"\n{attribute} has been updated!\n")
                     print("Returning to player info menu\n")
                     self.slow_print("....", 0.3)
@@ -1151,8 +1143,8 @@ c. Cancel
 Tournament schedule for: {tournament.name}
 """)
         
-
-        self.print_schedule_table(tournament)
+        printer = PrintMatches(tournament)
+        printer.print_schedule_table()
 
         print("""
 b. Back
@@ -1166,3 +1158,137 @@ q. Quit
         if choice == "h":
             return "HOME"
         return "QUIT"
+    
+
+#----------------------------------- UPDATE RESULTS MENU (ORGANIZER) -----------------------------------------
+    def show_update_results_menu(self, tournament: Tournament):
+        """Shows menu to update tournament information for organizer"""
+
+        while True:
+            
+            updatable_matches: list[Match] = self.__logic_api.geteligibleMatches(tournament)
+            
+            # Gets updated list of matches if viewer was initialized
+            try:
+                viewer.items = updatable_matches
+            except:
+                viewer = SelectFromPage(updatable_matches)
+
+            print(f"""
+----------------------------------------------------
+ RU's e-Sport Extravaganza
+----------------------------------------------------
+Select a match to update results for {tournament.name}
+
+Unfinished matches:
+-----------------------------------------
+{viewer.currentPage()}
+-----------------------------------------
+
+ENTER. Next page
+1-5. Select match
+b. Back
+h. Organizer menu
+q. Quit 
+""")    
+            choice = self.__prompt_options(["1", "2", "3", "4", "5", "", "b", "h", "q"])
+            if choice == "":
+                viewer.next_page()
+                continue
+            if choice == "b":
+                return "BACK"
+            if choice == "h":
+                return "HOME"
+            if choice == "q":
+                return "QUIT"
+            if choice.isdigit():
+                num = int(choice)
+                match: Match | None = viewer.select_item_by_number(num)
+                if match is None:
+                    continue
+
+                print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------                      
+Update results for match: {match.matchID}
+
+Teams: {match.team_A} vs {match.team_B}
+Date: {match.matchDate}, {match.matchTime}
+
+Scores:""")
+                print("-" * 40)
+
+            # Validate team score inputs
+                while True:
+                    try:
+                        team_A_score = int(input(f"Enter score for {match.team_A}: ").strip())
+                        team_B_score = int(input(f"Enter score for {match.team_B}: ").strip())
+                        
+                        winner = self.__logic_api.returnMatchWinner(match, team_A_score, team_B_score)
+                        
+                        if not winner:
+                            print('\nERROR: Match cannot be a tie\n')
+                            continue
+                        break   
+                    except ValueError:
+                        print()
+                        print("-" * 35)
+                        print("ERROR: Please enter a valid integer\n")
+
+                print(f"""
+-------------------------------------------
+Confirm update for match {match.matchID}?
+
+Winner: {winner}
+
+
+1. Confirm
+c. Cancel
+
+h. Organizer menu
+q. Quit
+""")
+                choice = self.__prompt_options(["1", "c", "h", "q"])
+                if choice == "1":
+                    score = [team_A_score, team_B_score]
+                    self.__logic_api.confirmMatchWinner(tournament, match, score)
+                    tournament = self.__logic_api.reloadTournament(tournament)
+                if choice == "c":
+                    continue
+                if choice == "h":
+                    return "HOME"
+                return "QUIT"
+            continue
+
+
+#----------------------------------- VIEW TOURNAMENT RESULTS MENU (PUBLIC) -----------------------------------------
+    def show_view_tournament_results_menu(self,tournament: Tournament):
+        """Displays the tournament standings for selected tournament"""
+        if self.__logic_api.validateTournamentBracket(tournament) == False:
+            print('Tournament has no bracket!')
+            return "BACK"
+        
+        print(f"""
+---------------------------
+ RU's e-Sport Extravaganza
+---------------------------
+Full standings - {tournament.name}
+""")
+        printer = PrintMatches(tournament)
+        printer.print_results_table()
+
+        print("""
+b. Back
+h. Home
+q. Quit
+""")    
+        choice = self.__prompt_options(["b", "h", "q"])
+        if choice == "b":
+            return "BACK"
+        
+        if choice == "h":
+            return "HOME"
+        
+        return "QUIT"
+    

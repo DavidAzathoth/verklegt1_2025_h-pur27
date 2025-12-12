@@ -66,9 +66,9 @@ class UIMain:
 
 #============================= LIST OF TOURNAMENTS MENU LOOP =======================
             elif self.current_screen == "LIST OF TOURNAMENTS":
-                options = self.__menu_ui.show_view_tournaments_menu()
+                options = self.__menu_ui.show_view_tournaments_menu(self.selection_mode)
                 
-                if isinstance(options, tuple) and options[0] == "TOURNAMENT INFO":
+                if isinstance(options, tuple) and options[0] == "TOURNAMENT":
                     self.selected_tournament = options[1]
                     self.__logic_api.populateTournament(self.selected_tournament)
                     
@@ -232,16 +232,12 @@ class UIMain:
                 options: str = self.__menu_ui.show_tournament_info(self.selected_tournament)
 
                 if options == "VIEW SCHEDULE":
-                    
                     self.current_screen = "TOURNAMENT SCHEDULE MENU"
 
                 elif options == "VIEW RESULTS":
-                    #TODO implement standings
-                    print("NOT IMPLEMENTED YET!!!")
-                    break
+                    self.current_screen = "VIEW TOURNAMENT RESULTS MENU"
 
                 elif options == "BACK":
-
                     if self.selection_mode == "SEARCH TOURNAMENT":
                         self.current_screen = "TOURNAMENTS MENU"
 
@@ -268,7 +264,7 @@ class UIMain:
                 options = self.__menu_ui.show_add_teams_to_tournament_menu(self.selected_tournament)
                 if options == "BACK":
                     self.current_screen = "LIST OF TOURNAMENTS"
-                elif options == "HOME":
+                elif options == "ORGANIZER":
                     self.current_screen = "ORGANIZER MENU"
                     self.selection_mode = None
                 elif options == "QUIT":
@@ -298,7 +294,6 @@ class UIMain:
                 elif options == "QUIT":
                     break
 
-
 #============================= TOURNAMENT SCHEDULE MENU LOOP =======================
             elif self.current_screen == "TOURNAMENT SCHEDULE MENU":
                 options = self.__menu_ui.show_tournament_schedule(self.selected_tournament)
@@ -313,7 +308,31 @@ class UIMain:
                 elif options == "QUIT":
                     break
 
+#============================= UPDATE TOURNAMENT MENU LOOP =======================
+            elif self.current_screen == "TOURNAMENT UPDATE MENU":
+                options = self.__menu_ui.show_update_results_menu(self.selected_tournament)
+                
+                if options == "BACK":
+                    self.current_screen = "LIST OF TOURNAMENTS"
+                elif options == "HOME":
+                    self.current_screen = "ORGANIZER MENU"
+                    self.selection_mode = None
+                elif options == "QUIT":
+                    break
 
+#============================= VIEW TOURNAMENT RESULTS MENU LOOP =======================
+            elif self.current_screen == "VIEW TOURNAMENT RESULTS MENU":
+                options = self.__menu_ui.show_view_tournament_results_menu(self.selected_tournament)
+
+                if options == "BACK":
+                    self.current_screen = "TOURNAMENT INFO MENU"
+                elif options == "HOME":
+                    self.current_screen = "MAIN MENU"
+                    self.selection_mode = None
+                elif options == "QUIT":
+                    break
+                
+        self.__logic_api.cleanBackups()
 
 
 

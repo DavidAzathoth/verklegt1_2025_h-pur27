@@ -148,6 +148,19 @@ Unnum mikið í bracket logic og UI.
   2. Reyna klára logic layerinn
   3. Halda áfram með UI
 ### Lokasprettur gengur vel og erum alveg að verða búnir með allt!
+## 11/12/24
+Klárðuðum forritið og löguðum UML
+- Í dag
+  1. Klára UI (Baldvin)
+  2. Klára logic(Davíd)
+  3. Laga UML og gera comments í forritið (Adam)
+  4. Við förum yfir allar A kröfur í forritinu
+- Á morgun
+  1. Gera video fyrir forritið
+  2. Laga til skýrsluna
+  3. Fara yfir allt aftur og hreinsa kóðan
+### Erum mjög sáttir við forritið og erum spenntir að skila því :)
+
 
 
 

@@ -2,6 +2,7 @@
 daviddebug.py
 adamdebug.py
 adamdebugPC.py
+baldvindebug.py
 *.pyc
 __pycache__
 .vscode/settings.json

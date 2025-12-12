@@ -3,7 +3,6 @@ class SelectFromPage:
         self.items=items
         self.endpage=5
         self.startpage=0
-        pass
     
     def currentPage(self):
         items_list: list=self.items[self.startpage:self.endpage]
@@ -21,7 +20,7 @@ class SelectFromPage:
             self.startpage = 0
             self.endpage = 5
 
-    def select_item_by_number(self, number: int) -> str | None:
+    def select_item_by_number(self, number: int):
         item_list: list = self.items[self.startpage:self.endpage]
         if 1 <= number <= len(item_list):
             return item_list[number - 1]

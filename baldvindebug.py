@@ -17,7 +17,18 @@ from LogicLayer.menuLogic import MenuLogic
 from datetime import datetime
 import time
 import sys
+llapi = LogicAPI()
+# tournament = llapi.getTournamentbyName('HAhringurinn')
+# llapi.populateTournament(tournament)
+# print(llapi.returnRoundNames(tournament))
+#print(''.join(llapi.getStandings(tournament)))
+# print(llapi.geteligibleMatches(tournament))
+# tournament = llapi.reloadTournament(tournament)
+
+# llapi.cleanBackups()
+
 """Main loop test"""
+
 run = UIMain()
 
 run.mainloop()
