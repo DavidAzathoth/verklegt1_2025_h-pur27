@@ -6,8 +6,6 @@ class MenuUI:
         self.__logic_api = logic_api
         self.baseUI = base_ui
 
-
-
 #----------------------------------- MAIN MENU -----------------------------------------
     def show_main_menu(self):
         """Prints out the main menu

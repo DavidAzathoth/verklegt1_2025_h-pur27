@@ -13,8 +13,8 @@ class PublicUI:
 
 
     def show_tournaments_menu(self):
-        """Prints tournaments options menu.
-        returns: "PRINT LIST OF TOURNAMENTS", "SEARCH FOR A TOURNAMENT", "BACK", "QUIT" """
+        """Prints view tournaments options menu.\n
+        Returns: "PRINT LIST OF TOURNAMENTS", ("GET TOURNAMENT", Tournament), "CANCEL", "BACK", "QUIT" """
         
 #========= TOURNAMENTS MENU INTERFACE ========
         print("""
@@ -60,10 +60,9 @@ q. Quit
         return "QUIT"
 
 
-
     def show_teams_menu(self):
-        """Prints teams options menu.
-        returns: "PRINT LIST OF TEAMS", "SEARCH FOR A TEAM", "BACK", "QUIT" """
+        """Prints view teams options menu.\n
+        returns: "PRINT LIST OF TEAMS", ("GET TEAM", Team), "CANCEL", "BACK", "QUIT" """
 
 #========= TEAMS MENU INTERFACE ========
         print("""
@@ -111,7 +110,7 @@ q. Quit
 
 
     def show_view_teams_menu(self):
-        """shows list of 5 teams at a time. allows to view team info.
+        """Shows list of 5 teams at a time. allows to view team info.\n
         returns: "TEAM INFO", "BACK", "QUIT" """
         
         teams = self.__logic_api.getTeams()
@@ -164,8 +163,9 @@ q. Quit
 
 
     def show_view_tournaments_menu(self, mode):
-        """Prints list of tournaments
-        returns: ("TOURNAMENT INFO",  tournament: object), "BACK", "QUIT"  """
+        """Prints list of tournaments.\n
+        modes: "VIEW TOURNAMENTS"(public), "ADD TEAMS"(organizer), "GENERATE"(organizer), "UPDATE"(organizer)\n
+        returns: ("TOURNAMENT",  tournament: object), "BACK", "QUIT"  """
         
         # view what kind of mode the menu is in (public/organizer)
         if mode == "VIEW TOURNAMENTS":
@@ -225,8 +225,8 @@ q. Quit
 
     def show_team_info(self, team: Team, mode: str):
         """Shows team information for selected team.\n
-        Returns: "BACK", "HOME", "QUIT"\n
-        Modes: "SEARCH TEAM", "VIEW TEAMS", "CAPTAIN" """
+        modes: "SEARCH TEAM"(public), "VIEW TEAMS"(public), "CAPTAIN"\n 
+        returns: "BACK", "HOME", "QUIT", ("PLAYER INFO", player) """
         
         ##If viewing from public
         if mode in ("SEARCH TEAM", "VIEW TEAMS"):
