@@ -51,18 +51,15 @@ q. Quit""")
 {captain_handle}'s Menu
 
 1. View my team/players
-2. Edit team information
 
 b. Back
 q. Quit
 """)
 #===================================================
         
-        choice = self.baseUI.prompt_options(["1", "2", "b", "q"])
+        choice = self.baseUI.prompt_options(["1", "b", "q"])
         if choice == "1":
             return ("VIEW MY TEAM/PLAYERS", team)
-        if choice == "2":
-            return "EDIT TEAM INFORMATION"
         if choice == "b":
             return "BACK"
         return "QUIT"

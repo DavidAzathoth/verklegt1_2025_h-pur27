@@ -165,8 +165,6 @@ class UIMain:
                 if isinstance(options, tuple) and options[0] == "VIEW MY TEAM/PLAYERS":
                     self.selection_mode = "CAPTAIN"
                     self.current_screen = "TEAM INFO MENU"
-                elif options == "EDIT TEAM INFORMATION":
-                    self.current_screen = "EDIT TEAM INFO MENU"
                 elif options == "BACK":
                     self.current_screen = "MAIN MENU"
                 elif options == "QUIT":
