@@ -7,7 +7,9 @@ class PrintMatches:
         self.tournament = tournament
 
 
+# RESULTS PRINT
     def print_results_table(self):
+        """Prints the result table for the tournament"""
         bracket: Bracket = self.tournament.bracket
 
         max_team = 0
@@ -50,7 +52,9 @@ class PrintMatches:
             print()
 
 
+# SCHEDULE PRINT
     def print_schedule_table(self):
+        """prints the schedule table for the tournament"""
         bracket: Bracket = self.tournament.bracket
         
         max_team = 0
@@ -61,7 +65,7 @@ class PrintMatches:
                 match: Match
 
                 current_team = max(len(match.team_A), len(match.team_B))
-                current_string = len(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")
+                current_string = len(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}, Server: {int(match.server)+1}")
 
                 if current_team > max_team:
                     max_team = current_team
@@ -77,6 +81,6 @@ class PrintMatches:
             print()
                 
             for match in matches:
-                print(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}")    
+                print(f"- Match {match.matchID:<4}: {match.team_A:<{max_team + 2}} vs   {match.team_B:<{max_team + 2}} Date: {match.matchDate},  {match.matchTime}, Server: {int(match.server)+1}")    
             print()
             print("-" * max_string)

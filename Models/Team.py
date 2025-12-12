@@ -23,26 +23,3 @@ class Team:
         """Creates a dictionary to store in a csv file"""
         ret_dic={'teamID':self.teamID,'teamName':self.teamName,'roster':(",".join(self.roster)),'wins':str(self.wins),'losses':str(self.losses),'captainHandle':self.captainHandle}
         return ret_dic
-#    def __str__(self):
-#        players = '\n'
-#        return f"""
-#Team name: {self.teamName}
-#Players
-#Address: {self.address}
-#Phone number: {self.phoneNumber}
-#E-mail: {self.emailAddress}
-#Link: {self.link}
-#        """
-
-#---------------------------
-#RU's e-Sport Extravaganza
-#---------------------------
-#View Team
-#Team name: Team 1
-#Players:
-#1. Sheriff_Norris
-#2. Player_A
-#3. Player_B
-#4. Player_C
-#5. Player_D
-#0. Back

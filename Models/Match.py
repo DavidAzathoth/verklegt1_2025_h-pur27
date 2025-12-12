@@ -36,7 +36,7 @@ Match {self.matchID}: {self.team_A} vs {self.team_B}
 
 
     def returninfo(self):
-        """Returns info for match, returns TBD or Not decied for match winner and score when match has not been played"""
+        """Returns info for match, returns TBD or Not decided for match winner and score when match has not been played"""
         ret_str = f"""
 Match {self.matchID}
 Team 1: {self.team_A}

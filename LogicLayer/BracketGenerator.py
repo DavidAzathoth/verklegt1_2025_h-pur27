@@ -26,7 +26,7 @@ class BracketGenerator:
 
         return rounds, extramatches
     
-    def generatebracket(self, tournament: Tournament):
+    def generatebracket(self, tournament: Tournament, server):
         """Generate inital bracket for tournament, accounting for a non base 2 number of teams(16,32,64...) Returns False if the tournament already has a bracket"""
         if type(tournament.bracket) == Bracket:
             return False
@@ -34,13 +34,6 @@ class BracketGenerator:
         teams=tournament.playingteams
         startdate = date(*(list(map(int,(tournament.startDate.split('-'))))))
         enddate = date(*(list(map(int,(tournament.endDate.split('-'))))))
-
-        #Calculate days that the tournament will be held
-        #days=(enddate-startdate).days
-
-        ##Stringify dates
-        #startdate=startdate.strftime("%d/%m/%Y")
-        #enddate=enddate.strftime("%d/%m/%Y")
 
 
         existingmatches=self.__dataapi.loadMatches()
@@ -147,17 +140,16 @@ class BracketGenerator:
                 roundsplayed[f'{i}'].append(self.__matchmodel(matchid,'TBD','TBD'))
 
         #Save all matches before returning
-        slots = self.generate_slots_full_range(startdate,enddate,servers=1,match_minutes=60)
+        slots = self.generate_slots_full_range(startdate,enddate,server,match_minutes=60)
 
-        used = self.schedule_round_blocks(roundsplayed, slots, servers=1)
+        used = self.schedule_round_blocks(roundsplayed, slots, server)
 
         total_games = len(tournament.teams) - 1
 
         generated = sum(len(v) for v in roundsplayed.values())
         remaining = total_games - generated
         self.schedule_spread_in_round_order(roundsplayed, slots)
-        #tbd_idxs = self.spread_indices(used, len(slots)-1,remaining)
-        #tbd_slots= [slots[i] for i in tbd_idxs]
+        
 
         
 
@@ -230,23 +222,7 @@ class BracketGenerator:
             m.matchDate = d.strftime("%d/%m/%Y")
             m.matchTime = t.strftime("%H:%M")
             m.server = s
-    
-    
 
-    #def updatebracket(self, bracket):
-        
-        #all_matches: list[Match] = []
-        #for round_key, match_list in bracket.rounds.items():
-        #    all_matches.extend(match_list)
-        #
-        #existing_rows = self.__dataapi.loadMatches()
-        #rows_by_id = {row["matchID"]: row for row in existing_rows}
-        #for m in all_matches:
-        #    rows_by_id[m.matchID] = m.createCSVDict()
-        #
-        #updated_rows = list(rows_by_id.values())
-        #self.__dataapi.updateMatches(updated_rows)
-        #return
     
     def updateOrMatches(self, tournament: Tournament, winningteam: str):
         bracket: Bracket = tournament.bracket
@@ -285,4 +261,3 @@ class BracketGenerator:
             i+=1
     def updatebracket(self, tournament: Tournament):
         self.addTeamsNextRound(tournament)
-        #self.updateOrMatches(tournament, matchwinner)

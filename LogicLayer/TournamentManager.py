@@ -25,17 +25,21 @@ class Tournamentmanager:
 
 
     def getTournaments(self):
+        """Returns a list of loaded Tournament models"""
         raw_list = self.__dataApi.loadTournaments()
         tournamentlist: list[Tournament] = self.__logichandler.loadmodels(self.__tournamentmodel, raw_list)
         return tournamentlist
     
     def getTournamentbyName(self, name: str, tournamentlist: list[Tournament]):
+        """Returns the tournament model that the given name belongs to, must provide a list of already loaded tournament models"""
         for tournament in tournamentlist:
             if name.lower().strip() == tournament.name.lower().strip():
                 return tournament
         return None
             
     def populateTournament(self, tournament: Tournament):
+        """Populates the given tournament, loads the loaded Bracket model with loaded Match models into the tournament.
+        This also ensures that all Team models are loaded into the tournament"""
         if type(tournament.teams) == list:
             if len(tournament.teams) > 0:
                 if type(tournament.teams[0]) == Team:
@@ -56,6 +60,7 @@ class Tournamentmanager:
         return tournament
     
     def unpopulateTournament(self, tournament: Tournament):
+        """Unpopulates the tournament, unpacks all loaded models inside the tournament. This is used before saving"""
         if type(tournament.teams) == list:
             if '' not in tournament.teams:
                 if len(tournament.teams) > 0:
@@ -72,11 +77,14 @@ class Tournamentmanager:
     
         
     def saveTournament(self,tournament: Tournament):
+        """Adds the tournament to file"""
         self.unpopulateTournament(tournament)
         self.__dataApi.saveTournament(tournament.createCSVDict())
         return
     
     def updateTournament(self, tournament: Tournament, input: object = None, operation: str = None ):
+        """Updates the given tournament or adds team. operations are 'addteam' or 'updateall'. Update all also updates all loaded models in the
+        tournament and overwrites everything in file that has the same id or name. addteam will simply add a team to the tournament and update the file."""
         if tournament.active==False:
             return False
         tournaments = self.getTournaments()
@@ -147,11 +155,13 @@ class Tournamentmanager:
             
 
     def saveBracket(self, bracket: Bracket):
+        """Adds a new bracket to file"""
         bracket=self.unpopulateBracket(bracket)
         self.__dataApi.saveBracket(bracket.createCSVDict())
 
 
     def populateBracket(self, bracket: Bracket):
+        """Populates the given bracket will all match models that belong to it"""
         rounds: dict[list]
         for round in bracket.rounds.keys():
             roundobjects = list(map(self.__matchlogic.getMatchbyID, bracket.rounds.get(round)))
@@ -179,18 +189,22 @@ class Tournamentmanager:
 
 
     def unpopulateBracket(self, bracket: Bracket):
+        """Unpacks the Match models in the bracket"""
         for round in bracket.rounds.keys():
             matchids=[match.matchID for match in bracket.rounds.get(round)]
             bracket.rounds[round] = matchids
         return bracket
     
     def updateBracket(self, bracket: Bracket):
+        """Updates all matches in the bracket"""
         for round in bracket.rounds.keys():
             match: Match
             for match in bracket.rounds.get(round):
                 self.__matchlogic.updateMatch(match)
     
     def reloadTournament(self, tournament: Tournament):
+        """This updates the entire tournament, bracket, matches, teams and all. Then gets a new tournament from file with the same name (itself) and deletes the loaded tournament. 
+        This is used to ensure the tournament updates correctly"""
         self.updateTournament(tournament,None,'updateall')
         tournamentlist = self.getTournaments()
         reloaded_tournament = self.getTournamentbyName(tournament.name,tournamentlist)
@@ -218,16 +232,6 @@ class Tournamentmanager:
                 if match.matchPlayed == 'True' or match.matchPlayed == True:
                     complete_matches.append(match)
         return complete_matches
-
-    def returnRoundNames(self, tournament: Tournament):
-        roundlist=['First rounds','Second rounds','Third rounds','Fourth rounds','Fifth rounds','Sixth rounds','Seventh rounds','Eight rounds','Ninth rounds','Tenth rounds']
-        finallist=['Quarter-finals','Semi-finals','Finals']
-        roundnames=[]
-        totalrounds=len(tournament.bracket.rounds)
-        for i in range(1,totalrounds-2):
-            roundnames.append(roundlist.pop(0))
-        roundnames+=finallist
-        return roundnames
     
     def validate_start_end_date(self, startdate, enddate):
         """validate start and enddate for tournament"""
@@ -235,39 +239,14 @@ class Tournamentmanager:
                 
         enddate = datetime.strptime(enddate, "%Y-%m-%d")
 
-        if enddate < startdate:
+        if enddate <= startdate:
             return None
 
         return startdate, enddate
-    def validateTournamentBracket(self, tournament: Tournament):
+    def validateTournamentBracket(self, tournament: Tournament)-> bool:
+        """Returns False if the tournament has a bracket, otherwise True"""
         if type(tournament.bracket) is not Bracket:
             return False
         else:
             return True
-        #if len(tournament.bracket) == 0 or tournament.bracket == '':
-        #    return False
-
-        
-
-
-
-#def populateTournament(self, tournament: Tournament):
-#        teams = self.__teamlogic.getTeams()
-#        teamobjects=list(map(lambda team: self.__teamlogic.get_team_by_teamID(team, teams), (tournament.teams)))
-#        tournament.teams=teamobjects
-#        return tournament
-
-
-#    def calculaterounds(self, teams: list[Team]):
-#        oddrounds = 0
-#        totalrounds = 0
-#        divbytwo = len(teams)
-#        while divbytwo != 1:
-#            temp=divbytwo / 2
-#            if divbytwo / 2 != 0:
-#                oddrounds += 1
-#                divbytwo=divbytwo-1
-
-#            
-        
 

@@ -2,7 +2,7 @@ from StorageLayer.storageApi import DataAPI
 from LogicLayer.logicHandler import logicHandler
 from Models.Player import Player
 from Models.Team import Team
-from Models.TeamCaptain import TeamCaptain
+
 
 class Teamlogic:
     def __init__(self, dataApi: DataAPI):
@@ -10,10 +10,11 @@ class Teamlogic:
         self.__logichandler = logicHandler()
         self.__teammodel = Team
         self.__playermodel = Player
-        self.__teamCaptainmodel = TeamCaptain
+        
         
     
     def getTeams(self) -> list[Team]:
+        """Returns a list of all teams as loaded Team models"""
         raw_list = self.__dataApi.loadTeams()
         teamlist: list[Team] = self.__logichandler.loadmodels(self.__teammodel,raw_list)
         for team in teamlist:
@@ -22,6 +23,7 @@ class Teamlogic:
         return teamlist
 
     def get_team_by_captain(self, captain_handle: str):
+        """Returns the team the given captain handle belongs to"""
         teams = self.getTeams()
         for t in teams:
             if t.captainHandle.lower().strip() == captain_handle.lower().strip():
@@ -31,6 +33,7 @@ class Teamlogic:
         return None
     
     def get_team_by_teamname(self, teamname: str, tournament) -> Team | None:
+        """Returns the team that the given team name belongs to, can provide loaded tournament model, or a list of teams"""
         if type(tournament) == list:
             teamlist = tournament
         else:
@@ -41,6 +44,7 @@ class Teamlogic:
         return None
     
     def get_team_by_teamID(self, teamid: str, teamlist: list[Team]) -> Team | None:
+        """Iterates through given teamlist and returns the team that the given teamid belongs to"""
         if None in teamlist:
             return None
         for team in teamlist:
@@ -53,10 +57,12 @@ class Teamlogic:
         return self.__logichandler.createModel(self.__teammodel, team)
     
     def saveTeam(self, team: Team):
+        """Adds Team to file"""
         self.__dataApi.saveTeam(team.createCSVDict())
 
     
     def updateCaptain(self, captainHandle):
+        """Updates captain hasTeam status to True"""
         captainslist: list[dict] = self.__dataApi.loadCaptains()
         for captain in captainslist:
             if captain.get('captainHandle') == captainHandle:
@@ -68,11 +74,13 @@ class Teamlogic:
         return self.__dataApi.updateCaptains(captainslist)
 
     def registerCaptain(self, captainHandle):
+        """Adds a new captain to the captains.csv file"""
         new_captain_info: dict = {"captainHandle":captainHandle, "hasTeam":False}
         self.__dataApi.saveCaptain(new_captain_info)
         return
             
     def getTeamMembers(self, team: Team):
+        """Returns all team members of given team as a list of Player models"""
         ret_list = []
         raw_list = self.__dataApi.loadPlayers()
         playerlist: list[Player] = self.__logichandler.loadmodels(self.__playermodel,raw_list)
@@ -108,14 +116,6 @@ class Teamlogic:
         self.__dataApi.updateTeams(teams)
             
         return team
-    
-   # def addplayertoteam(self, input, team: Team):
-   #     if type(input) == list:
-   #         player = self.__logichandler.createModel(Player,input)
-   #         self.__dataApi.savePlayer(player.createCSVDict())
-   #         self.updateTeam(player, 'addplayer',team)
-   #     else:
-   #         self.updateTeam(input, 'addplayer',team)
 
     def getCaptain(self, captain_input: str):
         raw_list: list[dict] = self.__dataApi.loadCaptains()

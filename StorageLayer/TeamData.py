@@ -4,10 +4,13 @@ class TeamData:
         self.FILE = 'StorageLayer/Data/teams.csv'
         self.__storagehandler = storagehandler
     def load_teams(self):
+        """Loads teams from file and returns a list of dictionaries"""
         return self.__storagehandler.retrieveFile(self.FILE)
     def save_team(self,data):
+        """Adds team to file"""
         self.__storagehandler.saveFile(self.FILE,data)
         return
     def update_team(self, data: list):
+        """Similar to update_tournaments (see TournamentData.update_tournaments)"""
         self.__storagehandler.editFile(self.FILE, data)
         return

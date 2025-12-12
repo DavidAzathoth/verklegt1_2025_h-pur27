@@ -17,6 +17,7 @@ class DataAPI:
         self.__matchData=MatchData(self.__storagehandler)
         self.__bracketData=BracketData(self.__storagehandler)
     def loadTeams(self):
+        """Returns list of dictionaries for teams"""
         return self.__teamData.load_teams()
     
 
@@ -26,6 +27,7 @@ class DataAPI:
     
 
     def loadTournaments(self):
+        """Returns list of dictionaries for tournaments"""
         return self.__tournamentData.load_tournaments()
 
 
@@ -35,6 +37,7 @@ class DataAPI:
     
 
     def loadMatches(self):
+        """Returns list of dictionaries for matches"""
         return self.__matchData.load_matches()
     
 
@@ -44,6 +47,7 @@ class DataAPI:
     
 
     def loadCaptains(self):
+        """Returns list of dictionaries for captains"""
         return self.__captainData.load_captains()
     
 
@@ -53,6 +57,7 @@ class DataAPI:
     
 
     def loadPlayers(self):
+        """Returns list of dictionaries for players"""
         return self.__playerData.load_players()
     
 
@@ -67,6 +72,7 @@ class DataAPI:
     
 
     def loadMatches(self):
+        """Returns list of dictionaries for matches"""
         return self.__matchData.load_matches()
     
 
@@ -80,6 +86,7 @@ class DataAPI:
 
 
     def loadBrackets(self):
+        """Returns list of dictionaries for brackets"""
         return self.__bracketData.loadBrackets()
       
 
@@ -98,4 +105,5 @@ class DataAPI:
     
     
     def cleanBackups(self):
+        """Cleans the backup folder, this is only run when the program exits safely"""
         self.__storagehandler.cleanBackups()

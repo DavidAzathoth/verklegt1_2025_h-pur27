@@ -6,10 +6,11 @@ class MenuUI:
         self.__logic_api = logic_api
         self.baseUI = base_ui
 
-#----------------------------------- MAIN MENU -----------------------------------------
+
+# MAIN MENU
     def show_main_menu(self):
-        """Prints out the main menu
-        returns: "TOURNAMENTS", "TEAMS", "ORGANIZER", "TEAM CAPTAIN", "QUIT" """
+        """Displays the main menu.\n
+        Returns: "TOURNAMENTS", "TEAMS", "ORGANIZER", "TEAM CAPTAIN", "QUIT" """
         
 #========= MAIN MENU INTERFACE ==========
         print("""
