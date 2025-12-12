@@ -6,6 +6,8 @@ from Models.Bracket import Bracket
 from Models.Match import Match
 from LogicLayer.TeamLogic import Teamlogic
 from LogicLayer.MatchLogic import MatchLogic
+from datetime import datetime, date
+
 class Tournamentmanager:
     def __init__(self, dataApi: DataAPI):
         self.__dataApi = dataApi
@@ -31,6 +33,7 @@ class Tournamentmanager:
         for tournament in tournamentlist:
             if name.lower().strip() == tournament.name.lower().strip():
                 return tournament
+        return None
             
     def populateTournament(self, tournament: Tournament):
         if type(tournament.teams) == list:
@@ -225,6 +228,17 @@ class Tournamentmanager:
             roundnames.append(roundlist.pop(0))
         roundnames+=finallist
         return roundnames
+    
+    def validate_start_end_date(self, startdate, enddate):
+        """validate start and enddate for tournament"""
+        startdate = datetime.strptime(startdate, "%Y-%m-%d")
+                
+        enddate = datetime.strptime(enddate, "%Y-%m-%d")
+
+        if enddate < startdate:
+            return None
+
+        return startdate, enddate
     def validateTournamentBracket(self, tournament: Tournament):
         if type(tournament.bracket) is not Bracket:
             return False

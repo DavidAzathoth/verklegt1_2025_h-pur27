@@ -21,7 +21,7 @@ M19,Falcons,Natus Vincere,Natus Vincere,"{'Falcons': '1', 'Natus Vincere': '2'}"
 M20,Astralis,B8,B8,"{'Astralis': '1', 'B8': '2'}",True,16/12/2025,15:00,0
 M21,Natus Vincere,B8,Natus Vincere,"{'Natus Vincere': '10', 'B8': '0'}",True,17/12/2025,15:00,0
 M22,FURIA,Vitality,Vitality,"{'FURIA': '1', 'Vitality': '15'}",True,11/12/2025,10:00,0
-M23,FURIA,Vitality,,{},False,11/12/2025,10:00,0
+M23,FURIA,Vitality,FURIA,"{'FURIA': '2', 'Vitality': '1'}",True,11/12/2025,10:00,0
 M24,Falcons,MOUZ,,{},False,11/12/2025,12:00,0
 M25,The MongolZ,Spirit,,{},False,11/12/2025,14:00,0
 M26,Natus Vincere,G2,,{},False,12/12/2025,11:00,0
@@ -29,7 +29,7 @@ M27,Aurora,paiN,,{},False,12/12/2025,13:00,0
 M28,Astralis,FaZe,,{},False,13/12/2025,10:00,0
 M29,3DMAX,Legacy,,{},False,13/12/2025,12:00,0
 M30,Liquid,B8,,{},False,13/12/2025,14:00,0
-M31,GamerLegion,FURIA or Vitality,,{},False,14/12/2025,11:00,0
+M31,GamerLegion,FURIA,,{},False,14/12/2025,11:00,0
 M32,HEROIC,Falcons or MOUZ,,{},False,14/12/2025,13:00,0
 M33,Virtus.rpo,The MongolZ or Spirit,,{},False,15/12/2025,10:00,0
 M34,SAW,Natus Vincere or G2,,{},False,15/12/2025,12:00,0
