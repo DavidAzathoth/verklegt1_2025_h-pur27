@@ -13,6 +13,8 @@ class MatchLogic:
     def getMatches(self):
         raw_list = self.__dataApi.loadMatches()
         matchlist: list[Match] = self.__logichandler.loadmodels(self.__matchmodel, raw_list)
+        for match in matchlist:
+            match.Score = eval(match.Score)
         return matchlist
     
     def getMatchbyID(self, id: str):
@@ -21,30 +23,45 @@ class MatchLogic:
             if match.matchID == id:
                 return match
         return None
-    def updateMatch(self, match: Match):
-        matches = self.getMatchesCSV
-        pass
+    
 
 
 
-# def updateTournament(self, tournament: Tournament, input: object, operation: str = None ):
-#        tournaments = self.__dataApi.loadTournaments()
-#        index = tournaments.index(tournament.createCSVDict())
-#        rem_tournament=tournament.createCSVDict()
-#        tournaments.remove(rem_tournament)
-#
-#        if tournament.teams[0] == '': #Cleans up empty string that appears when list is first created
-#            tournament.teams.pop(0)
-#        if tournament.matchesList[0] == '':
-#            tournament.matchesList.pop(0)
-#        if tournament.matchHistory[0] == '':
-#            tournament.matchHistory.pop(0)
-#
-#        if operation == 'addteam':
-#            if self.checkDuplTeams(tournament, input) == False:
-#                return False
-#            tournament.teams.append(input.teamID)
-#            tournament.teaminstances.append(input)
-#        
-#        tournaments.insert(index, tournament.createCSVDict())
-#        self.__dataApi.updateTournaments(tournaments)
+
+    def updateMatch(self, editedmatch: Match, input = None, operation: str = None):
+        matches = self.getMatches()
+        for match in matches:
+            if match.matchID == editedmatch.matchID:
+                index = matches.index(match)
+                matches.remove(match)
+                matches.insert(index, editedmatch)
+        
+        data = [match.createCSVDict() for match in matches]
+        self.__dataApi.updateMatch(data)
+
+    def returnMatchWinner(self, match: Match, team_A_score, team_B_score):
+        """Returns winner from list, list is team_A score for index 0 and team_B score for index 1 [0,1].
+        Does not save to file or update any data."""
+
+        if team_A_score == team_B_score:
+            return False
+        
+        if team_A_score > team_B_score:
+            return match.team_A
+        
+        return match.team_B
+        
+    def confirmMatchWinner(self, match: Match, scores: list):
+        """Input scores is a list [1,2] score 1(index 0) is team_A score and score 2(index 1) is team_B score"""
+        raw_dict={f'{match.team_A}':f'{scores[0]}',f'{match.team_B}':f'{scores[1]}'}
+        if scores[0]>scores[1]:
+            match.matchWinner = match.team_A
+            matchloser = match.team_B
+        else:
+            match.matchWinner = match.team_B
+            matchloser = match.team_A
+        match.Score=raw_dict
+        match.matchPlayed=True
+        return matchloser, match.matchWinner
+        
+        

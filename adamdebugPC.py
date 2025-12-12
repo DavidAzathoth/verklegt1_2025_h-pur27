@@ -8,10 +8,44 @@ from LogicLayer.PlayerLogic import Playerlogic
 #from Models.Player import Player
 from StorageLayer.storageApi import DataAPI
 #from Models.ViewTeamsMenu import ShowTeams
+from Models.Match import Match
+from Models.Bracket import Bracket
+from LogicLayer.BracketLogic import BracketLogic
 
 #da = DataAPI()
-#llapi=LogicAPI()
-#pllogic = Playerlogic(da)
+llapi=LogicAPI()
+
+tournaments = llapi.gettournaments()
+t = tournaments[0]
+llapi.populateTournament(t)
+
+bracket = t.bracket
+print(names)
+
+
+
+
+#m1 = Match("M1", "TeamA", "TeamB")
+#m2 = Match("M2", "TeamC", "TeamD")
+
+#da.updateMatches([m1.createCSVDict(), m2.createCSVDict()])
+#rounds = {"1": [m1, m2]}
+#bracket = Bracket("TestTournament", rounds)
+
+#m1.matchWinner = "TeamA"
+#m1.matchPlayed = True
+
+#m2.matchWinner = "TeamD"
+#m2.matchPlayed = True
+
+#llapi.updateBracket(bracket)
+
+#after = da.loadMatches()
+#print('Matches')
+#for row in after:
+    #print(row)
+
+
 #inputlisti=['1','2','3',4,5,'6']
 #print(llapi.createteam(inputlisti).createCSVDict())
 #teams=llapi.getTeams()
@@ -70,6 +104,12 @@ from StorageLayer.storageApi import DataAPI
 #    print(f,e,d,c,b,a)
 #listi=[1,2,3,4,5,6]
 #printnumbers(*listi)
-da = DataAPI()
-logic = Playerlogic(da)
-print(logic.editplayer("FalleN", "address", "6"))
+#tournaments = llapi.gettournaments()
+#t = tournaments[0]
+#da = DataAPI()
+#logic = Playerlogic(da)
+#available = llapi.availableteams(t)
+#print(logic.editplayer("FalleN", "address", "6"))
+#print("Teams available to add:")
+#for team in available:
+    #print(team.teamID, team.teamName)

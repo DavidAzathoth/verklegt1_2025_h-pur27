@@ -1,12 +1,16 @@
 from StorageLayer.storageApi import DataAPI
 from LogicLayer.logicHandler import logicHandler
 from Models.Player import Player
+from LogicLayer.menuLogic import MenuLogic
+from datetime import datetime, date
+from .menuLogic import InvalidEmailError
 
 class Playerlogic:
     def __init__(self, dataApi: DataAPI):
         self.PLAYERATTRIBUTES = ['teamID','playerGamertag','fullname','phoneNumber','emailAddress','address','link']
         self.__logichandler = logicHandler()
         self.__dataApi = dataApi
+        self.__menulogic = MenuLogic(DataAPI)
         self.__playermodel = Player
         
 
@@ -17,7 +21,7 @@ class Playerlogic:
         
     def getplayers(self):
         raw_data = self.__dataApi.loadPlayers()
-        playerlist=self.__logichandler.loadmodels(self.__playermodel,raw_data)
+        playerlist: list [Player] = self.__logichandler.loadmodels(self.__playermodel,raw_data)
         return playerlist
     
     def saveplayer(self, player: Player):
@@ -35,24 +39,35 @@ class Playerlogic:
             players = self.getplayers()
             for p in players:
                 if p.playerGamertag == gamertag:
-                    if attribute == "teamID":
-                        p.teamID = newValue
-                    elif attribute == "playerGamertag":
-                        p.playerGamertag = newValue
-                    elif attribute == "fullname":
-                        p.fullname = newValue
-                    elif attribute == "phoneNumber":
-                        p.phoneNumber = newValue
+                    
+                    if attribute == "phoneNumber":
+                        p.phoneNumber = int(newValue)
                     elif attribute == "emailAddress":
-                        p.emailAddress = newValue
+                        email, valid = self.__menulogic.emailverification(newValue)
+                        if valid is InvalidEmailError:
+                            raise InvalidEmailError(email)
+                        p.emailAddress = email
                     elif attribute == "address":
                         p.address = newValue
                     elif attribute == "link":
                         p.link = newValue
-                    elif attribute == "dateOfBirth":
-                        p.dateOfBirth = newValue
-
+                    
                     data = [pl.createCSVDict() for pl in players]
                     self.__dataApi.updatePlayers(data)
                     return True
         return False    
+    
+    def check_player_age(self, dob):
+        
+        minimum_age = 18
+        
+        dob = datetime.strptime(dob, "%Y-%m-%d").date()
+                
+        today = date.today()
+        age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+
+        if age < minimum_age:
+            ret_string = f"ERROR: You must be at least {minimum_age} years old. please enter a valid age"
+            return False, ret_string
+             
+        return True, dob

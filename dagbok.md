@@ -125,6 +125,42 @@ Byrjuðum að forrita og skipuleggja hver gerir hvað
   2. Gera ui virkni fyrir bracket og schedule generation
   3. Gera virkni sem vistar öllum upplýsingum á pökkuðum tournament(overwrite)
 ### Erum með hausverk vegna klasaritum
+## 09/12/25 Adam, Baldvin, Davíd
+í dag vorum við að vinna mikið með bracket.
+- Í dag
+  1. Byrja á update bracket og klára available teams (Adam)
+  2. Vinna mikið í bracket (Davíd)
+  3. Breyttum CSV í UTF8 (Davíd)
+  4. Vinna í UI (Baldvin)
+- Á morgun
+  1. Halda áfram að gera bracket
+  2. Halda áfram með UI kröfur
+  3. Finna einhverjar A kröfur sem við eigum eftir
+### Logic fyrir bracket er að gefa okkur hausverk
+## 10/12/25
+Unnum mikið í bracket logic og UI.
+- í dag
+  1. reload tournament, bæta við "finals" og "semifinals", debugga (Adam)
+  2. Vinna í logic og klára bracket! (Davíd)
+  3. Halda áfram að gera UI (Baldvin)
+- Á morgun
+  1. Debugga
+  2. Reyna klára logic layerinn
+  3. Halda áfram með UI
+### Lokasprettur gengur vel og erum alveg að verða búnir með allt!
+## 11/12/24
+Klárðuðum forritið og löguðum UML
+- Í dag
+  1. Klára UI (Baldvin)
+  2. Klára logic(Davíd)
+  3. Laga UML og gera comments í forritið (Adam)
+  4. Við förum yfir allar A kröfur í forritinu
+- Á morgun
+  1. Gera video fyrir forritið
+  2. Laga til skýrsluna
+  3. Fara yfir allt aftur og hreinsa kóðan
+### Erum mjög sáttir við forritið og erum spenntir að skila því :)
+
 
 
 

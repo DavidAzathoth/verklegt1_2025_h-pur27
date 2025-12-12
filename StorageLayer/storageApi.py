@@ -19,56 +19,83 @@ class DataAPI:
     def loadTeams(self):
         return self.__teamData.load_teams()
     
+
     def saveTeam(self,data):
         self.__teamData.save_team(data)
         return
     
+
     def loadTournaments(self):
         return self.__tournamentData.load_tournaments()
+
 
     def saveTournament(self,data):
         self.__tournamentData.save_tournament(data)
         return
+    
+
     def loadMatches(self):
         return self.__matchData.load_matches()
     
+
     def updateTournaments(self, data):
         self.__tournamentData.update_tournaments(data)
         return
     
+
     def loadCaptains(self):
         return self.__captainData.load_captains()
     
+
     def updateCaptains(self,data):
         self.__captainData.update_captains(data)
         return
     
+
     def loadPlayers(self):
         return self.__playerData.load_players()
     
+
     def savePlayer(self,data):
         self.__playerData.savePlayer(data)
         return
     
+
     def saveCaptain(self, data):
         self.__captainData.save_captain(data)
         return
     
+
     def loadMatches(self):
         return self.__matchData.load_matches()
     
+
     def saveMatch(self, data):
         self.__matchData.save_match(data)
         return
+    
+
     def updateTeams(self, data):
         self.__teamData.update_team(data)
+
 
     def loadBrackets(self):
         return self.__bracketData.loadBrackets()
       
+
     def saveBracket(self, data):
         self.__bracketData.saveBracket(data)
         
+
     def updatePlayers(self, data):
         self.__playerData.updatePlayers(data)
         return
+    
+
+    def updateMatch(self, data):
+        self.__matchData.update_match(data)
+        return
+    
+    
+    def cleanBackups(self):
+        self.__storagehandler.cleanBackups()

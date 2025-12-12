@@ -1,6 +1,10 @@
 from LogicLayer.TeamLogic import Teamlogic
 from StorageLayer.storageApi import DataAPI
 
+class InvalidEmailError(ValueError):
+    """raises Error if email is incorrect"""
+    pass
+
 class MenuLogic:
     def __init__(self,dataApi: DataAPI):
         self.__dataApi = dataApi
@@ -69,4 +73,7 @@ class MenuLogic:
             allgood=False
         if allgood:
             ret_string=email
-        return (ret_string, allgood)
+            return ret_string, allgood
+        else:
+            return ret_string, InvalidEmailError
+            
