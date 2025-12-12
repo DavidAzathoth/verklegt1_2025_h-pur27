@@ -1290,11 +1290,12 @@ q. Quit
                     score = [team_A_score, team_B_score]
                     self.__logic_api.confirmMatchWinner(tournament, match, score)
                     tournament = self.__logic_api.reloadTournament(tournament)
-                if choice == "c":
+                elif choice == "c":
                     continue
-                if choice == "h":
+                elif choice == "h":
                     return "HOME"
-                return "QUIT"
+                elif choice == "q":
+                    return "QUIT"
             continue
 
 
