@@ -19,7 +19,6 @@ class LogicAPI:
         self.__Playerlogic = Playerlogic(__dataAPI)
         self.__bracketgenerator = BracketGenerator()
         self.__matchlogic = MatchLogic(__dataAPI)
-        self.__bracketlogic = BracketLogic()
         self.__dataAPI = DataAPI()
         return
 
