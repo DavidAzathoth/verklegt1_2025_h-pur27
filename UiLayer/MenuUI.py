@@ -1093,28 +1093,34 @@ c. Cancel
 
                     num = int(edit_choice)                    
                     attribute = viewer.select_item_by_number(num)
-                    new_value = input("""Please enter new value or press "c" (Cancel): """.strip())
-                    if new_value.lower() == "c":
-                        continue
+                    
                     while True:
                         try:
-                            edit_player = self.__logic_api.editplayer(player.playerGamertag, attribute, new_value)
-                            if attribute=='emailAddress':
-                                if edit_player[1] == False:
-                                    raise ValueError
-                            break
-                        except ValueError or TypeError:
-                            print(f"\nERROR: Please enter correct value for player {attribute}.\n")
-                            if attribute=='emailAddress':
-                                print(edit_player[0])
                             new_value = input("""Please enter new value or press "c" (Cancel): """.strip())
                             if new_value.lower() == "c":
                                 break
+                            self.__logic_api.editplayer(player.playerGamertag, attribute, new_value)
+                            break
+                            
+                        except ValueError as email:
+                            print()
+                            print("-" * 60)
+                            print(email)  
+                        
+                        except ValueError:
+                            print()
+                            print("-" * 60)
+                            print(f"ERROR: Please enter correct value for player {attribute}.\n")
+                            if attribute=='emailAddress':
+                                print()
+
+                    
                     if new_value.lower() == "c":
                         continue
+
                     print(f"\n{attribute} has been updated!\n")
                     print("Returning to player info menu\n")
-                    self.slow_print("....", 0.3)
+                    self.slow_print("....", 0.4)
                     continue
 
                 #Cancel
